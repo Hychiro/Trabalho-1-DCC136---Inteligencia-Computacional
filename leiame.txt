@@ -1,0 +1,59 @@
+Para compilar o programa é necessario que os dados abaixo sejam escritos os argumentos na seguinte ordem:
+g++ -std=c++0x *.c* -o .\main.exe 
+
+Para executar o programa é necessario que os dados sejam escritos os argumentos na seguinte ordem:
+
+./<program_name> <input_file> <output_file>
+<input_file> representa o arquivo de entrada
+<output_file> representa o arquivo de saida(se não existir, ele será criado para a execução)
+
+Nosso codigo faz a leitura do arquivo da seguinte maneira:
+
+O R
+A A A A...
+A A A...
+A A...
+A...
+...
+
+
+A letra "O" representa a ordem, a letra "R" o numero de rotulos, o "A" representa o rotulo da aresta coluna linha
+
+isso produz uma matriz triangular superior de 0 a O-1. tendo sua diagonal principal valendo -1.
+Depois adiciona essas arestas rotuladas de acordo com a regra pedida, criando um grafo.
+
+O menu dara 6 opções
+1 - O algaritmo guloso simples;
+	Retorna no arquivo de saida o tempo de execução
+	Retorna no arquivo de saida a quantidade minima de rotulos
+	Retorna no arquivo de saida uma árvore geradora de rotulação minima.
+	
+
+2 - O algaritmo guloso randomico;
+	Pede pelo terminal o alpha
+	Pede pelo terminal o numero de iterações
+	Retorna no arquivo de saida a quantidade minima de rotulos usando alfa
+	Retorna no arquivo de saida uma árvore geradora de rotulação minima.
+	Retorna no arquivo de saida o tempo de execução
+
+3 - O algaritmo guloso randomico reativo;
+	Pede pelo terminal o numero de alphas
+	Pede pelo terminal para que se insira cada alpha
+	Pede pelo terminal o numero de iterações 
+	Retorna no arquivo de saida o tempo de execução
+	Retorna no arquivo de saida a quantidade minima de rotulos para o conjunto de alfas digitado
+	Retorna no arquivo de saida uma árvore geradora de rotulação minima.	
+
+4 - Printa Grafo o construido inicialmente;
+	Retorna no arquivo de saida um Grafo.
+
+5 - Densidade de Arestas do grafo inicial;
+	Retorna no arquivo de saida a densidade de arestas.
+
+0 - Encerra a execução;
+
+
+
+Nosso código executa as instâncias já proporcionadas pelo professor, além de executar uma outra adicional chamada 
+entradaTeste.txt que equivale ao exemplo do arquivo 888.pdf, pagina 26.
+ou o exemplo do arquivo do site
