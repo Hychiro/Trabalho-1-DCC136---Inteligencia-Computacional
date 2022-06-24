@@ -1,7 +1,12 @@
 {
     "files.associations": {
-        "istream": "cpp",
         "*.tcc": "cpp",
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "stack": "cpp",
+        "list": "cpp",
+        "memory": "cpp",
+        "future": "cpp",
+        "istream": "cpp",
+        "functional": "cpp"
     }
 }
