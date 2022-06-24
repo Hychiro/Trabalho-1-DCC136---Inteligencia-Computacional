@@ -14,7 +14,6 @@
 	<CompilerType Value="CPP"/>
 	<AppType Value="CONSOLE"/>
 	<Files>
-		<File Name="mainTeste.cpp"/>
 		<File Name="Node.h"/>
 		<File Name="Edge.h"/>
 		<File Name="Edge.cpp"/>
