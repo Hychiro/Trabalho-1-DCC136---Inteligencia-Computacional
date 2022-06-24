@@ -8,7 +8,6 @@ Matheus Cardoso Faesy 202065065A
 
 #ifndef GRASP_H_INCLUDED
 #define GRASP_H_INCLUDED
-#include "Node.h"
 #include "Graph.h"
 #include <fstream>
 #include <stack>

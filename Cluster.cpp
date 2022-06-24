@@ -2,10 +2,7 @@
 Hiero Henrique Barcelos Costa 202065136A
 Matheus Cardoso Faesy 202065065A
 */
-#include "Graph.h"
-#include "Node.h"
-#include "Edge.h"
-#include "Grasp.h"
+#include "Cluster.h"
 #include <iostream>
 #include <fstream>
 #include <stack>
@@ -21,9 +18,9 @@ Matheus Cardoso Faesy 202065065A
 
 using namespace std;
 
-Cluster::Cluster(float peso, float limiteInferior, float limiteSuperior)
+Cluster::Cluster(float limiteInferior, float limiteSuperior)
 {
-    this->peso = peso;
+    this->peso = 0;
     this->limiteInferior = limiteInferior;
     this->limiteSuperior = limiteSuperior;
 
@@ -31,6 +28,15 @@ Cluster::Cluster(float peso, float limiteInferior, float limiteSuperior)
     this->last_node = nullptr;
 }
 
+Cluster::Cluster()
+{
+    this->peso = 0;
+    this->limiteInferior = 0;
+    this->limiteSuperior = 0;
+
+    this->first_node = nullptr;
+    this->last_node = nullptr;
+}
 Cluster::~Cluster()
 {
 }
@@ -63,7 +69,7 @@ Node *Cluster::getLastNode()
 
 Node *Cluster::getNode(int id)
 {
-    //pega o no na lista de nos
+    // pega o no na lista de nos
     Node *p = first_node;
     if (searchNode(id))
     {
@@ -76,13 +82,12 @@ Node *Cluster::getNode(int id)
     return p;
 }
 
-
-void Cluster::addNode(int id,float peso)
+void Cluster::addNode(int id, float peso)
 {
     // so cria o no e deixa ele no espaço
     Node *p = new Node(id);
     p->setWeight(peso);
-    setPeso(getPeso()+peso);
+    setPeso(getPeso() + peso);
     if (this->first_node == nullptr)
     {
         this->first_node = p;
@@ -99,31 +104,37 @@ void Cluster::addNode(int id,float peso)
 void Cluster::addEdge(int id, int target_id, float peso)
 {
     // junta os nos entre si
-    if (searchNode(id)) //<-- ta sendo direcionado prestar atenção nisso.
+
+    Node *p = getNode(id);
+    Node *sup = getNode(target_id);
+    p->insertEdge(target_id, peso);
+    sup->insertEdge(id, peso);
+}
+
+void Cluster::addAresta(int id, Node *analisado)
+{
+    
+    for (Node *p = getFirstNode(); p != getLastNode(); p = p->getNextNode())
     {
-
-        if (!verificaAresta(id, target_id))
-        {
-            Node *p = getNode(id);
-            Node *sup = getNode(target_id);
-            p->insertEdge(target_id, peso);
-            sup->insertEdge(id, peso);
-
+        Edge* aux = analisado->hasEdgeBetween(p->getId());
+        if (aux!=nullptr){
+            addEdge(id, p->getId(), aux->getPeso());
         }
+            
     }
 }
 
-float Cluster::setPeso(float valor)
+void Cluster::setPeso(float valor)
 {
     this->peso = valor;
 }
 
-float Cluster::setLimiteInferior(float valor)
+void Cluster::setLimiteInferior(float valor)
 {
     this->limiteInferior = valor;
 }
 
-float Cluster::setLimiteSuperior(float valor)
+void Cluster::setLimiteSuperior(float valor)
 {
     this->limiteSuperior = valor;
 }

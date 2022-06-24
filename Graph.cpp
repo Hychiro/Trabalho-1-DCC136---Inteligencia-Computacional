@@ -3,8 +3,6 @@ Hiero Henrique Barcelos Costa 202065136A
 Matheus Cardoso Faesy 202065065A
 */
 #include "Graph.h"
-#include "Node.h"
-#include "Edge.h"
 #include <iostream>
 #include <fstream>
 #include <stack>
@@ -22,21 +20,28 @@ using namespace std;
 
 /**************************************************************************************************
  * Defining the Graph's methods
-**************************************************************************************************/
+ **************************************************************************************************/
 
 // Constructor
 Graph::Graph(int order, int numClusters)
 {
 
     this->order = order;
-    this->clusters=new Cluster[numClusters];
-    this->first_node = NULL;
-    this->last_node = NULL; 
+
+    Cluster aux[numClusters];
+
+    this->clusters = aux;
+
+    this->first_node = nullptr;
+    this->last_node = nullptr;
     this->number_edges = 0;
     this->melhorInstancia = -1;
     this->numClusters = numClusters;
+
     this->listaDeNosLivres = new bool[order];
-    for(int i=0;i<order;i++){
+
+    for (int i = 0; i < order; i++)
+    {
         listaDeNosLivres[i] = true;
     }
     insertAllNodes();
@@ -58,7 +63,8 @@ Graph::~Graph()
     }
 }
 
-Cluster Graph::getCluster(int id){
+Cluster Graph::getCluster(int id)
+{
     Cluster aux = this->clusters[id];
     return aux;
 }
@@ -95,7 +101,7 @@ int Graph::getNumberEdges()
 {
     return this->number_edges / 2;
 }
-//Function that verifies if the graph is directed
+// Function that verifies if the graph is directed
 
 Node *Graph::getFirstNode()
 {
@@ -109,14 +115,13 @@ Node *Graph::getLastNode()
     return this->last_node;
 }
 
-
 // Other methods
 /*
     The outdegree attribute of nodes is used as a counter for the number of edges in the graph.
     This allows the correct updating of the numbers of edges in the graph being directed or not.
 */
 
-//implementacao abaixo:
+// implementacao abaixo:
 
 void Graph::insertNode(int id)
 {
@@ -179,7 +184,6 @@ void Graph::insertEdge(int id, int target_id, float peso)
             p->insertEdge(target_id, peso);
             sup->insertEdge(id, peso);
             this->number_edges += 1;
-
         }
     }
 }
@@ -256,13 +260,14 @@ bool Graph::searchNode(int id)
     return false;
 }
 
-int Graph::getNumCluster(){
+int Graph::getNumCluster()
+{
     return this->numClusters;
 }
 
 Node *Graph::getNode(int id)
 {
-    //pega o no na lista de nos
+    // pega o no na lista de nos
     Node *p = first_node;
     if (searchNode(id))
     {
@@ -434,7 +439,7 @@ Node *Graph::getNode(int id)
 // Graph *Graph::gulosoRandomizadoReativoAux(int instancia, ofstream &output_file)
 // {
 //     output_file << "Algoritmo Guloso Radomizado Reativo" << endl;
-    
+
 //     int numAlfa; // encontra o num total de alfas
 //     cout << "Digite o Numero de alfas a serem adicionados:" << endl;
 //     cin >> numAlfa;
@@ -454,20 +459,19 @@ Node *Graph::getNode(int id)
 //     int numdInteracoes;
 //     cout << "Digite o numero de Iteracoes:" << endl;
 //     cin >> numdInteracoes;
-    
+
 //     int clo = clock();
 
 //     Graph *melhorSolucao = this;
 //     float qualidade[numAlfa];
-   
-    
+
 //     while (instancia < numdInteracoes)
 //     {
 
 //         Graph *itAtual = this;
 //         if (instancia < numAlfa)
 //         {
-            
+
 //             Graph *aux = itAtual->gulosoRandomizado(alfa[instancia], output_file);
 
 //             vezesUsada[instancia] = vezesUsada[instancia] + 1;
@@ -492,7 +496,6 @@ Node *Graph::getNode(int id)
 //                 probAlfa[j] = qualidade[j] / somaDasQualidades;
 //             }
 
-            
 //             int alfaEscolhido = funcEscolheAlfa(numAlfa, alfa, probAlfa, output_file);
 
 //             Graph *aux = itAtual->gulosoRandomizado(alfa[alfaEscolhido], output_file);
@@ -515,9 +518,9 @@ Node *Graph::getNode(int id)
 //             output_file << "Numero de particopações total igual a " << vezesUsada[j] << endl;
 //             output_file << endl;
 //         }*/
-        
+
 //         output_file<<"tempo de execucao: "<<(clock() - clo)<<" millisegundos"<<endl;
-   
+
 //     return melhorSolucao;
 // }
 

@@ -29,8 +29,6 @@ private:
     Node *first_node;
     Node *last_node;
     Cluster *clusters;
-
-
 public:
     bool *listaDeNosLivres;
     int melhorInstancia;

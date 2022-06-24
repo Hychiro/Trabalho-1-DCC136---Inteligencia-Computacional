@@ -12,8 +12,6 @@ Matheus Cardoso Faesy 202065065A
 #include <stdlib.h>
 #include <chrono>
 #include "Graph.h"
-#include "Node.h"
-#include "Edge.h"
 #include <thread>
 #include <time.h>
 #include <sstream>
@@ -21,6 +19,26 @@ Matheus Cardoso Faesy 202065065A
 #include <stdio.h>
 
 using namespace std;
+
+int transformacaoC(char cAnalizada)
+{
+    int valor = cAnalizada - '0';
+
+    return valor;
+}
+
+int transformacaoS(string sAnalizada)
+{
+    int tam = sAnalizada.length();
+    int valor = 0;
+
+    for (int i = 0; i < sAnalizada.length(); i++)
+    {
+        valor = valor + transformacaoC(sAnalizada[i]) * pow(10, tam - 1);
+        tam--;
+    }
+    return valor;
+}
 
 Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
 {
@@ -59,9 +77,10 @@ Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
         ordemS = ordemS.append(charAnalizado);
     }
 
-    for (int i = separator1; i < separator2; i++)
+    for (int i = separator1 + 1; i < separator2; i++)
     {
         charAnalizado = (primeiraLinha[i]);
+
         clustersS = clustersS.append(charAnalizado);
     }
 
@@ -70,19 +89,23 @@ Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
         charAnalizado = (primeiraLinha[i]);
         tipoCluster = tipoCluster.append(charAnalizado);
     }
+    cout << "tipoCluster" << tipoCluster << endl;
     for (int i = separator3; i < separator4; i++)
     {
         charAnalizado = (primeiraLinha[i]);
         limitesClusters = limitesClusters.append(charAnalizado);
     }
+    cout << "limitesClusters" << limitesClusters << endl;
     for (int i = separator4 + 1; i < primeiraLinha.length(); i++)
     {
         charAnalizado = (primeiraLinha[i]);
         pesoNos = pesoNos.append(charAnalizado);
     }
-
+    cout << "pesoNos" << pesoNos << endl;
     ordem = transformacaoS(ordemS);
+
     clusters = transformacaoS(clustersS);
+
     // Criando objeto grafo
     Graph *grafo = new Graph(ordem, clusters);
 
@@ -94,34 +117,56 @@ Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
     {
         string aux = "";
 
-        while (alturaDoTexto < limitesClusters.find_first_of(' ', alturaDoTexto) && alturaDoTexto < limitesClusters.length())
+        while (alturaDoTexto <= limitesClusters.find_first_of(' ', alturaDoTexto) && alturaDoTexto < limitesClusters.length())
         {
             charAnalizado = (limitesClusters[alturaDoTexto]);
-            aux = aux.append(charAnalizado);
-            alturaDoTexto++;
-        }
-        int valor = transformacaoS(aux);
 
+            if (charAnalizado != " ")
+            {
+                aux = aux.append(charAnalizado);
+                alturaDoTexto++;
+            }
+            else if (alturaDoTexto == 0 && charAnalizado == " ")
+            {
+                alturaDoTexto++;
+            }
+            else
+            {
+                alturaDoTexto++;
+                break;
+            }
+        }
+
+        int valor = transformacaoS(aux);
         limiteInferiorSuperior[i][0] = valor;
 
         aux = "";
-        while (alturaDoTexto < limitesClusters.find_first_of(' ', alturaDoTexto) && alturaDoTexto < limitesClusters.length())
+        while (alturaDoTexto <= limitesClusters.find_first_of(' ', alturaDoTexto) && alturaDoTexto < limitesClusters.length())
         {
             charAnalizado = (limitesClusters[alturaDoTexto]);
-            aux = aux.append(charAnalizado);
-            alturaDoTexto++;
+
+            if (charAnalizado != " ")
+            {
+                aux = aux.append(charAnalizado);
+                alturaDoTexto++;
+            }
+            else
+            {
+                alturaDoTexto++;
+                break;
+            }
         }
+
         valor = transformacaoS(aux);
         limiteInferiorSuperior[i][1] = valor;
     }
 
-    for(int i = 0; i <clusters; i++ ){
+    for (int i = 0; i < clusters; i++)
+    {
         grafo->getCluster(i).setLimiteInferior(limiteInferiorSuperior[i][0]);
+
         grafo->getCluster(i).setLimiteSuperior(limiteInferiorSuperior[i][1]);
     }
-
-
-
     alturaDoTexto = 0;
     int pesoVertice[ordem];
 
@@ -132,20 +177,33 @@ Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
         while (alturaDoTexto < pesoNos.find_first_of(' ', alturaDoTexto) && alturaDoTexto < pesoNos.length())
         {
             charAnalizado = (pesoNos[alturaDoTexto]);
-            aux = aux.append(charAnalizado);
-            alturaDoTexto++;
+            if (charAnalizado != " ")
+            {
+                aux = aux.append(charAnalizado);
+                alturaDoTexto++;
+            }
+            else if (alturaDoTexto == 0 && charAnalizado == " ")
+            {
+                alturaDoTexto++;
+            }
+            else
+            {
+                alturaDoTexto++;
+                break;
+            }
         }
         int valor = transformacaoS(aux);
 
         pesoVertice[i] = valor;
     }
 
-    for(int i =0; i<ordem ;i++){
+    for (int i = 0; i < ordem; i++)
+    {
         grafo->getNode(i)->setWeight(pesoVertice[i]);
     }
     ////
 
-    int matrixPesoArestas[ordem][ordem];
+    float matrixPesoArestas[ordem][ordem];
 
     for (int k = 0; k < ordem; k++)
     {
@@ -154,13 +212,14 @@ Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
             matrixPesoArestas[k][j] = -1;
         }
     }
-    
+
     int coluna = 1;
     int linha = 0;
     // Leitura de arquivo
+
     while (input_file >> verticeA >> verticeB >> pesoAresta)
     {
-
+        cout << "verticeA " << verticeA << " verticeB " << verticeB << " pesoAresta " << pesoAresta << endl;
         matrixPesoArestas[verticeA][verticeB] = pesoAresta;
         matrixPesoArestas[verticeB][verticeA] = pesoAresta;
     }
@@ -169,7 +228,7 @@ Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
     {
         for (int p = 0; p < ordem; p++)
         {
-            if (!grafo->verificaAresta(o, p))
+            if (!grafo->verificaAresta(o, p) && o!=p)
             {
                 grafo->insertEdge(o, p, matrixPesoArestas[o][p]);
             }
@@ -177,26 +236,6 @@ Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
     }
 
     return grafo;
-}
-
-int transformacaoS(string sAnalizada)
-{
-    int tam = sAnalizada.length();
-    int valor = 0;
-
-    for (int i = 0; i < sAnalizada.length(); i++)
-    {
-        valor = valor + transformacaoC(sAnalizada[i]) * pow(10, tam - 1);
-        tam--;
-    }
-    return valor;
-}
-
-int transformacaoC(char cAnalizada)
-{
-    int valor = cAnalizada - '0';
-
-    return valor;
 }
 
 int menu()
@@ -224,7 +263,7 @@ void selecionar(int selecao, Graph *graph, ofstream &output_file)
     case 1:
     {
         int clo = clock();
-
+        graph->printGraph(output_file);
         output_file << "tempo de execucao: " << (clock() - clo) << " millisegundos" << endl;
 
         break;
@@ -250,7 +289,7 @@ int mainMenu(ofstream &output_file, Graph *graph)
 
     while (selecao != 0)
     {
-        system("cls");
+        // system("cls");
         selecao = menu();
 
         if (output_file.is_open())
@@ -280,9 +319,9 @@ int main(int argc, char const *argv[])
     string input_file_name(argv[1]);
 
     string instance;
-    if (input_file_name.find("v") <= input_file_name.size())
+    if (input_file_name.find("_") <= input_file_name.size())
     {
-        string instance = input_file_name.substr(input_file_name.find("v"));
+        string instance = input_file_name.substr(0, input_file_name.find(""));
         cout << "Running " << program_name << " with instance " << instance << " ... " << endl;
     }
 

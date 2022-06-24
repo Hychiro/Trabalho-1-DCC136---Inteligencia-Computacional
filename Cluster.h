@@ -2,8 +2,11 @@
 Hiero Henrique Barcelos Costa 202065136A
 Matheus Cardoso Faesy 202065065A
 */
+
 #ifndef CLUSTER_H_INCLUDED
 #define CLUSTER_H_INCLUDED
+
+#include "Node.h"
 
 using namespace std;
 
@@ -20,7 +23,7 @@ private:
 
 public:
     // Constructor
-    Cluster(float peso, float limiteInferior, float limiteSuperior);
+    Cluster( float limiteInferior, float limiteSuperior);
     Cluster();
     // Destructor
     ~Cluster();
@@ -32,17 +35,15 @@ public:
     Node *getFirstNode();
     Node *getLastNode();
 
-    
-
-    Node* getNode(int id);
+    Node *getNode(int id);
     // Setters
-    void addNode(int id,float peso);
-    void addAresta(int id,Graph *grafo);
+    void addNode(int id, float peso);
+    void addAresta(int id, Node *analisado);
     void addEdge(int id, int target_id, float peso);
 
-    float setPeso(float valor);
-    float setLimiteInferior(float valor);
-    float setLimiteSuperior(float valor);
+    void setPeso(float valor);
+    void setLimiteInferior(float valor);
+    void setLimiteSuperior(float valor);
 
     Node *searchNode(int id);
 
