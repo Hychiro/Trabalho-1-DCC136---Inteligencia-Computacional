@@ -83,6 +83,8 @@ Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
 
     ordem = transformacaoS(ordemS);
     clusters = transformacaoS(clustersS);
+    // Criando objeto grafo
+    Graph *grafo = new Graph(ordem, clusters);
 
     int limiteInferiorSuperior[clusters][2];
 
@@ -113,6 +115,13 @@ Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
         limiteInferiorSuperior[i][1] = valor;
     }
 
+    for(int i = 0; i <clusters; i++ ){
+        grafo->getCluster(i).setLimiteInferior(limiteInferiorSuperior[i][0]);
+        grafo->getCluster(i).setLimiteSuperior(limiteInferiorSuperior[i][1]);
+    }
+
+
+
     alturaDoTexto = 0;
     int pesoVertice[ordem];
 
@@ -130,6 +139,10 @@ Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
 
         pesoVertice[i] = valor;
     }
+
+    for(int i =0; i<ordem ;i++){
+        grafo->getNode(i)->setWeight(pesoVertice[i]);
+    }
     ////
 
     int matrixPesoArestas[ordem][ordem];
@@ -141,8 +154,7 @@ Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
             matrixPesoArestas[k][j] = -1;
         }
     }
-    // Criando objeto grafo
-    Graph *graph = new Graph(ordem, clusters);
+    
     int coluna = 1;
     int linha = 0;
     // Leitura de arquivo
@@ -157,14 +169,14 @@ Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
     {
         for (int p = 0; p < ordem; p++)
         {
-            if (!graph->verificaAresta(o, p))
+            if (!grafo->verificaAresta(o, p))
             {
-                graph->insertEdge(o, p, matrixPesoArestas[o][p]);
+                grafo->insertEdge(o, p, matrixPesoArestas[o][p]);
             }
         }
     }
 
-    return graph;
+    return grafo;
 }
 
 int transformacaoS(string sAnalizada)

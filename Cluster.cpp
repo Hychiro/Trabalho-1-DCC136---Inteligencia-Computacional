@@ -31,15 +31,6 @@ Cluster::Cluster(float peso, float limiteInferior, float limiteSuperior)
     this->last_node = nullptr;
 }
 
-Cluster::Cluster(){
-    this->peso = 0;
-    this->limiteInferior = 0;
-    this->limiteSuperior = 0;
-
-    this->first_node = nullptr;
-    this->last_node = nullptr;
-}
-
 Cluster::~Cluster()
 {
 }
@@ -91,6 +82,7 @@ void Cluster::addNode(int id,float peso)
     // so cria o no e deixa ele no espaço
     Node *p = new Node(id);
     p->setWeight(peso);
+    setPeso(getPeso()+peso);
     if (this->first_node == nullptr)
     {
         this->first_node = p;
@@ -119,24 +111,6 @@ void Cluster::addEdge(int id, int target_id, float peso)
 
         }
     }
-}
-
-void Cluster::addAresta(int id,Graph *grafo){
-
-    Node *analisadoG;
-    analisadoG=grafo->getNode(id);
-    Node *analisadoC;
-    analisadoC=getLastNode();
-    for (Node *aux=getFirstNode();aux!=nullptr;aux=aux->getNextNode()){
-
-        if(analisadoG->searchEdge(aux->getId())){//contenção de erro
-        analisadoC->insertEdge(aux->getId(),analisadoG->searchEdgeWeight(aux->getId()));//inserir aresta
-        aux->insertEdge(analisadoC->getId(),analisadoG->searchEdgeWeight(aux->getId()));
-        }else{
-            cout<<"DEU MERDA TA --add aresta "<<endl;
-        }
-    }
-
 }
 
 float Cluster::setPeso(float valor)

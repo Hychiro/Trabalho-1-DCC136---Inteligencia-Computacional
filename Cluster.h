@@ -32,11 +32,12 @@ public:
     Node *getFirstNode();
     Node *getLastNode();
 
-    void addAresta(int id,Graph *grafo);
+    
 
     Node* getNode(int id);
     // Setters
     void addNode(int id,float peso);
+    void addAresta(int id,Graph *grafo);
     void addEdge(int id, int target_id, float peso);
 
     float setPeso(float valor);
