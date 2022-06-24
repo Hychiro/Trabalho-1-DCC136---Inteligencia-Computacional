@@ -32,9 +32,9 @@ void Grasp::Clusterizar(Graph *grafo){
 void Grasp::Centroides(Graph *grafo){
 
     int Ncentroides=0;
-    //Ncentroides=grafo->numeroClusters; ww
+    Ncentroides=grafo->getNumCluster(); 
     int Nvertices=0;
-    //Nvertices=grafo->numeroVertices; ww
+    Nvertices=grafo->getOrder(); 
 
     int centroides[Ncentroides];
 
@@ -52,32 +52,33 @@ void Grasp::Centroides(Graph *grafo){
     }
 
     for(int i=0;i<Ncentroides;i++){
-    //grafo->Cluster[i]->addVertice(centroide[i]); int iD
+    float aux = grafo->getNode(centroides[i])->getWeight();
+    grafo->getCluster(i).addNode(centroides[i],aux);
     }
 
 }
 
 void Grasp::CompletarLI1(Graph *grafo){
     int Nvertices=0;
-    //Nvertices=grafo->numeroVertices; ww
+    Nvertices=grafo->getOrder();
     int Nclusters=0;
-    //Nclusters=grafo->numeroClusters; ww
+    Nclusters=grafo->getNumCluster();
     Node *verticeAnalisado;
     Node *verticeAux;
     bool noLivreAnt[Nvertices];
     bool repete=false;
 
     for(int i=0;i<Nvertices;i++){ //faz uma copia dos nos livres antes da iteração
-    //noLivreAnt[i]=grafo->noLivre[i]; ww
+    noLivreAnt[i]=grafo->listaDeNosLivres[i];
     }
 
     do{
         repete=false;
     for(int i=0;i<Nvertices;i++){//para todo nó 1 a 1
 
-            //if(grafo->noLivre[i]==true) {  //se o nó for livre ww
+            if(grafo->listaDeNosLivres[i]==true) {  //se o nó for livre 
 
-            int clustersViaveis[Nclusters];
+            float clustersViaveis[Nclusters];
                     for (int p = 0; p < Nclusters; p++)
                     {
                         clustersViaveis[p]=0;
@@ -89,20 +90,17 @@ void Grasp::CompletarLI1(Graph *grafo){
                 {
                     verticeAnalisado=grafo->getNode(arestaAnalisada->getTargetId());
 
-                    
-
                     for (int o = 0; o < Nclusters; o++)//para todos clusters
                     {
-                        
-                        //for (verticeAux=grafo->cluster[o]->getFirstNode(); verticeAux != nullptr ; verticeAux=verticeAux->getNextNode())//para cada vertice nesse cluster ww
-                        //{ ww
-                        //if(verticeAnalisado->getTargetId()==verticeAux->getTargetId())//se for igual ao vertice analisado ww
-                            //{ ww
-                                //if(grafo->cluster[o]->peso() < grafo->cluster[o]->limiteInferior) ww //se o peso do cluster for menor que o limite inferior
-                                clustersViaveis[o]=clustersViaveis[o]/*+arestaAnalisada->getPeso() ww*/; //
+                        for (verticeAux=grafo->getCluster(o).getFirstNode(); verticeAux != nullptr ; verticeAux=verticeAux->getNextNode())//para cada vertice nesse cluster 
+                        { 
+                        if(verticeAnalisado->getWeight()==verticeAux->getWeight())//se for igual ao vertice analisado 
+                            { 
+                                if(grafo->getCluster(o).getPeso() < grafo->getCluster(o).getLimiteInferior())  //se o peso do cluster for menor que o limite inferior
+                                clustersViaveis[o]=clustersViaveis[o] + arestaAnalisada->getPeso() ; //
 
-                            //} ww
-                        //} ww
+                            } 
+                        } 
                     }
                 }
 
@@ -116,17 +114,18 @@ void Grasp::CompletarLI1(Graph *grafo){
                         }
                     }
                 if(clustersViaveis[melhorCluster]>0){
-                //grafo->Cluster[melhorCluster]->addVertice(i); ww adiciona o nó no cluster
-                //Função adiciona Arestas
-                //remover nó da lista de nós livres
+                float aux = grafo->getNode(i)->getWeight();
+                grafo->getCluster(melhorCluster).addNode(i,aux); // adiciona o nó no cluster
+                grafo->getCluster(melhorCluster).addAresta(i,grafo);
+                grafo->listaDeNosLivres[i]=false;
                 }
-            //}ww
+            }
         }
 
         for(int i=0;i<Nvertices;i++){ //faz uma copia dos nos livres antes da iteração
-    //if(noLivreAnt[i]!=grafo->noLivre[i]) { ww //se os nós livres mudaram em alguma maneira repete
+    if(noLivreAnt[i]!=grafo->listaDeNosLivres[i]) { //se os nós livres mudaram em alguma maneira repete
     repete=true;
-    //}
+    }
     }
     }while(repete);
 
@@ -134,25 +133,25 @@ void Grasp::CompletarLI1(Graph *grafo){
 
 void Grasp::CompletarLS1(Graph *grafo){
     int Nvertices=0;
-    //Nvertices=grafo->numeroVertices; ww
+    Nvertices=grafo->getOrder();
     int Nclusters=0;
-    //Nclusters=grafo->numeroClusters; ww
+    Nclusters=grafo->getNumCluster();
     Node *verticeAnalisado;
     Node *verticeAux;
     bool noLivreAnt[Nvertices];
     bool repete=false;
 
     for(int i=0;i<Nvertices;i++){ //faz uma copia dos nos livres antes da iteração
-    //noLivreAnt[i]=grafo->noLivre[i]; ww
+    noLivreAnt[i]=grafo->listaDeNosLivres[i];
     }
 
     do{
         repete=false;
     for(int i=0;i<Nvertices;i++){//para todo nó 1 a 1
 
-            //if(grafo->noLivre[i]==true) {  //se o nó for livre ww
+            if(grafo->listaDeNosLivres[i]==true) {  //se o nó for livre 
 
-            int clustersViaveis[Nclusters];
+            float clustersViaveis[Nclusters];
                     for (int p = 0; p < Nclusters; p++)
                     {
                         clustersViaveis[p]=0;
@@ -160,24 +159,21 @@ void Grasp::CompletarLS1(Graph *grafo){
 
             verticeAnalisado=grafo->getNode(i);
 
-                for (Edge *arestaAnalisada=verticeAnalisado->getFirstEdge(); arestaAnalisada != nullptr/*verticeAnalisado->getLastEdge()*/; arestaAnalisada=arestaAnalisada->getNextEdge())//verifica todos caminhos desse nó
+                for (Edge *arestaAnalisada=verticeAnalisado->getFirstEdge(); arestaAnalisada != nullptr; arestaAnalisada=arestaAnalisada->getNextEdge())//verifica todos caminhos desse nó
                 {
                     verticeAnalisado=grafo->getNode(arestaAnalisada->getTargetId());
 
-                    
-
                     for (int o = 0; o < Nclusters; o++)//para todos clusters
                     {
-                        
-                        //for (verticeAux=grafo->cluster[o]->getFirstNode(); verticeAux != nullptr ; verticeAux=verticeAux->getNextNode())//para cada vertice nesse cluster ww
-                        //{ ww
-                        //if(verticeAnalisado->getTargetId()==verticeAux->getTargetId())//se for igual ao vertice analisado ww
-                            //{ ww
-                                //if((grafo->cluster[o]->peso()+arestaAnalisada->getPeso()) < grafo->cluster[o]->limiteSuperior) ww //se o peso do cluster + o peso da aresta for menor que o limite superior
-                                clustersViaveis[o]=clustersViaveis[o]/*+arestaAnalisada->getPeso() ww*/; //
+                        for (verticeAux=grafo->getCluster(o).getFirstNode(); verticeAux != nullptr ; verticeAux=verticeAux->getNextNode())//para cada vertice nesse cluster 
+                        { 
+                        if(verticeAnalisado->getWeight()==verticeAux->getWeight())//se for igual ao vertice analisado 
+                            { 
+                                 if((grafo->getCluster(o).getPeso()+arestaAnalisada->getPeso()) < grafo->getCluster(o).getLimiteSuperior()) //se o peso do cluster + o peso da aresta for menor que o limite superior
+                                clustersViaveis[o]=clustersViaveis[o] + arestaAnalisada->getPeso() ; //
 
-                            //} ww
-                        //} ww
+                            } 
+                        } 
                     }
                 }
 
@@ -191,19 +187,19 @@ void Grasp::CompletarLS1(Graph *grafo){
                         }
                     }
                 if(clustersViaveis[melhorCluster]>0){
-                //grafo->Cluster[melhorCluster]->addVertice(i); ww adiciona o nó no cluster
-                //Função adiciona Arestas
-                //remover nó da lista de nós livres
-                
+                float aux = grafo->getNode(i)->getWeight();
+                grafo->getCluster(melhorCluster).addNode(i,aux); // adiciona o nó no cluster
+                grafo->getCluster(melhorCluster).addAresta(i,grafo);
+                grafo->listaDeNosLivres[i]=false;
                 }
-            //}ww
+            }
         }
 
         for(int i=0;i<Nvertices;i++){ //faz uma copia dos nos livres antes da iteração
-    //if(noLivreAnt[i]!=grafo->noLivre[i]) { ww //se os nós livres mudaram em alguma maneira repete
+    if(noLivreAnt[i]!=grafo->listaDeNosLivres[i]) { //se os nós livres mudaram em alguma maneira repete
     repete=true;
-    //}
+    }
     }
     }while(repete);
-    
+
 }

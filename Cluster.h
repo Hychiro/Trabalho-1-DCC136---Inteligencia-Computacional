@@ -21,6 +21,7 @@ private:
 public:
     // Constructor
     Cluster(float peso, float limiteInferior, float limiteSuperior);
+    Cluster();
     // Destructor
     ~Cluster();
     // Getters
@@ -31,9 +32,11 @@ public:
     Node *getFirstNode();
     Node *getLastNode();
 
+    void addAresta(int id,Graph *grafo);
+
     Node* getNode(int id);
     // Setters
-    void addNode(int id);
+    void addNode(int id,float peso);
     void addEdge(int id, int target_id, float peso);
 
     float setPeso(float valor);

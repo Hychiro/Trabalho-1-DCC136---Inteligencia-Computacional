@@ -198,6 +198,20 @@ bool Node::searchEdge(int target_id){
 
 }
 
+float Node::searchEdgeWeight(int target_id){
+     // Verifies whether there are at least one edge in the node
+    if(this->first_edge != NULL){
+        // Searching for a specific edge of target id equal to target id
+        for(Edge* aux = this->first_edge; aux != NULL; aux = aux->getNextEdge())
+            if(aux->getTargetId() == target_id)
+                return aux->getPeso();
+
+    }
+
+    return 0;
+
+}
+
 void Node::incrementInDegree(){
 
     this->in_degree++;

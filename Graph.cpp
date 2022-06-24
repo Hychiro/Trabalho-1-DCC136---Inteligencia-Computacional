@@ -29,8 +29,9 @@ Graph::Graph(int order, int numClusters)
 {
 
     this->order = order;
+    this->clusters=new Cluster[numClusters];
     this->first_node = NULL;
-    this->last_node = NULL;
+    this->last_node = NULL; 
     this->number_edges = 0;
     this->melhorInstancia = -1;
     this->numClusters = numClusters;
@@ -55,6 +56,11 @@ Graph::~Graph()
         delete next_node;
         next_node = aux_node;
     }
+}
+
+Cluster Graph::getCluster(int id){
+    Cluster aux = this->clusters[id];
+    return aux;
 }
 
 void Graph::printGraph(ofstream &output_file)
@@ -248,6 +254,10 @@ bool Graph::searchNode(int id)
         }
     }
     return false;
+}
+
+int Graph::getNumCluster(){
+    return this->numClusters;
 }
 
 Node *Graph::getNode(int id)

@@ -29,10 +29,10 @@ private:
     Node *first_node;
     Node *last_node;
     Cluster *clusters;
-    bool *listaDeNosLivres;
 
 
 public:
+    bool *listaDeNosLivres;
     int melhorInstancia;
     // Constructor
     Graph(int order, int numCluster);
@@ -44,13 +44,14 @@ public:
     Node *getFirstNode();
     Node *getLastNode();
     bool getConexGraph();
-    int getNumRotulos();
+    int getNumCluster();
     // Other methods
     void insertNode(int id);
     void insertEdge(int id, int target_id, float peso);
     void removeNode(int id);
     bool searchNode(int id);
     Node *getNode(int id);
+    Cluster getCluster(int id);
     void insertAllNodes();
     bool verificaAresta(int id, int target_id);
 
