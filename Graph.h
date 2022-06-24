@@ -4,11 +4,12 @@ Matheus Cardoso Faesy 202065065A
 */
 /**************************************************************************************************
  * Implementation of the TAD Graph
-**************************************************************************************************/
+ **************************************************************************************************/
 
 #ifndef GRAPH_H_INCLUDED
 #define GRAPH_H_INCLUDED
 #include "Node.h"
+#include "Cluster.h"
 #include <fstream>
 #include <stack>
 #include <list>
@@ -20,42 +21,42 @@ using namespace std;
 class Graph
 {
 
-    //Atributes
+    // Atributes
 private:
     int order;
     int number_edges;
-    bool conexGraph;
+    int numClusters;
     Node *first_node;
     Node *last_node;
-    std::list<int> rotulos;
-    std::list<int>::iterator iteradorRotulos;
-    int numeroRotulos;
+    Cluster *clusters;
+    Node *listaDeNosLivres;
+
 
 public:
     int melhorInstancia;
-    //Constructor
-    Graph(int order, int numeroRotulos);
-    //Destructor
+    // Constructor
+    Graph(int order, int numCluster);
+    // Destructor
     ~Graph();
-    //Getters
+    // Getters
     int getOrder();
     int getNumberEdges();
     Node *getFirstNode();
     Node *getLastNode();
     bool getConexGraph();
     int getNumRotulos();
-    //Other methods
+    // Other methods
     void insertNode(int id);
-    void insertEdge(int id, int target_id, int rotulo);
+    void insertEdge(int id, int target_id, float peso);
     void removeNode(int id);
     bool searchNode(int id);
     Node *getNode(int id);
     void insertAllNodes();
     bool verificaAresta(int id, int target_id);
 
-    void funcAtualizaProbAlfas(float numeroDeRotulos, int numAlfa, float *alfa, float *probAlfa, float *mediaAlfa,ofstream &output_file);
+    void funcAtualizaProbAlfas(float numeroDeRotulos, int numAlfa, float *alfa, float *probAlfa, float *mediaAlfa, ofstream &output_file);
 
-    int funcEscolheAlfa(int numAlfa, float *alfa, float *probAlfa,ofstream &output_file);
+    int funcEscolheAlfa(int numAlfa, float *alfa, float *probAlfa, ofstream &output_file);
 
     void aumentaQtdRotulos();
     int contaRotulo(int rotuloAnalisado);
@@ -74,13 +75,13 @@ public:
     Graph *getVertexInduced(int *listIdNodes, int tam);
     Graph *agmPrim(ofstream &output_file);
 
-    //methods phase1
+    // methods phase1
     float greed();
     float greedRandom();
     float greedRactiveRandom();
 
 private:
-    //Auxiliar methods
+    // Auxiliar methods
 };
 
 #endif // GRAPH_H_INCLUDED

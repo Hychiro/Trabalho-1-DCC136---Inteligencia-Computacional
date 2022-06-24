@@ -12,21 +12,28 @@ class Cluster
 {
     // Attributes
     private:
-        int target_id;
-        Edge* next_edge;
-        int rotulo;
+        float peso;
+        float limiteInferior;
+        float limiteSuperior;
+        Node* next_node;
 
     public:
         // Constructor
-        Edge(int target_id);
+        Cluster(float peso,  float limiteInferior, float limiteSuperior);
         // Destructor
-        ~Edge();
+        ~Cluster();
         // Getters
-        int getTargetId();
-        Edge* getNextEdge();
-        int getRotulo();
+        float getPeso();
+        float getLimiteInferior();
+        float getLimiteSuperior();
+
+        Node* getNextNode();
+
         // Setters
-        void setNextEdge(Edge* edge);
-        void setRotulo(int rotulo); 
+        void setNextNode(Node* node);
+        
+        float setPeso(float valor);
+        float setLimiteInferior(float valor);
+        float setLimiteSuperior(float valor);
 };
 #endif // CLUSTER_H_INCLUDED

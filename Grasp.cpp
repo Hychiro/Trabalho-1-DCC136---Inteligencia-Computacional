@@ -52,7 +52,7 @@ void Grasp::Centroides(Graph *grafo){
     }
 
     for(int i=0;i<Ncentroides;i++){
-    //grafo->Cluster[i]->addVertice(centroide[i]); ww
+    //grafo->Cluster[i]->addVertice(centroide[i]); int iD
     }
 
 }
@@ -85,7 +85,7 @@ void Grasp::CompletarLI1(Graph *grafo){
 
             verticeAnalisado=grafo->getNode(i);
 
-                for (Edge *arestaAnalisada=verticeAnalisado->getFirstEdge(); arestaAnalisada != nullptr/*verticeAnalisado->getLastEdge()*/; arestaAnalisada=arestaAnalisada->getNextEdge())//verifica todos caminhos desse nó
+                for (Edge *arestaAnalisada=verticeAnalisado->getFirstEdge(); arestaAnalisada != nullptr; arestaAnalisada=arestaAnalisada->getNextEdge())//verifica todos caminhos desse nó
                 {
                     verticeAnalisado=grafo->getNode(arestaAnalisada->getTargetId());
 
@@ -94,7 +94,7 @@ void Grasp::CompletarLI1(Graph *grafo){
                     for (int o = 0; o < Nclusters; o++)//para todos clusters
                     {
                         
-                        //for (verticeAux=grafo->cluster[o]->getFirstNode(); verticeAux != nullptr/*grafo->cluster[o]->getLastNode()*/ ; verticeAux=verticeAux->getNextNode())//para cada vertice nesse cluster ww
+                        //for (verticeAux=grafo->cluster[o]->getFirstNode(); verticeAux != nullptr ; verticeAux=verticeAux->getNextNode())//para cada vertice nesse cluster ww
                         //{ ww
                         //if(verticeAnalisado->getTargetId()==verticeAux->getTargetId())//se for igual ao vertice analisado ww
                             //{ ww
@@ -169,7 +169,7 @@ void Grasp::CompletarLS1(Graph *grafo){
                     for (int o = 0; o < Nclusters; o++)//para todos clusters
                     {
                         
-                        //for (verticeAux=grafo->cluster[o]->getFirstNode(); verticeAux != nullptr/*grafo->cluster[o]->getLastNode()*/ ; verticeAux=verticeAux->getNextNode())//para cada vertice nesse cluster ww
+                        //for (verticeAux=grafo->cluster[o]->getFirstNode(); verticeAux != nullptr ; verticeAux=verticeAux->getNextNode())//para cada vertice nesse cluster ww
                         //{ ww
                         //if(verticeAnalisado->getTargetId()==verticeAux->getTargetId())//se for igual ao vertice analisado ww
                             //{ ww
@@ -194,6 +194,7 @@ void Grasp::CompletarLS1(Graph *grafo){
                 //grafo->Cluster[melhorCluster]->addVertice(i); ww adiciona o nó no cluster
                 //Função adiciona Arestas
                 //remover nó da lista de nós livres
+                
                 }
             //}ww
         }

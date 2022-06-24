@@ -17,7 +17,7 @@ class Edge{
     private:
         int target_id;
         Edge* next_edge;
-        int rotulo;
+        float peso;
 
     public:
         // Constructor
@@ -27,10 +27,10 @@ class Edge{
         // Getters
         int getTargetId();
         Edge* getNextEdge();
-        int getRotulo();
+        float getPeso();
         // Setters
         void setNextEdge(Edge* edge);
-        void setRotulo(int rotulo); 
+        void setPeso(float peso); 
 
 }; 
 
