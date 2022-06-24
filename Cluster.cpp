@@ -27,7 +27,8 @@ Cluster::Cluster(float peso, float limiteInferior, float limiteSuperior)
     this->limiteInferior = limiteInferior;
     this->limiteSuperior = limiteSuperior;
 
-    this->next_node = nullptr;
+    this->first_node = nullptr;
+    this->last_node = nullptr;
 }
 
 Cluster::~Cluster()
@@ -49,26 +50,106 @@ float Cluster::getLimiteSuperior()
     return this->limiteSuperior;
 }
 
-Node *Cluster::getNextNode()
+Node *Cluster::getFirstNode()
 {
 
-    return this->next_node;
+    return this->first_node;
 }
 
-void Cluster::setNextNode(Node *next_node)
+Node *Cluster::getLastNode()
 {
-    this->next_node = next_node;
+    return this->last_node;
+}
+
+Node *Cluster::getNode(int id)
+{
+    //pega o no na lista de nos
+    Node *p = first_node;
+    if (searchNode(id))
+    {
+        while (p != NULL && p->getId() != id)
+        {
+            p = p->getNextNode();
+        }
+        return p;
+    }
+    return p;
+}
+
+
+void Cluster::addNode(int id)
+{
+    // so cria o no e deixa ele no espaço
+    Node *p = new Node(id);
+    if (this->first_node == nullptr)
+    {
+        this->first_node = p;
+    }
+    else
+    {
+        this->last_node->setNextNode(p);
+    }
+    this->last_node = p;
+    this->last_node->setNextNode(nullptr);
+    delete p;
+}
+
+void Cluster::addEdge(int id, int target_id, float peso)
+{
+    // junta os nos entre si
+    if (searchNode(id)) //<-- ta sendo direcionado prestar atenção nisso.
+    {
+
+        if (!verificaAresta(id, target_id))
+        {
+            Node *p = getNode(id);
+            Node *sup = getNode(target_id);
+            p->insertEdge(target_id, peso);
+            sup->insertEdge(id, peso);
+
+        }
+    }
 }
 
 float Cluster::setPeso(float valor)
 {
     this->peso = valor;
 }
+
 float Cluster::setLimiteInferior(float valor)
 {
     this->limiteInferior = valor;
 }
+
 float Cluster::setLimiteSuperior(float valor)
 {
     this->limiteSuperior = valor;
+}
+
+Node *Cluster::searchNode(int id)
+{
+    // so verifica se exste o no ali ou nao
+
+    for (Node *p = this->first_node; p != NULL; p = p->getNextNode())
+    {
+        if (p->getId() == id)
+        {
+            return p;
+        }
+    }
+    return nullptr;
+}
+
+bool Cluster::verificaAresta(int id, int target_id)
+{
+    Node *p = getNode(id);
+    for (Edge *g = p->getFirstEdge(); g != NULL; g = g->getNextEdge())
+    {
+
+        if (g->getTargetId() == target_id)
+        {
+            return true;
+        }
+    }
+    return false;
 }

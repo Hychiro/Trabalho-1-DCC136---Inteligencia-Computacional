@@ -34,6 +34,10 @@ Graph::Graph(int order, int numClusters)
     this->number_edges = 0;
     this->melhorInstancia = -1;
     this->numClusters = numClusters;
+    this->listaDeNosLivres = new bool[order];
+    for(int i=0;i<order;i++){
+        listaDeNosLivres[i] = true;
+    }
     insertAllNodes();
 }
 

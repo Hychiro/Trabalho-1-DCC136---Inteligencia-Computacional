@@ -29,7 +29,7 @@ private:
     Node *first_node;
     Node *last_node;
     Cluster *clusters;
-    Node *listaDeNosLivres;
+    bool *listaDeNosLivres;
 
 
 public:
@@ -54,31 +54,31 @@ public:
     void insertAllNodes();
     bool verificaAresta(int id, int target_id);
 
-    void funcAtualizaProbAlfas(float numeroDeRotulos, int numAlfa, float *alfa, float *probAlfa, float *mediaAlfa, ofstream &output_file);
+    // void funcAtualizaProbAlfas(float numeroDeRotulos, int numAlfa, float *alfa, float *probAlfa, float *mediaAlfa, ofstream &output_file);
 
-    int funcEscolheAlfa(int numAlfa, float *alfa, float *probAlfa, ofstream &output_file);
+    // int funcEscolheAlfa(int numAlfa, float *alfa, float *probAlfa, ofstream &output_file);
 
-    void aumentaQtdRotulos();
-    int contaRotulo(int rotuloAnalisado);
-    void adicionaRotulo(int rotuloAnalisado, Graph *grafoNovo, Graph *grafoOriginal);
-    bool verificaConexo(Graph *grafo);
+    // void aumentaQtdRotulos();
+    // int contaRotulo(int rotuloAnalisado);
+    // void adicionaRotulo(int rotuloAnalisado, Graph *grafoNovo, Graph *grafoOriginal);
+    // bool verificaConexo(Graph *grafo);
 
-    Graph *guloso(ofstream &output_file);
-    Graph *gulosoRandomizadoAux(float alfa, int instancia, int numIteracoes, ofstream &output_file);
-    Graph *gulosoRandomizado(float alfa, ofstream &output_file);
-    Graph *gulosoRandomizadoReativoAux(int instancia, ofstream &output_file);
+    // Graph *guloso(ofstream &output_file);
+    // Graph *gulosoRandomizadoAux(float alfa, int instancia, int numIteracoes, ofstream &output_file);
+    // Graph *gulosoRandomizado(float alfa, ofstream &output_file);
+    // Graph *gulosoRandomizadoReativoAux(int instancia, ofstream &output_file);
 
-    void fechoTransitivoDireto(ofstream &output_file, int id);
+    // void fechoTransitivoDireto(ofstream &output_file, int id);
 
     void printGraph(ofstream &output_file);
 
-    Graph *getVertexInduced(int *listIdNodes, int tam);
-    Graph *agmPrim(ofstream &output_file);
+    // Graph *getVertexInduced(int *listIdNodes, int tam);
+    // Graph *agmPrim(ofstream &output_file);
 
-    // methods phase1
-    float greed();
-    float greedRandom();
-    float greedRactiveRandom();
+    // // methods phase1
+    // float greed();
+    // float greedRandom();
+    // float greedRactiveRandom();
 
 private:
     // Auxiliar methods

@@ -11,29 +11,37 @@ using namespace std;
 class Cluster
 {
     // Attributes
-    private:
-        float peso;
-        float limiteInferior;
-        float limiteSuperior;
-        Node* next_node;
+private:
+    float peso;
+    float limiteInferior;
+    float limiteSuperior;
+    Node *first_node;
+    Node *last_node;
 
-    public:
-        // Constructor
-        Cluster(float peso,  float limiteInferior, float limiteSuperior);
-        // Destructor
-        ~Cluster();
-        // Getters
-        float getPeso();
-        float getLimiteInferior();
-        float getLimiteSuperior();
+public:
+    // Constructor
+    Cluster(float peso, float limiteInferior, float limiteSuperior);
+    // Destructor
+    ~Cluster();
+    // Getters
+    float getPeso();
+    float getLimiteInferior();
+    float getLimiteSuperior();
 
-        Node* getNextNode();
+    Node *getFirstNode();
+    Node *getLastNode();
 
-        // Setters
-        void setNextNode(Node* node);
-        
-        float setPeso(float valor);
-        float setLimiteInferior(float valor);
-        float setLimiteSuperior(float valor);
+    Node* getNode(int id);
+    // Setters
+    void addNode(int id);
+    void addEdge(int id, int target_id, float peso);
+
+    float setPeso(float valor);
+    float setLimiteInferior(float valor);
+    float setLimiteSuperior(float valor);
+
+    Node *searchNode(int id);
+
+    bool verificaAresta(int id, int target_id);
 };
 #endif // CLUSTER_H_INCLUDED
