@@ -12,6 +12,7 @@ Matheus Cardoso Faesy 202065065A
 #include <stdlib.h>
 #include <chrono>
 #include "Graph.h"
+#include "Grasp.h"
 #include <thread>
 #include <time.h>
 #include <sstream>
@@ -106,9 +107,6 @@ Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
 
     clusters = transformacaoS(clustersS);
 
-    // Criando objeto grafo
-    Graph *grafo = new Graph(ordem, clusters);
-
     int limiteInferiorSuperior[clusters][2];
 
     int alturaDoTexto = 0;
@@ -161,12 +159,8 @@ Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
         limiteInferiorSuperior[i][1] = valor;
     }
 
-    for (int i = 0; i < clusters; i++)
-    {
-        grafo->getCluster(i).setLimiteInferior(limiteInferiorSuperior[i][0]);
-
-        grafo->getCluster(i).setLimiteSuperior(limiteInferiorSuperior[i][1]);
-    }
+    // Criando objeto grafo
+    Graph *grafo = new Graph(ordem, clusters, limiteInferiorSuperior);
     alturaDoTexto = 0;
     int pesoVertice[ordem];
 
@@ -174,7 +168,7 @@ Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
     {
         string aux = "";
 
-        while (alturaDoTexto < pesoNos.find_first_of(' ', alturaDoTexto) && alturaDoTexto < pesoNos.length())
+        while (alturaDoTexto <= pesoNos.find_first_of(' ', alturaDoTexto) && alturaDoTexto < pesoNos.length())
         {
             charAnalizado = (pesoNos[alturaDoTexto]);
             if (charAnalizado != " ")
@@ -199,6 +193,7 @@ Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
 
     for (int i = 0; i < ordem; i++)
     {
+        //cout<<"pesoVertice "<<i<<": "<<pesoVertice[i]<<endl;
         grafo->getNode(i)->setWeight(pesoVertice[i]);
     }
     ////
@@ -219,7 +214,7 @@ Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
 
     while (input_file >> verticeA >> verticeB >> pesoAresta)
     {
-        cout << "verticeA " << verticeA << " verticeB " << verticeB << " pesoAresta " << pesoAresta << endl;
+        //cout << "verticeA " << verticeA << " verticeB " << verticeB << " pesoAresta " << pesoAresta << endl;
         matrixPesoArestas[verticeA][verticeB] = pesoAresta;
         matrixPesoArestas[verticeB][verticeA] = pesoAresta;
     }
@@ -233,6 +228,11 @@ Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
                 grafo->insertEdge(o, p, matrixPesoArestas[o][p]);
             }
         }
+    }
+
+    for (int i = 0; i < grafo->getOrder(); i++)
+    {
+        //cout<<"Peso do No "<<i<<": "<<grafo->getNode(i)->getWeight()<<endl;
     }
 
     return grafo;
@@ -264,7 +264,18 @@ void selecionar(int selecao, Graph *graph, ofstream &output_file)
     {
         int clo = clock();
         graph->printGraph(output_file);
+
+        Grasp *a;
+
+    //     for (int i = 0; i < graph->getNumCluster(); i++)
+    // {
+    //     cout<<"LI: "<<graph->getCluster(i).getLimiteInferior()<<endl;
+    // }
+
+        a->Clusterizar(graph);
+
         output_file << "tempo de execucao: " << (clock() - clo) << " millisegundos" << endl;
+
 
         break;
     }
@@ -337,6 +348,10 @@ int main(int argc, char const *argv[])
     {
 
         graph = leituraInstancia(input_file, output_file);
+        //for (int i = 0; i < graph->getOrder(); i++)
+    //{
+        //cout<<"Peso do No "<<i<<": "<<graph->getNode(i)->getWeight()<<endl;
+    //}
     }
     else
         cout << "Unable to open " << argv[1];

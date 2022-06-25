@@ -18,8 +18,9 @@ Matheus Cardoso Faesy 202065065A
 
 using namespace std;
 
-Cluster::Cluster(float limiteInferior, float limiteSuperior)
+Cluster::Cluster(int id,float limiteInferior, float limiteSuperior)
 {
+    this->idCluster=id;
     this->peso = 0;
     this->limiteInferior = limiteInferior;
     this->limiteSuperior = limiteSuperior;
@@ -28,8 +29,9 @@ Cluster::Cluster(float limiteInferior, float limiteSuperior)
     this->last_node = nullptr;
 }
 
-Cluster::Cluster()
+Cluster::Cluster(int id)
 {
+    this->idCluster=id;
     this->peso = 0;
     this->limiteInferior = 0;
     this->limiteSuperior = 0;
@@ -39,6 +41,17 @@ Cluster::Cluster()
 }
 Cluster::~Cluster()
 {
+}
+
+Cluster* Cluster::getNextCluster(){
+
+    return this->nextCluster;
+}
+
+void Cluster::setNextCluster(Cluster* next_Cluster){
+
+    this->nextCluster = next_Cluster;
+
 }
 
 float Cluster::getPeso()
@@ -114,7 +127,7 @@ void Cluster::addEdge(int id, int target_id, float peso)
 void Cluster::addAresta(int id, Node *analisado)
 {
     
-    for (Node *p = getFirstNode(); p != getLastNode(); p = p->getNextNode())
+    for (Node *p = this->getFirstNode(); p !=nullptr; p = p->getNextNode())
     {
         Edge* aux = analisado->hasEdgeBetween(p->getId());
         if (aux!=nullptr){

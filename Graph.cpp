@@ -23,15 +23,13 @@ using namespace std;
  **************************************************************************************************/
 
 // Constructor
-Graph::Graph(int order, int numClusters)
+Graph::Graph(int order, int numClusters,int aux[][2])
 {
 
     this->order = order;
 
-    Cluster aux[numClusters];
-
-    this->clusters = aux;
-
+    this->first_Cluster = nullptr;
+    this->last_Cluster = nullptr;
     this->first_node = nullptr;
     this->last_node = nullptr;
     this->number_edges = 0;
@@ -45,6 +43,14 @@ Graph::Graph(int order, int numClusters)
         listaDeNosLivres[i] = true;
     }
     insertAllNodes();
+    insertAllClusters();
+    Cluster *p;
+    for (int i = 0; i < numClusters; i++)
+    {
+        p=getCluster(i);
+        p->setLimiteSuperior(aux[i][1]);
+        p->setLimiteInferior(aux[i][0]);
+    }
 }
 
 // Destructor
@@ -63,11 +69,20 @@ Graph::~Graph()
     }
 }
 
-Cluster Graph::getCluster(int id)
+Cluster *Graph::getCluster(int id)
 {
-    Cluster aux = this->clusters[id];
-    return aux;
+    Cluster *p = first_Cluster;
+    if (searchCluster(id))
+    {
+        while (p != NULL && p->getidCluster() != id)
+        {
+            p = p->getNextCluster();
+        }
+        return p;
+    }
+    return p;
 }
+
 
 void Graph::printGraph(ofstream &output_file)
 {
@@ -154,6 +169,23 @@ void Graph::insertAllNodes()
             this->last_node->setNextNode(p);
         }
         this->last_node = p;
+    }
+}
+
+void Graph::insertAllClusters()
+{
+    for (int i = 0; i < this->numClusters; i++)
+    {
+        Cluster *p = new Cluster(i);
+        if (this->first_Cluster == NULL)
+        {
+            this->first_Cluster = p;
+        }
+        else
+        {
+            this->last_Cluster->setNextCluster(p);
+        }
+        this->last_Cluster = p;
     }
 }
 
@@ -253,6 +285,20 @@ bool Graph::searchNode(int id)
     for (Node *p = this->first_node; p != NULL; p = p->getNextNode())
     {
         if (p->getId() == id)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Graph::searchCluster(int id)
+{
+    // so verifica se exste o no ali ou nao
+
+    for (Cluster *p = this->first_Cluster; p != NULL; p = p->getNextCluster())
+    {
+        if (p->getidCluster() == id)
         {
             return true;
         }

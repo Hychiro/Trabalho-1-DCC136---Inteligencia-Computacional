@@ -19,11 +19,11 @@ using namespace std;
 
 class Grasp
 {
-void Clusterizar(Graph *grafo);
-void Centroides(Graph *grafo);
-void CompletarLI1(Graph *grafo);
-void CompletarLS1(Graph *grafo);
-void CompletarPiorCaso(Graph *grafo);
-
+public:
+    void Clusterizar(Graph *grafo);
+    void Centroides(Graph *grafo);
+    void CompletarLI1(Graph *grafo);
+    void CompletarLS1(Graph *grafo);
+    void CompletarPiorCaso(Graph *grafo);
 };
 #endif // GRASP_INCLUDED

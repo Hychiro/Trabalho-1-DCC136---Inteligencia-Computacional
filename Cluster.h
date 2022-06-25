@@ -15,16 +15,18 @@ class Cluster
 {
     // Attributes
 private:
+    int idCluster;
     float peso;
     float limiteInferior;
     float limiteSuperior;
     Node *first_node;
     Node *last_node;
+    Cluster *nextCluster;
 
 public:
     // Constructor
-    Cluster( float limiteInferior, float limiteSuperior);
-    Cluster();
+    Cluster(int id, float limiteInferior, float limiteSuperior);
+    Cluster(int id);
     // Destructor
     ~Cluster();
     // Getters
@@ -36,6 +38,7 @@ public:
     Node *getLastNode();
 
     Node *getNode(int id);
+    Cluster *getNextCluster();
     // Setters
     void addNode(int id, float peso);
     void addAresta(int id, Node *analisado);
@@ -44,6 +47,10 @@ public:
     void setPeso(float valor);
     void setLimiteInferior(float valor);
     void setLimiteSuperior(float valor);
+    int getidCluster(){
+        return this->idCluster;
+    };
+    void setNextCluster(Cluster* cluster);
 
     Node *searchNode(int id);
 

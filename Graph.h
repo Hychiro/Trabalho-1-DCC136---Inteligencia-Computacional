@@ -28,12 +28,14 @@ private:
     int numClusters;
     Node *first_node;
     Node *last_node;
-    Cluster *clusters;
+    Cluster *first_Cluster;
+    Cluster *last_Cluster;
 public:
     bool *listaDeNosLivres;
     int melhorInstancia;
     // Constructor
-    Graph(int order, int numCluster);
+    Graph(int order, int numCluster, int aux[][2]);
+
     // Destructor
     ~Graph();
     // Getters
@@ -48,9 +50,11 @@ public:
     void insertEdge(int id, int target_id, float peso);
     void removeNode(int id);
     bool searchNode(int id);
+    bool searchCluster(int id);
     Node *getNode(int id);
-    Cluster getCluster(int id);
+    Cluster *getCluster(int id);
     void insertAllNodes();
+    void insertAllClusters();
     bool verificaAresta(int id, int target_id);
 
     // void funcAtualizaProbAlfas(float numeroDeRotulos, int numAlfa, float *alfa, float *probAlfa, float *mediaAlfa, ofstream &output_file);
