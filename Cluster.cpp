@@ -152,6 +152,16 @@ void Cluster::setLimiteSuperior(float valor)
     this->limiteSuperior = valor;
 }
 
+void Cluster::setFirstNode(Node * node)
+{
+    this->first_node = node;
+}
+
+void Cluster::setLastNode(Node * node)
+{
+    this->last_node = node;
+}
+
 Node *Cluster::searchNode(int id)
 {
     // so verifica se exste o no ali ou nao

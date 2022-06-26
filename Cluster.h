@@ -51,7 +51,8 @@ public:
         return this->idCluster;
     };
     void setNextCluster(Cluster* cluster);
-
+    void setFirstNode(Node * node);
+    void setLastNode(Node * node);
     Node *searchNode(int id);
 
     bool verificaAresta(int id, int target_id);

@@ -59,14 +59,9 @@ Graph::~Graph()
 
     Node *next_node = this->first_node;
 
-    while (next_node != nullptr)
-    {
-
-        next_node->removeAllEdges();
-        Node *aux_node = next_node->getNextNode();
-        delete next_node;
-        next_node = aux_node;
-    }
+    delete next_node;
+    this->first_node = nullptr;
+    this->last_node = nullptr;
 }
 
 Cluster *Graph::getCluster(int id)
@@ -315,17 +310,16 @@ void Graph::resetaClusters()
     for (Cluster *a = this->first_Cluster; a != nullptr; a = a->getNextCluster())
     {
         a->setPeso(0);
-        Node *next_node = a->getFirstNode();
 
-        while (next_node != nullptr)
+        Node *next_node = a->getFirstNode();
+        //cout<<"entra aqui 1"<<endl;
+        if (next_node != nullptr)
         {
 
-            //next_node->removeAllEdges();
-            Node *aux_node = next_node->getNextNode();
-            cout<<"chega aqui 1"<<endl;
             delete next_node;
-            cout<<"chega aqui 2"<<endl;
-            next_node = aux_node;
+            //cout<<"entra aqui 2"<<endl;
+            a->setFirstNode(nullptr);
+            a->setLastNode(nullptr);
         }
     }
 }
