@@ -25,5 +25,6 @@ public:
     void CompletarLI1(Graph *grafo);
     void CompletarLS1(Graph *grafo);
     void CompletarPiorCaso(Graph *grafo);
+    void Completar(Graph *grafo);
 };
 #endif // GRASP_INCLUDED
