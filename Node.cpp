@@ -30,11 +30,11 @@ Node::~Node()
 {
     if (this->next_node != nullptr)
     {
-        //cout<<"entra aqui 1.1"<<endl;
+        // cout<<"entra aqui 1.1"<<endl;
         delete this->next_node;
-        //cout<<"entra aqui 1.2"<<endl;
+        // cout<<"entra aqui 1.2"<<endl;
         next_node->removeAllEdges();
-        //cout<<"entra aqui 1.3"<<endl;
+        // cout<<"entra aqui 1.3"<<endl;
         this->next_node = nullptr;
     }
 };
@@ -95,6 +95,16 @@ void Node::setWeight(float peso)
     this->weight = peso;
 }
 
+void Node::setFirstEdge(Edge *edge)
+{
+    this->first_edge = edge;
+}
+void Node::setLastEdge(Edge *edge)
+{
+    this->last_edge = edge;
+
+}
+
 // Other methods
 void Node::insertEdge(int target_id, float peso)
 {
@@ -121,16 +131,16 @@ void Node::removeAllEdges()
     // Verifies whether there are at least one edge in the node
     if (this->first_edge != nullptr)
     {
-        //cout<<"entra aqui 1.2.1"<<endl;
+        // cout<<"entra aqui 1.2.1"<<endl;
         Edge *aux = this->first_edge;
-        //cout<<"entra aqui 1.2.2"<<endl;
-        // Removing all edges of the node
+        // cout<<"entra aqui 1.2.2"<<endl;
+        //  Removing all edges of the node
         delete aux;
-       // cout<<"entra aqui 1.2.3"<<endl;
+        // cout<<"entra aqui 1.2.3"<<endl;
     }
 
     this->first_edge = nullptr;
-     this->last_edge = nullptr;
+    this->last_edge = nullptr;
 }
 
 int Node::removeEdge(int id, bool directed, Node *target_node)

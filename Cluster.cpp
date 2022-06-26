@@ -18,9 +18,9 @@ Matheus Cardoso Faesy 202065065A
 
 using namespace std;
 
-Cluster::Cluster(int id,float limiteInferior, float limiteSuperior)
+Cluster::Cluster(int id, float limiteInferior, float limiteSuperior)
 {
-    this->idCluster=id;
+    this->idCluster = id;
     this->peso = 0;
     this->limiteInferior = limiteInferior;
     this->limiteSuperior = limiteSuperior;
@@ -31,7 +31,7 @@ Cluster::Cluster(int id,float limiteInferior, float limiteSuperior)
 
 Cluster::Cluster(int id)
 {
-    this->idCluster=id;
+    this->idCluster = id;
     this->peso = 0;
     this->limiteInferior = 0;
     this->limiteSuperior = 0;
@@ -43,15 +43,16 @@ Cluster::~Cluster()
 {
 }
 
-Cluster* Cluster::getNextCluster(){
+Cluster *Cluster::getNextCluster()
+{
 
     return this->nextCluster;
 }
 
-void Cluster::setNextCluster(Cluster* next_Cluster){
+void Cluster::setNextCluster(Cluster *next_Cluster)
+{
 
     this->nextCluster = next_Cluster;
-
 }
 
 float Cluster::getPeso()
@@ -95,8 +96,9 @@ Node *Cluster::getNode(int id)
     return p;
 }
 
-int Cluster::getNumNodes(){
-    return this->getNumNodes();
+int Cluster::getNumNodes()
+{
+    return this->numNodes;
 }
 
 void Cluster::addNode(int id, float peso)
@@ -112,33 +114,39 @@ void Cluster::addNode(int id, float peso)
     }
     else
     {
-        this->last_node->setNextNode(p);
+        this->last_node->setNextNode(p);    
     }
     this->last_node = p;
     this->last_node->setNextNode(nullptr);
-    //delete p;
+    // delete p;
 }
 
-bool Cluster::viavel(){
-    if(this->peso>this->limiteSuperior){
+bool Cluster::viavel()
+{
+    if (this->peso > this->limiteSuperior)
+    {
         return false;
-    } 
+    }
 
-    if(this->peso<this->limiteInferior){
+    if (this->peso < this->limiteInferior)
+    {
         return false;
     }
 
     return true;
 }
 
-float Cluster::calculaQualidade(){
-    float valor=0;
-    for(Node* i=this->first_node;i!=nullptr;i=i->getNextNode()){
-        for(Edge* j=i->getFirstEdge();j!=nullptr;j=j->getNextEdge()){
-            valor=valor+j->getPeso();
+float Cluster::calculaQualidade()
+{
+    float valor = 0;
+    for (Node *i = this->first_node; i != nullptr; i = i->getNextNode())
+    {
+        for (Edge *j = i->getFirstEdge(); j != nullptr; j = j->getNextEdge())
+        {
+            valor = valor + j->getPeso();
         }
     }
-    return valor/2;
+    return valor / 2;
 }
 
 void Cluster::addEdge(int id, int target_id, float peso)
@@ -153,74 +161,90 @@ void Cluster::addEdge(int id, int target_id, float peso)
 
 void Cluster::removeNode(int id) // pfv dps me ajudem a revisar esse removeNode
 {
-    this->peso=this->peso - this->getNode(id)->getWeight();
+    this->peso = this->peso - this->getNode(id)->getWeight();
 
-    Node *p;
+    Node *p = getNode(id);
     this->numNodes--;
+
     if (this->last_node != nullptr)
     {
         if (this->first_node == this->last_node)
         {
+
             this->first_node = nullptr;
-            p = nullptr;
+            delete p;
         }
         else
         {
+
             Node *previousN = this->first_node;
             Node *nextN;
-            Node *aux;
-            Edge *sup;
+            Edge *previousE;
+            Edge *nextE;
             int count_edges = 0;
-
-            p = getNode(id);
 
             while (p != previousN->getNextNode())
             {
-                previousN->getNextNode();
+                previousN = previousN->getNextNode();
             }
             nextN = p->getNextNode();
 
             previousN->setNextNode(nextN);
-            if (previousN->getNextNode() == nullptr)
+            if (nextN == nullptr)
             {
                 last_node = previousN;
             }
 
-            for (Node *i = first_node; i != nullptr; i->getNextNode())
+            for (Node *i = this->getFirstNode(); i != nullptr; i = i->getNextNode())
             {
-                Edge *k = i->getFirstEdge();
-                while (k != nullptr)
+                Edge *aux = i->getFirstEdge();
+                if (i->getLastEdge() != nullptr)
                 {
-                    sup = k;
-                    k->getNextEdge();
-
-                    if (k->getTargetId() == p->getId())
+                    if (i->getFirstEdge() == i->getLastEdge())
                     {
-                        sup->setNextEdge(k->getNextEdge());
-                        k = nullptr;
-                        k = sup->getNextEdge();
+                        delete p;
                     }
+                    while (aux != nullptr)
+                    {
+
+                        if (aux->getTargetId() == p->getId())
+                        {
+                            break;
+                        }
+                        previousE = aux;
+                        aux = aux->getNextEdge();
+                    }
+
+                    nextE = aux->getNextEdge();
+                    if (nextE == nullptr)
+                    {
+                        i->setLastEdge(previousE);
+                    }
+                    // last edg
+                    previousE->setNextEdge(nextE);
+                         
+                    aux = nullptr;
                 }
             }
-
-            p->removeAllEdges();
-            p = nullptr;
         }
     }
     else
         cout << "ERRO: o grafo esta vazio!" << endl;
+
+    p->removeAllEdges();
+    p = nullptr;
 }
 
 void Cluster::addAresta(int id, Node *analisado)
 {
-    
-    for (Node *p = this->getFirstNode(); p !=nullptr; p = p->getNextNode())
+
+    for (Node *p = this->getFirstNode(); p != nullptr; p = p->getNextNode())
     {
-        Edge* aux = analisado->hasEdgeBetween(p->getId());
-        if (aux!=nullptr){
+        Edge *aux = analisado->hasEdgeBetween(p->getId());
+        if (aux != nullptr)
+        {
             addEdge(id, p->getId(), aux->getPeso());
         }
-            
     }
 }
 
@@ -239,12 +263,12 @@ void Cluster::setLimiteSuperior(float valor)
     this->limiteSuperior = valor;
 }
 
-void Cluster::setFirstNode(Node * node)
+void Cluster::setFirstNode(Node *node)
 {
     this->first_node = node;
 }
 
-void Cluster::setLastNode(Node * node)
+void Cluster::setLastNode(Node *node)
 {
     this->last_node = node;
 }

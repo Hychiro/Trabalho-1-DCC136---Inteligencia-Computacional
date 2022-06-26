@@ -41,6 +41,8 @@ class Node{
         // Setters
         void setNextNode(Node* node);
         void setWeight(float peso);
+        void setFirstEdge(Edge* edge);
+        void setLastEdge(Edge* edge);
         // Other methods
         bool searchEdge(int target_id);
         float searchEdgeWeight(int target_id);
