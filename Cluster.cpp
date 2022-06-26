@@ -24,7 +24,7 @@ Cluster::Cluster(int id,float limiteInferior, float limiteSuperior)
     this->peso = 0;
     this->limiteInferior = limiteInferior;
     this->limiteSuperior = limiteSuperior;
-
+    this->numNodes = 0;
     this->first_node = nullptr;
     this->last_node = nullptr;
 }
@@ -35,7 +35,7 @@ Cluster::Cluster(int id)
     this->peso = 0;
     this->limiteInferior = 0;
     this->limiteSuperior = 0;
-
+    this->numNodes = 0;
     this->first_node = nullptr;
     this->last_node = nullptr;
 }
@@ -95,12 +95,17 @@ Node *Cluster::getNode(int id)
     return p;
 }
 
+int Cluster::getNumNodes(){
+    return this->getNumNodes();
+}
+
 void Cluster::addNode(int id, float peso)
 {
     // so cria o no e deixa ele no espaço
     Node *p = new Node(id);
     p->setWeight(peso);
     setPeso(getPeso() + peso);
+    this->numNodes++;
     if (this->first_node == nullptr)
     {
         this->first_node = p;
@@ -151,6 +156,7 @@ void Cluster::removeNode(int id) // pfv dps me ajudem a revisar esse removeNode
     this->peso=this->peso - this->getNode(id)->getWeight();
 
     Node *p;
+    this->numNodes--;
     if (this->last_node != nullptr)
     {
         if (this->first_node == this->last_node)

@@ -32,7 +32,7 @@ private:
     Cluster *last_Cluster;
 public:
     bool *listaDeNosLivres;
-    int melhorInstancia;
+    float melhorInstancia;
     // Constructor
     Graph(int order, int numCluster, int aux[][2]);
 

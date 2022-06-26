@@ -9,6 +9,7 @@ Matheus Cardoso Faesy 202065065A
 #ifndef GRASP_H_INCLUDED
 #define GRASP_H_INCLUDED
 #include "Graph.h"
+#include "Instancia.h"
 #include <fstream>
 #include <stack>
 #include <list>
@@ -29,8 +30,12 @@ public:
     void verticesRandom(Graph *grafo);
     void imprime(Graph *grafo);
 
-    bool verificaTroca(Graph *grafo, int idClusterExcedente,int idClusterAlvo,int idNo);
-    void troca(Graph *grafo, int idClusterExcedente,int idClusterAlvo,int idNo);
+    bool verificaTroca(Graph *grafo, int idClusterExcedente, int idClusterAlvo, int idNo);
+    void troca(Graph *grafo, int idClusterExcedente, int idClusterAlvo, int idNo);
     void ajuste(Graph *grafo);
+
+    float calculaSolucao(Graph *grafo);
+    void buscaLocal(Graph *grafo);
+    bool desbalanceadoS(Cluster * cluster);
 };
 #endif // GRASP_INCLUDED

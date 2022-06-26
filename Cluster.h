@@ -22,6 +22,7 @@ private:
     Node *first_node;
     Node *last_node;
     Cluster *nextCluster;
+    int numNodes;
 
 public:
     // Constructor
@@ -33,6 +34,7 @@ public:
     float getPeso();
     float getLimiteInferior();
     float getLimiteSuperior();
+    int getNumNodes();
     bool viavel();
     float calculaQualidade();
 

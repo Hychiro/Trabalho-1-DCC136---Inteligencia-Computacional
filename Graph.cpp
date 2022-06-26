@@ -147,7 +147,7 @@ void Graph::insertNode(int id)
     this->last_node = p;
     this->last_node->setNextNode(nullptr);
     this->order++;
-    delete p;
+    //delete p;
 }
 void Graph::insertAllNodes()
 {
