@@ -39,6 +39,7 @@ public:
     // Destructor
     ~Graph();
     // Getters
+    void resetaClusters();
     int getOrder();
     int getNumberEdges();
     Node *getFirstNode();

@@ -23,7 +23,7 @@ using namespace std;
  **************************************************************************************************/
 
 // Constructor
-Graph::Graph(int order, int numClusters,int aux[][2])
+Graph::Graph(int order, int numClusters, int aux[][2])
 {
 
     this->order = order;
@@ -47,7 +47,7 @@ Graph::Graph(int order, int numClusters,int aux[][2])
     Cluster *p;
     for (int i = 0; i < numClusters; i++)
     {
-        p=getCluster(i);
+        p = getCluster(i);
         p->setLimiteSuperior(aux[i][1]);
         p->setLimiteInferior(aux[i][0]);
     }
@@ -59,7 +59,7 @@ Graph::~Graph()
 
     Node *next_node = this->first_node;
 
-    while (next_node != NULL)
+    while (next_node != nullptr)
     {
 
         next_node->removeAllEdges();
@@ -74,7 +74,7 @@ Cluster *Graph::getCluster(int id)
     Cluster *p = first_Cluster;
     if (searchCluster(id))
     {
-        while (p != NULL && p->getidCluster() != id)
+        while (p != nullptr && p->getidCluster() != id)
         {
             p = p->getNextCluster();
         }
@@ -83,18 +83,17 @@ Cluster *Graph::getCluster(int id)
     return p;
 }
 
-
 void Graph::printGraph(ofstream &output_file)
 {
     Node *p = this->first_node;
     Edge *aux = p->getFirstEdge();
 
     output_file << "strict graph{" << endl;
-    while (p != NULL)
+    while (p != nullptr)
     {
 
         aux = p->getFirstEdge();
-        while (aux != NULL)
+        while (aux != nullptr)
         {
 
             output_file << p->getId() << " -- " << aux->getTargetId() << "  [ label = " << aux->getPeso() << " ]" << endl;
@@ -142,7 +141,7 @@ void Graph::insertNode(int id)
 {
     // so cria o no e deixa ele no espaço
     Node *p = new Node(id);
-    if (this->first_node == NULL)
+    if (this->first_node == nullptr)
     {
         this->first_node = p;
     }
@@ -151,7 +150,7 @@ void Graph::insertNode(int id)
         this->last_node->setNextNode(p);
     }
     this->last_node = p;
-    this->last_node->setNextNode(NULL);
+    this->last_node->setNextNode(nullptr);
     this->order++;
     delete p;
 }
@@ -160,7 +159,7 @@ void Graph::insertAllNodes()
     for (int i = 0; i < this->order; i++)
     {
         Node *p = new Node(i);
-        if (this->first_node == NULL)
+        if (this->first_node == nullptr)
         {
             this->first_node = p;
         }
@@ -177,7 +176,7 @@ void Graph::insertAllClusters()
     for (int i = 0; i < this->numClusters; i++)
     {
         Cluster *p = new Cluster(i);
-        if (this->first_Cluster == NULL)
+        if (this->first_Cluster == nullptr)
         {
             this->first_Cluster = p;
         }
@@ -192,7 +191,7 @@ void Graph::insertAllClusters()
 bool Graph::verificaAresta(int id, int target_id)
 {
     Node *p = getNode(id);
-    for (Edge *g = p->getFirstEdge(); g != NULL; g = g->getNextEdge())
+    for (Edge *g = p->getFirstEdge(); g != nullptr; g = g->getNextEdge())
     {
 
         if (g->getTargetId() == target_id)
@@ -223,12 +222,12 @@ void Graph::insertEdge(int id, int target_id, float peso)
 void Graph::removeNode(int id) // pfv dps me ajudem a revisar esse removeNode
 {
     Node *p;
-    if (this->last_node != NULL)
+    if (this->last_node != nullptr)
     {
         if (this->first_node == this->last_node)
         {
-            this->first_node = NULL;
-            p = NULL;
+            this->first_node = nullptr;
+            p = nullptr;
         }
         else
         {
@@ -247,15 +246,15 @@ void Graph::removeNode(int id) // pfv dps me ajudem a revisar esse removeNode
             nextN = p->getNextNode();
 
             previousN->setNextNode(nextN);
-            if (previousN->getNextNode() == NULL)
+            if (previousN->getNextNode() == nullptr)
             {
                 last_node = previousN;
             }
 
-            for (Node *i = first_node; i != NULL; i->getNextNode())
+            for (Node *i = first_node; i != nullptr; i->getNextNode())
             {
                 Edge *k = i->getFirstEdge();
-                while (k != NULL)
+                while (k != nullptr)
                 {
                     sup = k;
                     k->getNextEdge();
@@ -263,14 +262,14 @@ void Graph::removeNode(int id) // pfv dps me ajudem a revisar esse removeNode
                     if (k->getTargetId() == p->getId())
                     {
                         sup->setNextEdge(k->getNextEdge());
-                        k = NULL;
+                        k = nullptr;
                         k = sup->getNextEdge();
                     }
                 }
             }
 
             p->removeAllEdges();
-            p = NULL;
+            p = nullptr;
         }
         order--;
     }
@@ -282,7 +281,7 @@ bool Graph::searchNode(int id)
 {
     // so verifica se exste o no ali ou nao
 
-    for (Node *p = this->first_node; p != NULL; p = p->getNextNode())
+    for (Node *p = this->first_node; p != nullptr; p = p->getNextNode())
     {
         if (p->getId() == id)
         {
@@ -296,7 +295,7 @@ bool Graph::searchCluster(int id)
 {
     // so verifica se exste o no ali ou nao
 
-    for (Cluster *p = this->first_Cluster; p != NULL; p = p->getNextCluster())
+    for (Cluster *p = this->first_Cluster; p != nullptr; p = p->getNextCluster())
     {
         if (p->getidCluster() == id)
         {
@@ -311,13 +310,33 @@ int Graph::getNumCluster()
     return this->numClusters;
 }
 
+void Graph::resetaClusters()
+{
+    for (Cluster *a = this->first_Cluster; a != nullptr; a = a->getNextCluster())
+    {
+        a->setPeso(0);
+        Node *next_node = a->getFirstNode();
+
+        while (next_node != nullptr)
+        {
+
+            //next_node->removeAllEdges();
+            Node *aux_node = next_node->getNextNode();
+            cout<<"chega aqui 1"<<endl;
+            delete next_node;
+            cout<<"chega aqui 2"<<endl;
+            next_node = aux_node;
+        }
+    }
+}
+
 Node *Graph::getNode(int id)
 {
     // pega o no na lista de nos
     Node *p = first_node;
     if (searchNode(id))
     {
-        while (p != NULL && p->getId() != id)
+        while (p != nullptr && p->getId() != id)
         {
             p = p->getNextNode();
         }

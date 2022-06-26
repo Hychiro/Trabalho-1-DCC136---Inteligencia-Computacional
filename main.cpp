@@ -273,7 +273,13 @@ void selecionar(int selecao, Graph *graph, ofstream &output_file)
     // }
 
         a->Clusterizar(graph);
-
+        cout<<"teste 1"<<endl;
+        graph->resetaClusters();
+        cout<<"teste 2"<<endl;
+        for(int i=0;i<graph->getOrder();i++){
+            graph->listaDeNosLivres[i]=true;
+        }
+        cout<<"teste 3"<<endl;
         output_file << "tempo de execucao: " << (clock() - clo) << " millisegundos" << endl;
 
 

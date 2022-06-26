@@ -86,7 +86,7 @@ Node *Cluster::getNode(int id)
     Node *p = first_node;
     if (searchNode(id))
     {
-        while (p != NULL && p->getId() != id)
+        while (p != nullptr && p->getId() != id)
         {
             p = p->getNextNode();
         }
@@ -156,7 +156,7 @@ Node *Cluster::searchNode(int id)
 {
     // so verifica se exste o no ali ou nao
 
-    for (Node *p = this->first_node; p != NULL; p = p->getNextNode())
+    for (Node *p = this->first_node; p != nullptr; p = p->getNextNode())
     {
         if (p->getId() == id)
         {
@@ -169,7 +169,7 @@ Node *Cluster::searchNode(int id)
 bool Cluster::verificaAresta(int id, int target_id)
 {
     Node *p = getNode(id);
-    for (Edge *g = p->getFirstEdge(); g != NULL; g = g->getNextEdge())
+    for (Edge *g = p->getFirstEdge(); g != nullptr; g = g->getNextEdge())
     {
 
         if (g->getTargetId() == target_id)
