@@ -166,6 +166,44 @@ void Graph::insertAllNodes()
     }
 }
 
+bool Graph::clustersViaveis1(){
+
+    for (Cluster* i = this->first_Cluster; i != nullptr; i=i->getNextCluster())
+    {
+        if(!(i->viavel())){//se o cluster n for viavel
+            return false;
+        }
+    }
+
+    int k=0;
+    for(int i=0;i<this->getOrder();i++){
+    if(this->listaDeNosLivres[i]==true){
+        k++;
+    }
+    }
+    if(k>0){
+        return false;
+    }
+
+    return true;
+    
+
+}
+
+
+bool Graph::clustersViaveis2(){
+
+    for (Cluster* i = this->first_Cluster; i != nullptr; i=i->getNextCluster())
+    {
+        if(!(i->viavel())){//se o cluster n for viavel
+            return false;
+        }
+    }
+
+    return true;
+    
+}
+
 void Graph::insertAllClusters()
 {
     for (int i = 0; i < this->numClusters; i++)

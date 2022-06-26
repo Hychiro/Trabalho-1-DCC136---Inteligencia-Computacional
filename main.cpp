@@ -272,14 +272,13 @@ void selecionar(int selecao, Graph *graph, ofstream &output_file)
     //     cout<<"LI: "<<graph->getCluster(i).getLimiteInferior()<<endl;
     // }
 
+
+
         a->Clusterizar(graph);
-        cout<<"teste 1"<<endl;
         graph->resetaClusters();
-        cout<<"teste 2"<<endl;
         for(int i=0;i<graph->getOrder();i++){
             graph->listaDeNosLivres[i]=true;
         }
-        cout<<"teste 3"<<endl;
         output_file << "tempo de execucao: " << (clock() - clo) << " millisegundos" << endl;
 
 
@@ -288,6 +287,12 @@ void selecionar(int selecao, Graph *graph, ofstream &output_file)
     // Algoritmo Guloso Randomizado;
     case 2:
     {
+        Grasp *a;
+        graph->getCluster(0)->addNode(5,graph->getNode(5)->getWeight());
+        a->imprime(graph);
+        a->troca(graph, 0, 1, 5);
+        a->imprime(graph);
+
 
         break;
     }

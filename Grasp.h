@@ -26,5 +26,11 @@ public:
     void CompletarLS1(Graph *grafo);
     void CompletarPiorCaso(Graph *grafo);
     void Completar(Graph *grafo);
+    void verticesRandom(Graph *grafo);
+    void imprime(Graph *grafo);
+
+    bool verificaTroca(Graph *grafo, int idClusterExcedente,int idClusterAlvo,int idNo);
+    void troca(Graph *grafo, int idClusterExcedente,int idClusterAlvo,int idNo);
+    void ajuste(Graph *grafo);
 };
 #endif // GRASP_INCLUDED

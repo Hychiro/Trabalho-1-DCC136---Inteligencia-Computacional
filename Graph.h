@@ -47,6 +47,8 @@ public:
     bool getConexGraph();
     int getNumCluster();
     // Other methods
+    bool clustersViaveis1();
+    bool clustersViaveis2();
     void insertNode(int id);
     void insertEdge(int id, int target_id, float peso);
     void removeNode(int id);

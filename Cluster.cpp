@@ -111,7 +111,29 @@ void Cluster::addNode(int id, float peso)
     }
     this->last_node = p;
     this->last_node->setNextNode(nullptr);
-    delete p;
+    //delete p;
+}
+
+bool Cluster::viavel(){
+    if(this->peso>this->limiteSuperior){
+        return false;
+    } 
+
+    if(this->peso<this->limiteInferior){
+        return false;
+    }
+
+    return true;
+}
+
+float Cluster::calculaQualidade(){
+    float valor=0;
+    for(Node* i=this->first_node;i!=nullptr;i=i->getNextNode()){
+        for(Edge* j=i->getFirstEdge();j!=nullptr;j=j->getNextEdge()){
+            valor=valor+j->getPeso();
+        }
+    }
+    return valor/2;
 }
 
 void Cluster::addEdge(int id, int target_id, float peso)
@@ -122,6 +144,65 @@ void Cluster::addEdge(int id, int target_id, float peso)
     Node *sup = getNode(target_id);
     p->insertEdge(target_id, peso);
     sup->insertEdge(id, peso);
+}
+
+void Cluster::removeNode(int id) // pfv dps me ajudem a revisar esse removeNode
+{
+    this->peso=this->peso - this->getNode(id)->getWeight();
+
+    Node *p;
+    if (this->last_node != nullptr)
+    {
+        if (this->first_node == this->last_node)
+        {
+            this->first_node = nullptr;
+            p = nullptr;
+        }
+        else
+        {
+            Node *previousN = this->first_node;
+            Node *nextN;
+            Node *aux;
+            Edge *sup;
+            int count_edges = 0;
+
+            p = getNode(id);
+
+            while (p != previousN->getNextNode())
+            {
+                previousN->getNextNode();
+            }
+            nextN = p->getNextNode();
+
+            previousN->setNextNode(nextN);
+            if (previousN->getNextNode() == nullptr)
+            {
+                last_node = previousN;
+            }
+
+            for (Node *i = first_node; i != nullptr; i->getNextNode())
+            {
+                Edge *k = i->getFirstEdge();
+                while (k != nullptr)
+                {
+                    sup = k;
+                    k->getNextEdge();
+
+                    if (k->getTargetId() == p->getId())
+                    {
+                        sup->setNextEdge(k->getNextEdge());
+                        k = nullptr;
+                        k = sup->getNextEdge();
+                    }
+                }
+            }
+
+            p->removeAllEdges();
+            p = nullptr;
+        }
+    }
+    else
+        cout << "ERRO: o grafo esta vazio!" << endl;
 }
 
 void Cluster::addAresta(int id, Node *analisado)
@@ -162,7 +243,7 @@ void Cluster::setLastNode(Node * node)
     this->last_node = node;
 }
 
-Node *Cluster::searchNode(int id)
+bool Cluster::searchNode(int id)
 {
     // so verifica se exste o no ali ou nao
 
@@ -170,10 +251,10 @@ Node *Cluster::searchNode(int id)
     {
         if (p->getId() == id)
         {
-            return p;
+            return true;
         }
     }
-    return nullptr;
+    return false;
 }
 
 bool Cluster::verificaAresta(int id, int target_id)

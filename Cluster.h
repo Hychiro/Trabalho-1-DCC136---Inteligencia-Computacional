@@ -33,6 +33,8 @@ public:
     float getPeso();
     float getLimiteInferior();
     float getLimiteSuperior();
+    bool viavel();
+    float calculaQualidade();
 
     Node *getFirstNode();
     Node *getLastNode();
@@ -43,6 +45,7 @@ public:
     void addNode(int id, float peso);
     void addAresta(int id, Node *analisado);
     void addEdge(int id, int target_id, float peso);
+    void removeNode(int id);
 
     void setPeso(float valor);
     void setLimiteInferior(float valor);
@@ -53,7 +56,7 @@ public:
     void setNextCluster(Cluster* cluster);
     void setFirstNode(Node * node);
     void setLastNode(Node * node);
-    Node *searchNode(int id);
+    bool searchNode(int id);
 
     bool verificaAresta(int id, int target_id);
 };
