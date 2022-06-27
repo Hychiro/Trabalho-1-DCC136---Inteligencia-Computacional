@@ -6642,3 +6642,6 @@ strict graph{
 81 -- 79  [ label = 2.21637 ]
 81 -- 80  [ label = 7.79351 ]
 }
+tempo de execucao: 281908 millisegundos
+
+
