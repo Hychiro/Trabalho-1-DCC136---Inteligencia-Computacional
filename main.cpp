@@ -256,6 +256,7 @@ int menu()
 
 void selecionar(int selecao, Graph *graph, ofstream &output_file)
 {
+    srand((unsigned int)time(NULL));
 
     switch (selecao)
     {
@@ -265,20 +266,38 @@ void selecionar(int selecao, Graph *graph, ofstream &output_file)
         int clo = clock();
         graph->printGraph(output_file);
 
-        Grasp *a;
 
     //     for (int i = 0; i < graph->getNumCluster(); i++)
     // {
     //     cout<<"LI: "<<graph->getCluster(i).getLimiteInferior()<<endl;
     // }
 
+        Instancia *atual = new Instancia();
+        Instancia *analizada = new Instancia();
+        Instancia *melhorAnalizada = new Instancia();
 
 
-        a->Clusterizar(graph);
-        graph->resetaClusters();
-        for(int i=0;i<graph->getOrder();i++){
-            graph->listaDeNosLivres[i]=true;
+        float melhorsolucao=0;
+        for(int i=0;i<10;i++)
+        {
+        Grasp *a;
+        cout<<"Cluster "<<i<<endl;
+        a->Clusterizar(graph,atual,analizada,melhorAnalizada);
+        //cout<<"Solucao: "<<a->calculaSolucao(graph)<<endl;
+        if(a->calculaSolucao(graph)>melhorsolucao){
+            melhorsolucao=a->calculaSolucao(graph);
+            //cout<<"Melhor Solucao: "<<melhorsolucao<<endl;
         }
+        graph->resetaClusters();
+        for(int k=0;k<graph->getOrder();k++){
+            graph->listaDeNosLivres[k]=true;
+        }
+        }
+        cout<<"Melhor Solucao Final: "<<melhorsolucao<<endl;
+
+
+
+
         output_file << "tempo de execucao: " << (clock() - clo) << " millisegundos" << endl;
 
 

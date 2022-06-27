@@ -114,11 +114,11 @@ void Cluster::addNode(int id, float peso)
     }
     else
     {
-        this->last_node->setNextNode(p);    
+        this->last_node->setNextNode(p);
     }
     this->last_node = p;
     this->last_node->setNextNode(nullptr);
-    // delete p;
+    //delete p;
 }
 
 bool Cluster::viavel()
@@ -164,24 +164,96 @@ void Cluster::removeNode(int id) // pfv dps me ajudem a revisar esse removeNode
     this->peso = this->peso - this->getNode(id)->getWeight();
 
     Node *p = getNode(id);
+    Node *previousN = this->first_node;
+    Node *nextN;
+    Edge *previousE;
+    Edge *nextE;
+    int count_edges = 0;
     this->numNodes--;
+    bool verify = false;
+
+
+    for (Node *i = this->getFirstNode(); i != nullptr; i = i->getNextNode())
+    {
+        //cout<<"remove node 1"<<endl;
+        Edge *aux = i->getFirstEdge();
+        if (i->getLastEdge() != nullptr)
+        {
+            //cout<<"remove node 2"<<endl;
+
+            if (i->getFirstEdge() == i->getLastEdge() && aux->getTargetId() == p->getId())
+            {
+                //cout<<"remove node 3"<<endl;
+                aux=nullptr;
+                i->setFirstEdge(nullptr);
+                i->setLastEdge(nullptr);
+            }
+            else if (i->getFirstEdge()->getTargetId() == p->getId())
+            {
+                //cout<<"remove node 4"<<endl;
+                nextE = aux->getNextEdge();
+                //cout<<"remove node 4.1"<<endl;
+                i->setFirstEdge(nextE);
+                //cout<<"remove node 4.2"<<endl;
+                aux->setNextEdge(nullptr);
+                //cout<<"remove node 4.3"<<endl;
+                aux=nullptr;
+                //cout<<"remove node 4.4"<<endl;
+            }
+            else
+            {
+                //cout<<"remove node 5"<<endl;
+                while (aux != nullptr)
+                {
+                    if (aux->getTargetId() == p->getId())
+                    {
+                        verify = true;
+                        break;
+                    }
+                    previousE = aux;
+                    aux = aux->getNextEdge();
+                }
+                if (verify)
+                {
+                    //cout<<"remove node 6"<<endl;
+                    nextE = aux->getNextEdge();
+
+                    previousE->setNextEdge(nextE);
+                    if (nextE == nullptr)
+                    {
+                        i->setLastEdge(previousE);
+                    }
+                    aux->setNextEdge(nullptr);
+                    aux=nullptr;
+                }
+                verify = false;
+            }
+            // last edg
+
+            //delete aux;
+        }
+    }
+    //cout<<"remove node 7"<<endl;
 
     if (this->last_node != nullptr)
     {
+        //cout<<"remove node 8"<<endl;
         if (this->first_node == this->last_node)
         {
 
             this->first_node = nullptr;
             delete p;
         }
+        else if (this->getFirstNode() == p)
+        {
+            nextN = p->getNextNode();
+            this->first_node = nextN;
+            p->setNextNode(nullptr);
+            delete p;
+        }
         else
         {
-
-            Node *previousN = this->first_node;
-            Node *nextN;
-            Edge *previousE;
-            Edge *nextE;
-            int count_edges = 0;
+            //cout<<"remove node 9"<<endl;
 
             while (p != previousN->getNextNode())
             {
@@ -194,46 +266,19 @@ void Cluster::removeNode(int id) // pfv dps me ajudem a revisar esse removeNode
             {
                 last_node = previousN;
             }
-
-            for (Node *i = this->getFirstNode(); i != nullptr; i = i->getNextNode())
-            {
-                Edge *aux = i->getFirstEdge();
-                if (i->getLastEdge() != nullptr)
-                {
-                    if (i->getFirstEdge() == i->getLastEdge())
-                    {
-                        delete p;
-                    }
-                    while (aux != nullptr)
-                    {
-
-                        if (aux->getTargetId() == p->getId())
-                        {
-                            break;
-                        }
-                        previousE = aux;
-                        aux = aux->getNextEdge();
-                    }
-
-                    nextE = aux->getNextEdge();
-                    if (nextE == nullptr)
-                    {
-                        i->setLastEdge(previousE);
-                    }
-                    // last edg
-                    previousE->setNextEdge(nextE);
-                         
-                    aux = nullptr;
-                }
-            }
+            p->setNextNode(nullptr);
+            delete p;
+           // cout<<"remove node 10"<<endl;
         }
+        //cout<<"remove node 11"<<endl;
     }
     else
         cout << "ERRO: o grafo esta vazio!" << endl;
 
-    p->removeAllEdges();
-    p = nullptr;
+        //cout<<"remove node 12"<<endl;
 }
+
+
 
 void Cluster::addAresta(int id, Node *analisado)
 {

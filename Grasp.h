@@ -21,7 +21,7 @@ using namespace std;
 class Grasp
 {
 public:
-    void Clusterizar(Graph *grafo);
+    void Clusterizar(Graph *grafo,Instancia* atual,Instancia* analizada,Instancia* melhorAnalizada);
     void Centroides(Graph *grafo);
     void CompletarLI1(Graph *grafo);
     void CompletarLS1(Graph *grafo);
@@ -35,7 +35,7 @@ public:
     void ajuste(Graph *grafo);
 
     float calculaSolucao(Graph *grafo);
-    void buscaLocal(Graph *grafo);
+    void buscaLocal(Graph *grafo,Instancia *atual,Instancia *analizada,Instancia *melhorAnalizada);
     bool desbalanceadoS(Cluster * cluster);
 };
 #endif // GRASP_INCLUDED

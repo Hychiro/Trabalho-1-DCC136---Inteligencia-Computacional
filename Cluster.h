@@ -58,6 +58,9 @@ public:
     void setNextCluster(Cluster* cluster);
     void setFirstNode(Node * node);
     void setLastNode(Node * node);
+    void setNumNodes(int valor){
+        this->numNodes=valor;
+    };
     bool searchNode(int id);
 
     bool verificaAresta(int id, int target_id);

@@ -19,18 +19,20 @@ using namespace std;
 class Instancia
 {
 private:
+
+
+public:
     int idCluster;
     int idNo;
     float melhorInstancia;
 
-public:
     Instancia(){
         this->idCluster = 0;
         this->idNo = 0;
         this->melhorInstancia = 0;
     };
 
-    ~Instancia();
+    ~Instancia(){};
 
     int getIdCluster(){
         return  this->idCluster;

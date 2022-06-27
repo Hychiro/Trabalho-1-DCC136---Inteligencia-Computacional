@@ -348,6 +348,7 @@ void Graph::resetaClusters()
     for (Cluster *a = this->first_Cluster; a != nullptr; a = a->getNextCluster())
     {
         a->setPeso(0);
+        a->setNumNodes(0);
 
         Node *next_node = a->getFirstNode();
         //cout<<"entra aqui 1"<<endl;
