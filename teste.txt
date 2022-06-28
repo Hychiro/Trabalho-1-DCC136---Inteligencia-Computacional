@@ -380,6 +380,3 @@ strict graph{
 19 -- 17  [ label = 0 ]
 19 -- 18  [ label = 0 ]
 }
-tempo de execucao: 572 millisegundos
-
-
