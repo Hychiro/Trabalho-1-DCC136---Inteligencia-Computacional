@@ -21,6 +21,15 @@ Matheus Cardoso Faesy 202065065A
 
 using namespace std;
 
+bool verificaTipoLeitura(string input_file_name)
+{
+    if (input_file_name[2] >= '0' && input_file_name[2] <= '9')
+    {
+        return false;
+    }
+    return true;
+}
+
 int transformacaoC(char cAnalizada)
 {
     int valor = cAnalizada - '0';
@@ -193,7 +202,7 @@ Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
 
     for (int i = 0; i < ordem; i++)
     {
-        //cout<<"pesoVertice "<<i<<": "<<pesoVertice[i]<<endl;
+        // cout<<"pesoVertice "<<i<<": "<<pesoVertice[i]<<endl;
         grafo->getNode(i)->setWeight(pesoVertice[i]);
     }
     ////
@@ -214,7 +223,7 @@ Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
 
     while (input_file >> verticeA >> verticeB >> pesoAresta)
     {
-        //cout << "verticeA " << verticeA << " verticeB " << verticeB << " pesoAresta " << pesoAresta << endl;
+        // cout << "verticeA " << verticeA << " verticeB " << verticeB << " pesoAresta " << pesoAresta << endl;
         matrixPesoArestas[verticeA][verticeB] = pesoAresta;
         matrixPesoArestas[verticeB][verticeA] = pesoAresta;
     }
@@ -223,7 +232,7 @@ Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
     {
         for (int p = 0; p < ordem; p++)
         {
-            if (!grafo->verificaAresta(o, p) && o!=p)
+            if (!grafo->verificaAresta(o, p) && o != p)
             {
                 grafo->insertEdge(o, p, matrixPesoArestas[o][p]);
             }
@@ -232,7 +241,108 @@ Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
 
     for (int i = 0; i < grafo->getOrder(); i++)
     {
-        //cout<<"Peso do No "<<i<<": "<<grafo->getNode(i)->getWeight()<<endl;
+        // cout<<"Peso do No "<<i<<": "<<grafo->getNode(i)->getWeight()<<endl;
+    }
+
+    return grafo;
+}
+
+Graph *leituraInstancia2(ifstream &input_file, ofstream &output_file)
+{
+
+    // Variáveis para auxiliar na criação dos nós no Grafo
+
+    int ordem;
+    int clusters;
+    float limiteSClusters;
+    int limiteIClusters = 0;
+    float pesoAresta;
+
+    // Pegando a ordem do grafo
+
+    input_file >> ordem;
+    input_file >> clusters;
+    input_file >> limiteSClusters;
+
+    cout << "Ordem: " << ordem << endl;
+    cout << "Numero de clusters: " << clusters << endl;
+    cout << "Limite Superior dos Clusters: " << limiteSClusters << endl;
+
+    float pesoNos[ordem];
+
+    for (int i = 0; i < ordem; i++)
+    {
+        input_file >> pesoNos[i];
+    }
+    cout << "Peso Nos: " << endl;
+    for (int i = 0; i < ordem; i++)
+    {
+        cout << pesoNos[i] << " ";
+    }
+    cout << endl;
+
+    float matrixPesoArestas[ordem][ordem];
+
+    for (int k = 0; k < ordem; k++)
+    {
+        for (int j = 0; j < ordem; j++)
+        {
+            matrixPesoArestas[k][j] = -1;
+        }
+    }
+
+    for (int k = 0; k < ordem; k++)
+    {
+        for (int j = 0; j < ordem; j++)
+        {
+            input_file >> matrixPesoArestas[k][j];
+        }
+    }
+
+    for (int k = 0; k < ordem; k++)
+    {
+        for (int j = 0; j < ordem; j++)
+        {
+            input_file >> matrixPesoArestas[k][j];
+        }
+    }
+
+
+
+
+    int limiteInferiorSuperior[clusters][2];
+
+    for (int i = 0; i < clusters; i++)
+    {
+        limiteInferiorSuperior[i][0] = 0;
+        limiteInferiorSuperior[i][1] = limiteSClusters;
+    }
+
+    // Criando objeto grafo
+    Graph *grafo = new Graph(ordem, clusters, limiteInferiorSuperior);
+
+    for (int i = 0; i < ordem; i++)
+    {
+        // cout<<"pesoVertice "<<i<<": "<<pesoVertice[i]<<endl;
+        grafo->getNode(i)->setWeight(pesoNos[i]);
+    }
+    ////
+    // Leitura de arquivo
+
+    for (int o = 0; o < ordem; o++)
+    {
+        for (int p = 0; p < ordem; p++)
+        {
+            if (!grafo->verificaAresta(o, p) && o != p)
+            {
+                grafo->insertEdge(o, p, matrixPesoArestas[o][p]);
+            }
+        }
+    }
+
+    for (int i = 0; i < grafo->getOrder(); i++)
+    {
+        // cout<<"Peso do No "<<i<<": "<<grafo->getNode(i)->getWeight()<<endl;
     }
 
     return grafo;
@@ -266,40 +376,37 @@ void selecionar(int selecao, Graph *graph, ofstream &output_file)
         int clo = clock();
         graph->printGraph(output_file);
 
-
-    //     for (int i = 0; i < graph->getNumCluster(); i++)
-    // {
-    //     cout<<"LI: "<<graph->getCluster(i).getLimiteInferior()<<endl;
-    // }
+        //     for (int i = 0; i < graph->getNumCluster(); i++)
+        // {
+        //     cout<<"LI: "<<graph->getCluster(i).getLimiteInferior()<<endl;
+        // }
 
         Instancia *atual = new Instancia();
         Instancia *analizada = new Instancia();
         Instancia *melhorAnalizada = new Instancia();
 
-
-        float melhorsolucao=0;
-        for(int i=0;i<1000;i++)
+        float melhorsolucao = 0;
+        for (int i = 0; i < 10; i++)
         {
-        Grasp *a;
-        cout<<"Cluster "<<i<<endl;
-        a->Clusterizar(graph,atual,analizada,melhorAnalizada);
-        //cout<<"Solucao: "<<a->calculaSolucao(graph)<<endl;
-        if(a->calculaSolucao(graph)>melhorsolucao){
-            melhorsolucao=a->calculaSolucao(graph);
-            //cout<<"Melhor Solucao: "<<melhorsolucao<<endl;
+            Grasp *a;
+            cout << "Cluster " << i << endl;
+            a->Clusterizar(graph, atual, analizada, melhorAnalizada);
+            a->imprime(graph);
+            // cout<<"Solucao: "<<a->calculaSolucao(graph)<<endl;
+            if (a->calculaSolucao(graph) > melhorsolucao)
+            {
+                melhorsolucao = a->calculaSolucao(graph);
+                // cout<<"Melhor Solucao: "<<melhorsolucao<<endl;
+            }
+            graph->resetaClusters();
+            for (int k = 0; k < graph->getOrder(); k++)
+            {
+                graph->listaDeNosLivres[k] = true;
+            }
         }
-        graph->resetaClusters();
-        for(int k=0;k<graph->getOrder();k++){
-            graph->listaDeNosLivres[k]=true;
-        }
-        }
-        cout<<"Melhor Solucao Final: "<<melhorsolucao<<endl;
-
-
-
+        cout << "Melhor Solucao Final: " << melhorsolucao << endl;
 
         output_file << "tempo de execucao: " << (clock() - clo) << " millisegundos" << endl;
-
 
         break;
     }
@@ -307,11 +414,10 @@ void selecionar(int selecao, Graph *graph, ofstream &output_file)
     case 2:
     {
         Grasp *a;
-        graph->getCluster(0)->addNode(5,graph->getNode(5)->getWeight());
+        graph->getCluster(0)->addNode(5, graph->getNode(5)->getWeight());
         a->imprime(graph);
         a->troca(graph, 0, 1, 5);
         a->imprime(graph);
-
 
         break;
     }
@@ -377,11 +483,21 @@ int main(int argc, char const *argv[])
     if (input_file.is_open())
     {
 
-        graph = leituraInstancia(input_file, output_file);
-        //for (int i = 0; i < graph->getOrder(); i++)
-    //{
-        //cout<<"Peso do No "<<i<<": "<<graph->getNode(i)->getWeight()<<endl;
-    //}
+        if (verificaTipoLeitura(input_file_name))
+        {
+           
+            graph = leituraInstancia(input_file, output_file);
+        }
+        else
+        {
+          
+            graph = leituraInstancia2(input_file, output_file);
+        }
+
+        // for (int i = 0; i < graph->getOrder(); i++)
+        //{
+        // cout<<"Peso do No "<<i<<": "<<graph->getNode(i)->getWeight()<<endl;
+        //}
     }
     else
         cout << "Unable to open " << argv[1];

@@ -40,7 +40,7 @@ void Grasp::Clusterizar(Graph *grafo,Instancia* atual,Instancia* analizada,Insta
 
     this->Completar(grafo);
 
-    //this->imprime(grafo);
+    this->imprime(grafo);
 
     for(int i=0;i<2000;i++){
         //cout<<"Busca local: "<<i<<endl;
