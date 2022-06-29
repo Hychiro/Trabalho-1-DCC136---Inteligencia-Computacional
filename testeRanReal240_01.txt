@@ -1,0 +1,44 @@
+
+======== NOVA MELHOR SOLUÇÃO ========
+
+
+Cluster 0 Nos : 25, 21, 91, 140, 206, 228, 213, 162, 148, 92, 124, 197, 189, 48, 174, 100, 176, 55, 201, 111, 36, 145, 2,  Peso: 125    Qualidade = 13326.4 Numero de nos 23
+Cluster 1 Nos : 19, 24, 32, 190, 119, 62, 59, 78, 160, 81, 69, 33, 185, 164, 123, 122, 57, 234, 184, 214, 172, 224, 56, 75, 22, 26,  Peso: 125    Qualidade = 15848.7 Numero de nos 26
+Cluster 2 Nos : 225, 168, 20, 68, 186, 203, 72, 87, 12, 133,  Peso: 76    Qualidade = 2400.27 Numero de nos 10
+Cluster 3 Nos : 211, 38, 161, 158, 181, 159, 44, 125, 166, 79, 163, 144, 177, 188, 130, 232, 196, 47, 17, 137, 61, 178, 191, 103, 157,  Peso: 125    Qualidade = 15682.4 Numero de nos 25
+Cluster 4 Nos : 71, 74, 139, 96, 9, 89, 230, 209, 83, 205, 132, 212, 77,  Peso: 78    Qualidade = 4144.97 Numero de nos 13
+Cluster 5 Nos : 134, 65, 135, 198, 170, 60, 29, 235, 223, 231, 219, 112, 204, 10, 0, 171, 86, 46, 141, 182, 200, 5, 226, 194,  Peso: 125    Qualidade = 14938.9 Numero de nos 24
+Cluster 6 Nos : 101, 14, 109, 58, 95, 93, 15, 94, 136, 221, 143, 118, 99, 156, 180, 192, 116, 220, 90, 53, 104, 202, 127, 187, 39, 183,  Peso: 125    Qualidade = 17102.1 Numero de nos 26
+Cluster 7 Nos : 173, 35, 208, 102, 105, 165, 169, 41, 126, 115, 120,  Peso: 75    Qualidade = 2899.14 Numero de nos 11
+Cluster 8 Nos : 88, 215, 147, 146, 129, 30, 66, 210, 37, 54, 31, 233, 227, 43, 238, 34, 11, 64, 207, 85, 98, 76, 42, 23, 152, 217, 237,  Peso: 125    Qualidade = 17579.3 Numero de nos 27
+Cluster 9 Nos : 151, 128, 6, 80, 63, 108, 51, 153, 239, 8, 70, 84, 154, 175, 73, 195, 218, 179, 13, 4, 114, 40,  Peso: 125    Qualidade = 12600.8 Numero de nos 22
+Cluster 10 Nos : 97, 16, 49, 193, 222, 7, 52, 45, 107, 18, 131, 229, 236, 3, 121, 1, 138, 142, 27, 50, 110,  Peso: 125    Qualidade = 11108.3 Numero de nos 21
+Cluster 11 Nos : 113, 117, 155, 67, 167, 199, 28, 150, 82, 149, 106, 216,  Peso: 76    Qualidade = 3152.14 Numero de nos 12
+Qualidade do Grafo: 130783
+Solucao Viavel
+
+
+======== NOVA MELHOR SOLUÇÃO ========
+
+
+Cluster 0 Nos : 123, 22, 3, 76, 82, 216, 92, 101, 34, 98, 126, 172, 65, 122, 125, 63, 175, 53, 156, 231, 133, 120, 132, 183, 6,  Peso: 125    Qualidade = 16301.8 Numero de nos 25
+Cluster 1 Nos : 79, 124, 155, 165, 69, 212, 72, 166, 35, 108, 74,  Peso: 78    Qualidade = 3123.92 Numero de nos 11
+Cluster 2 Nos : 17, 116, 113, 154, 44, 41, 208, 115, 217, 186, 64,  Peso: 75    Qualidade = 3027.67 Numero de nos 11
+Cluster 3 Nos : 128, 139, 174, 48, 104, 38, 144, 220, 190, 224, 24, 215, 194, 187, 179, 185, 111, 213, 66, 33, 200, 232, 118, 119, 93, 9, 97, 203, 117, 75,  Peso: 125    Qualidade = 21811.4 Numero de nos 30
+Cluster 4 Nos : 105, 20, 107, 135, 143, 199, 226, 14, 204, 42,  Peso: 77    Qualidade = 2696.28 Numero de nos 10
+Cluster 5 Nos : 221, 184, 16, 67, 201, 21, 206, 227, 223, 40,  Peso: 76    Qualidade = 2216.62 Numero de nos 10
+Cluster 6 Nos : 52, 222, 26, 138, 189, 86, 12, 230, 10, 147, 70, 237, 129, 29, 158, 157, 55, 210, 78, 71, 27,  Peso: 125    Qualidade = 11818.9 Numero de nos 21
+Cluster 7 Nos : 84, 152, 47, 7, 8, 2, 58, 205, 68, 50, 4, 114, 87, 164, 19, 140, 178, 18, 130, 25, 102,  Peso: 124    Qualidade = 12248.6 Numero de nos 21
+Cluster 8 Nos : 149, 198, 96, 57, 192, 169, 168, 195, 121, 142, 91, 56, 5, 106, 13, 182, 32, 173, 229, 233, 54, 11, 81, 83, 127, 90, 145,  Peso: 125    Qualidade = 18754.7 Numero de nos 27
+Cluster 9 Nos : 211, 196, 73, 188, 235, 162, 94, 176, 80, 151, 59, 37, 28, 1, 77, 89, 36, 218, 159, 141, 30, 51, 134, 31, 214,  Peso: 125    Qualidade = 16298.1 Numero de nos 25
+Cluster 10 Nos : 0, 202, 236, 160, 171, 95, 62, 45, 85, 150, 88, 197, 15, 177, 148, 39, 23, 161, 43, 137, 153, 131,  Peso: 125    Qualidade = 11628.3 Numero de nos 22
+Cluster 11 Nos : 146, 209, 136, 238, 180, 99, 234, 239, 167, 49, 170, 103, 163, 191, 100, 60, 110, 112, 193, 225, 228, 219, 181, 207, 109, 46, 61,  Peso: 125    Qualidade = 18167.1 Numero de nos 27
+Qualidade do Grafo: 138093
+Solucao Viavel
+
+Numero de solucoes inviaveis: 0
+Media das Solucoes: 133380
+Melhor Solucao Final: 138093
+tempo de execucao: 590012 millisegundos
+
+

@@ -1,0 +1,54 @@
+
+======== NOVA MELHOR SOLUÇÃO ========
+
+
+Cluster 0 Nos : 1, 5, 0, 11, 2,  Peso: 105.368    Qualidade = 191 Numero de nos 5
+Cluster 1 Nos : 4, 12, 14,  Peso: 72.079    Qualidade = 407 Numero de nos 3
+Cluster 2 Nos : 19, 10, 6, 17,  Peso: 99.5521    Qualidade = 0 Numero de nos 4
+Cluster 3 Nos : 3, 8, 18, 13,  Peso: 105.099    Qualidade = 120 Numero de nos 4
+Cluster 4 Nos : 15, 16, 9, 7,  Peso: 95.3541    Qualidade = 383 Numero de nos 4
+Qualidade do Grafo: 1101
+Solucao Viavel
+
+
+======== NOVA MELHOR SOLUÇÃO ========
+
+
+Cluster 0 Nos : 19, 5, 11,  Peso: 74.6528    Qualidade = 498 Numero de nos 3
+Cluster 1 Nos : 1, 14, 2, 6, 17, 0,  Peso: 104.422    Qualidade = 206 Numero de nos 6
+Cluster 2 Nos : 3, 12, 4,  Peso: 100.436    Qualidade = 81 Numero de nos 3
+Cluster 3 Nos : 15, 8, 13,  Peso: 97.4598    Qualidade = 0 Numero de nos 3
+Cluster 4 Nos : 10, 16, 18, 9, 7,  Peso: 100.481    Qualidade = 383 Numero de nos 5
+Qualidade do Grafo: 1168
+Solucao Viavel
+
+
+======== NOVA MELHOR SOLUÇÃO ========
+
+
+Cluster 0 Nos : 4, 12, 13, 14,  Peso: 101.766    Qualidade = 407 Numero de nos 4
+Cluster 1 Nos : 1, 17, 2, 0, 18, 6,  Peso: 104.256    Qualidade = 206 Numero de nos 6
+Cluster 2 Nos : 19, 8, 5, 11,  Peso: 100.868    Qualidade = 498 Numero de nos 4
+Cluster 3 Nos : 15, 3,  Peso: 80.4174    Qualidade = 0 Numero de nos 2
+Cluster 4 Nos : 10, 16, 9, 7,  Peso: 90.1441    Qualidade = 383 Numero de nos 4
+Qualidade do Grafo: 1494
+Solucao Viavel
+
+
+======== NOVA MELHOR SOLUÇÃO ========
+
+
+Cluster 0 Nos : 1, 6, 8, 2,  Peso: 103.731    Qualidade = 68 Numero de nos 4
+Cluster 1 Nos : 3, 13, 9, 18,  Peso: 103.726    Qualidade = 87 Numero de nos 4
+Cluster 2 Nos : 12, 4, 14,  Peso: 72.0791    Qualidade = 407 Numero de nos 3
+Cluster 3 Nos : 10, 15, 17, 0,  Peso: 94.3089    Qualidade = 138 Numero de nos 4
+Cluster 4 Nos : 19, 11, 7, 16, 5,  Peso: 103.607    Qualidade = 826 Numero de nos 5
+Qualidade do Grafo: 1526
+Solucao Viavel
+
+Numero de solucoes inviaveis: 0
+Media das Solucoes: 1267.3
+Melhor Solucao Final: 1526
+tempo de execucao: 40000 millisegundos
+
+

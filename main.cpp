@@ -352,8 +352,8 @@ int menu()
 
     cout << "MENU" << endl;
     cout << "----" << endl;
-    cout << "[1] Teste Unico" << endl;
-    cout << "[2] 10 repetições" << endl;
+    cout << "[1] Executar" << endl;
+    cout << "[2] Menus de Testes Especificos" << endl;
     cout << "[0] Sair" << endl;
 
     cin >> selecao;
@@ -372,7 +372,7 @@ void selecionar(int selecao, Graph *graph, ofstream &output_file)
     {
         int clo = clock();
         int contaSolNaoViaveis = 0;
-        graph->printGraph(output_file);
+        //graph->printGraph(output_file);
 
         //     for (int i = 0; i < graph->getNumCluster(); i++)
         // {
@@ -383,20 +383,23 @@ void selecionar(int selecao, Graph *graph, ofstream &output_file)
         Instancia *analizada = new Instancia();
         Instancia *melhorAnalizada = new Instancia();
         Instancia *movimentoAnterior = new Instancia();
-
+        Grasp *a;
         float melhorsolucao = 0;
+        float media=0;
         for (int i = 0; i < 10; i++)
         {
-            Grasp *a;
             cout << "Cluster " << i << endl;
             a->Clusterizar(graph, atual, analizada, melhorAnalizada, movimentoAnterior);
-            a->imprime(graph);
+            //a->imprime(graph);
             // cout<<"Solucao: "<<a->calculaSolucao(graph)<<endl;
 
             if (graph->clustersViaveis2())
             {
+                media=media+a->calculaSolucao(graph);
                 if (a->calculaSolucao(graph) > melhorsolucao)
                 {
+                    output_file<<endl<<"======== NOVA MELHOR SOLUÇÃO ========"<<endl<<endl;
+                    a->guarda(graph,output_file);
                     melhorsolucao = a->calculaSolucao(graph);
                     // cout<<"Melhor Solucao: "<<melhorsolucao<<endl;
                 }
@@ -412,9 +415,14 @@ void selecionar(int selecao, Graph *graph, ofstream &output_file)
                 graph->listaDeNosLivres[k] = true;
             }
         }
-        cout << "Melhor Solucao Final: " << melhorsolucao << endl;
-        cout << "Numero de solucoes inviaveis: " << contaSolNaoViaveis << endl;
-
+        output_file << "Numero de solucoes inviaveis: " << contaSolNaoViaveis << endl;
+        if(contaSolNaoViaveis<10){
+            media=media/(10-contaSolNaoViaveis);
+            output_file << "Media das Solucoes: " << media << endl;
+            output_file << "Melhor Solucao Final: " << melhorsolucao << endl;
+        }else{
+            output_file << "Nao houve Solucao Viavel, Logo Melhor Solucao e Media inexistentes"<< endl;
+        }
         output_file << "tempo de execucao: " << (clock() - clo) << " millisegundos" << endl;
 
         break;

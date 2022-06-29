@@ -103,6 +103,32 @@ void Grasp::imprime(Graph *grafo)
     cout << endl;
 }
 
+void Grasp::guarda(Graph *grafo,ofstream &output_file)
+{
+
+    output_file << endl;
+    // cout << "Melhor Instancia: " << grafo->melhorInstancia << endl;
+    for (int i = 0; i < grafo->getNumCluster(); i++)
+    {
+        output_file << "Cluster " << i << " Nos : ";
+        for (Node *a = grafo->getCluster(i)->getFirstNode(); a != nullptr; a = a->getNextNode())
+        {
+            output_file << a->getId() << ", ";
+        }
+        output_file << " Peso: " << grafo->getCluster(i)->getPeso() << "    Qualidade = " << grafo->getCluster(i)->calculaQualidade() << " Numero de nos " << grafo->getCluster(i)->getNumNodes() << endl;
+    }
+    output_file << "Qualidade do Grafo: " << this->calculaSolucao(grafo) << endl;
+    if (grafo->clustersViaveis2())
+    {
+        output_file << "Solucao Viavel" << endl;
+    }
+    else
+    {
+        output_file << "Solucao Nao Viavel" << endl;
+    }
+    output_file << endl;
+}
+
 void Grasp::Centroides(Graph *grafo)
 {
     int Ncentroides = 0;

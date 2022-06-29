@@ -29,6 +29,7 @@ public:
     void Completar(Graph *grafo);
     void verticesRandom(Graph *grafo);
     void imprime(Graph *grafo);
+    void guarda(Graph *grafo,ofstream &output_file);
     void CompletarVerticesLivres(Graph *grafo);
 
     bool verificaTroca(Graph *grafo, int idClusterExcedente, int idClusterAlvo, int idNo);
