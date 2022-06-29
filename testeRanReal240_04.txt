@@ -1,0 +1,82 @@
+
+======== NOVA MELHOR SOLUÇÃO ========
+
+
+Cluster 0 Nos : 225, 16, 203, 195, 64, 239, 175, 154, 6, 137,  Peso: 79    Qualidade = 2869.94 Numero de nos 10
+Cluster 1 Nos : 38, 118, 14, 220, 167, 45, 140, 130, 5, 197, 101, 218, 116, 93, 212, 86, 194, 207, 129, 159, 104, 40, 211, 80, 113,  Peso: 124    Qualidade = 15717.5 Numero de nos 25
+Cluster 2 Nos : 69, 111, 108, 187, 179, 91, 22, 193, 54, 98, 47, 219, 168, 88, 42,  Peso: 75    Qualidade = 5158.97 Numero de nos 15
+Cluster 3 Nos : 149, 150, 120, 228, 205, 17, 146, 135, 128, 79, 145, 56,  Peso: 75    Qualidade = 3837.32 Numero de nos 12
+Cluster 4 Nos : 29, 3, 85, 50, 71, 162, 57, 102, 202, 147, 15, 238, 0, 20, 66, 133, 92, 78, 10, 233, 46, 152, 65, 157, 114,  Peso: 121    Qualidade = 15693.5 Numero de nos 25
+Cluster 5 Nos : 122, 74, 31, 232, 117, 87, 188, 24, 221, 127, 158, 171, 63, 8, 51, 143,  Peso: 91    Qualidade = 6725.65 Numero de nos 16
+Cluster 6 Nos : 223, 75, 172, 183, 190, 27, 62, 52, 97, 61, 115, 30, 217, 107, 189, 77, 7, 215, 73, 68, 138, 198, 165, 181,  Peso: 125    Qualidade = 14986.3 Numero de nos 24
+Cluster 7 Nos : 18, 33, 99, 37, 49, 201, 173, 139, 222, 134, 161,  Peso: 76    Qualidade = 3362.21 Numero de nos 11
+Cluster 8 Nos : 236, 178, 48, 125, 123, 23, 41, 170, 13, 109, 19, 153, 81, 35, 11, 26, 160, 25, 43, 209, 191, 185, 210, 89, 36, 163, 216, 144, 177, 126, 151,  Peso: 125    Qualidade = 23389 Numero de nos 31
+Cluster 9 Nos : 229, 84, 155, 106, 94, 103, 200, 196, 2, 28, 60, 12, 21, 44, 206, 110, 166, 182, 96, 234, 82, 39, 213, 34,  Peso: 125    Qualidade = 15045.1 Numero de nos 24
+Cluster 10 Nos : 226, 204, 235, 83, 199, 4, 100, 32, 180, 53, 141, 230, 1, 184, 121, 231, 58, 186, 169, 132, 67, 72,  Peso: 125    Qualidade = 12865.9 Numero de nos 22
+Cluster 11 Nos : 59, 156, 70, 9, 142, 131, 176, 90, 95, 105, 227, 214, 76, 55, 136, 119, 224, 164, 208, 124, 237, 174, 192, 112, 148,  Peso: 125    Qualidade = 15780.5 Numero de nos 25
+Qualidade do Grafo: 135432
+Solucao Viavel
+
+
+======== NOVA MELHOR SOLUÇÃO ========
+
+
+Cluster 0 Nos : 128, 239, 224, 22, 30, 90, 200, 175, 121, 55,  Peso: 78    Qualidade = 1912.12 Numero de nos 10
+Cluster 1 Nos : 208, 172, 67, 188, 64, 183, 10, 24, 97, 126, 213, 49, 147,  Peso: 76    Qualidade = 3840.68 Numero de nos 13
+Cluster 2 Nos : 99, 138, 211, 60, 115, 160, 197, 37, 47, 214, 144, 12, 127,  Peso: 76    Qualidade = 4747.51 Numero de nos 13
+Cluster 3 Nos : 26, 18, 225, 80, 131, 233, 45, 56, 48, 192, 130, 72, 120, 234, 232, 79, 156, 106, 185, 164, 223, 168, 157, 98, 113, 31, 81, 32, 112, 178, 78,  Peso: 125    Qualidade = 23105.1 Numero de nos 31
+Cluster 4 Nos : 186, 217, 195, 33, 149, 23, 116, 159, 87, 20, 59, 28, 199, 69, 207, 203, 27, 95, 124, 104, 226, 62, 76, 229,  Peso: 125    Qualidade = 14481.5 Numero de nos 24
+Cluster 5 Nos : 227, 15, 11, 190, 201, 84, 58, 6, 173,  Peso: 76    Qualidade = 2273.82 Numero de nos 9
+Cluster 6 Nos : 166, 13, 57, 114, 189, 46, 21, 219, 143, 1, 105, 154, 132, 184, 179, 210, 158, 86, 180, 169, 205, 42, 35,  Peso: 125    Qualidade = 13666.9 Numero de nos 23
+Cluster 7 Nos : 146, 140, 75, 204, 101, 162, 137, 102, 136, 117, 25, 40, 83, 123, 96, 133, 181, 218, 206, 8, 122, 237, 2, 118, 176,  Peso: 125    Qualidade = 16218.3 Numero de nos 25
+Cluster 8 Nos : 7, 139, 34, 191, 100, 177, 150, 167, 107, 65, 103, 134, 235, 221, 54, 51, 193, 17, 44, 4, 70, 73, 174,  Peso: 125    Qualidade = 14888.5 Numero de nos 23
+Cluster 9 Nos : 110, 52, 228, 209, 125, 141, 14, 0, 29, 53, 61, 91, 50, 39, 230, 109, 38, 148, 63, 212, 142, 152, 220, 36, 16, 215, 108, 68, 155,  Peso: 125    Qualidade = 20456.6 Numero de nos 29
+Cluster 10 Nos : 187, 41, 71, 9, 198, 88, 82, 129, 19, 236, 77, 66, 153, 74, 194, 170, 238, 202, 171, 182, 231, 222, 92, 3,  Peso: 125    Qualidade = 14152 Numero de nos 24
+Cluster 11 Nos : 85, 89, 163, 196, 43, 93, 165, 151, 5, 119, 111, 145, 94, 161, 216, 135,  Peso: 85    Qualidade = 6178.09 Numero de nos 16
+Qualidade do Grafo: 135921
+Solucao Viavel
+
+
+======== NOVA MELHOR SOLUÇÃO ========
+
+
+Cluster 0 Nos : 59, 65, 148, 142, 185, 233, 219, 33, 74, 144, 62, 53, 83, 158, 236, 184, 114, 10, 115, 193, 150, 136, 108, 171, 161,  Peso: 125    Qualidade = 16898.4 Numero de nos 25
+Cluster 1 Nos : 157, 0, 22, 163, 36, 35, 56, 165, 159, 152, 4, 173, 215, 204, 91, 63, 90, 149, 208, 50,  Peso: 106    Qualidade = 9963.95 Numero de nos 20
+Cluster 2 Nos : 77, 190, 217, 230, 79, 128, 99, 132, 196, 198, 188,  Peso: 77    Qualidade = 2941.47 Numero de nos 11
+Cluster 3 Nos : 87, 70, 97, 30, 214, 112, 44, 2, 225, 46, 5,  Peso: 76    Qualidade = 2557.9 Numero de nos 11
+Cluster 4 Nos : 60, 102, 58, 146, 85, 129, 16, 127, 183, 205, 229, 26, 124, 68, 88, 181, 47, 125, 37, 101, 197, 18, 223, 40, 107,  Peso: 124    Qualidade = 16181.5 Numero de nos 25
+Cluster 5 Nos : 51, 72, 145, 57, 52, 111, 154, 113, 130, 98, 20,  Peso: 77    Qualidade = 3316.78 Numero de nos 11
+Cluster 6 Nos : 202, 170, 131, 235, 120, 95, 200, 86, 168, 227, 192, 224, 135, 54, 92, 206, 169, 28, 116,  Peso: 105    Qualidade = 9055.33 Numero de nos 19
+Cluster 7 Nos : 137, 49, 34, 162, 239, 84, 195, 203, 201, 176, 41,  Peso: 76    Qualidade = 3133.69 Numero de nos 11
+Cluster 8 Nos : 211, 82, 9, 17, 174, 118, 64, 177, 78, 123, 222, 151, 31, 75, 194, 12, 216, 175, 80, 126, 237, 8, 76, 94, 234, 7, 67, 189,  Peso: 125    Qualidade = 19744.3 Numero de nos 28
+Cluster 9 Nos : 187, 182, 25, 117, 156, 66, 19, 110, 221, 48, 38, 207, 45, 104, 96, 178, 186, 199, 231, 14, 109, 238, 180, 133, 209, 1,  Peso: 125    Qualidade = 17321.8 Numero de nos 26
+Cluster 10 Nos : 69, 71, 106, 73, 172, 23, 167, 103, 212, 140, 3, 147, 15, 122, 27, 89, 43, 29, 226, 191, 220, 179, 153, 11, 160, 61,  Peso: 125    Qualidade = 17432.1 Numero de nos 26
+Cluster 11 Nos : 6, 228, 55, 121, 232, 39, 134, 138, 213, 143, 81, 32, 100, 166, 210, 139, 93, 24, 119, 105, 155, 218, 141, 21, 42, 13, 164,  Peso: 125    Qualidade = 18954.2 Numero de nos 27
+Qualidade do Grafo: 137501
+Solucao Viavel
+
+
+======== NOVA MELHOR SOLUÇÃO ========
+
+
+Cluster 0 Nos : 13, 239, 227, 127, 161, 220, 137, 95, 147, 207,  Peso: 77    Qualidade = 2719.81 Numero de nos 10
+Cluster 1 Nos : 200, 30, 221, 16, 6, 9, 231, 90, 140, 125, 99, 103, 107, 21, 124, 191, 65, 117, 175,  Peso: 119    Qualidade = 9323.13 Numero de nos 19
+Cluster 2 Nos : 62, 56, 195, 154, 37, 144, 7, 59, 168, 88, 178, 66, 78, 83, 188,  Peso: 76    Qualidade = 5320.8 Numero de nos 15
+Cluster 3 Nos : 60, 81, 170, 85, 235, 11, 228, 24, 35, 84, 54,  Peso: 76    Qualidade = 2697 Numero de nos 11
+Cluster 4 Nos : 183, 163, 158, 219, 138, 171, 14, 41, 128, 146, 97, 118, 91, 153, 210, 25, 55, 211,  Peso: 98    Qualidade = 8263.73 Numero de nos 18
+Cluster 5 Nos : 181, 113, 76, 63, 155, 61, 174, 28, 18, 38, 234, 122, 167, 8, 46, 198, 121, 31, 134, 202, 194,  Peso: 119    Qualidade = 11560.8 Numero de nos 21
+Cluster 6 Nos : 47, 145, 204, 165, 20, 52, 12, 110, 69, 33, 67,  Peso: 76    Qualidade = 2681.68 Numero de nos 11
+Cluster 7 Nos : 45, 68, 10, 187, 94, 80, 23, 196, 53, 236, 102, 71, 40, 197, 212, 44, 159, 58, 173, 208, 100, 3, 226, 1, 199, 203, 205,  Peso: 125    Qualidade = 19466.3 Numero de nos 27
+Cluster 8 Nos : 222, 164, 193, 213, 109, 36, 180, 0, 182, 108, 96, 98, 209, 27, 4, 229, 189, 148, 92, 72, 172, 86, 70, 166, 114, 176, 77, 111, 39, 115, 104,  Peso: 125    Qualidade = 24529.2 Numero de nos 31
+Cluster 9 Nos : 143, 17, 190, 224, 119, 177, 132, 120, 215, 50, 131, 233, 225, 123, 232, 152, 150, 57, 149, 139, 74, 214, 89, 49,  Peso: 125    Qualidade = 15792.5 Numero de nos 24
+Cluster 10 Nos : 112, 223, 87, 93, 105, 133, 157, 192, 19, 82, 29, 116, 238, 141, 126, 5, 51, 2, 101, 79, 32, 75, 162, 151, 184,  Peso: 125    Qualidade = 16136.3 Numero de nos 25
+Cluster 11 Nos : 135, 237, 22, 216, 156, 129, 130, 217, 48, 169, 106, 42, 206, 142, 160, 179, 26, 43, 185, 136, 73, 218, 64, 186, 34, 201, 230, 15,  Peso: 125    Qualidade = 19830.7 Numero de nos 28
+Qualidade do Grafo: 138322
+Solucao Viavel
+
+Numero de solucoes inviaveis: 0
+Media das Solucoes: 134890
+Melhor Solucao Final: 138322
+tempo de execucao: 590013 millisegundos
+
+

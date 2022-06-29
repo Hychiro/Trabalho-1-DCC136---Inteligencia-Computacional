@@ -1,0 +1,25 @@
+
+======== NOVA MELHOR SOLUÇÃO ========
+
+
+Cluster 0 Nos : 212, 111, 55, 219, 66, 130, 53, 237, 68, 65, 226, 103, 15, 108, 186, 167, 70, 155, 104, 176, 22,  Peso: 118    Qualidade = 10856.1 Numero de nos 21
+Cluster 1 Nos : 16, 6, 230, 88, 45, 164, 171, 76, 127, 101, 228, 39, 1,  Peso: 76    Qualidade = 4391.85 Numero de nos 13
+Cluster 2 Nos : 89, 191, 140, 183, 128, 235, 12, 175, 86, 150,  Peso: 77    Qualidade = 2153.55 Numero de nos 10
+Cluster 3 Nos : 106, 54, 59, 202, 160, 205, 203, 182, 215, 0, 120, 60, 8,  Peso: 78    Qualidade = 4379.19 Numero de nos 13
+Cluster 4 Nos : 197, 157, 62, 109, 124, 67, 18, 146, 153, 35, 154,  Peso: 77    Qualidade = 3194.49 Numero de nos 11
+Cluster 5 Nos : 47, 156, 136, 57, 19, 3, 217, 90, 97, 91, 121, 34, 178, 216, 72, 158, 51, 80, 151, 144, 165,  Peso: 121    Qualidade = 11418.7 Numero de nos 21
+Cluster 6 Nos : 9, 44, 166, 110, 14, 187, 10, 238, 199, 208, 159,  Peso: 78    Qualidade = 3039 Numero de nos 11
+Cluster 7 Nos : 98, 27, 81, 40, 26, 229, 30, 131, 32, 113, 227, 126, 58, 100, 125, 213, 24, 13, 2, 169, 236, 37, 116, 137, 46, 188, 85, 63,  Peso: 125    Qualidade = 19486.6 Numero de nos 28
+Cluster 8 Nos : 196, 115, 29, 190, 172, 99, 122, 152, 114, 141, 168, 48, 145, 112, 4, 234, 7, 139, 143, 129, 170, 133, 232, 96, 134, 74,  Peso: 125    Qualidade = 18063.8 Numero de nos 26
+Cluster 9 Nos : 193, 221, 117, 218, 36, 189, 223, 28, 162, 17, 163, 132, 147, 211, 231, 138, 52, 21, 107, 194, 173, 61, 239, 83, 31, 56, 195, 177, 82, 161, 192, 148, 105, 33,  Peso: 125    Qualidade = 30173.1 Numero de nos 34
+Cluster 10 Nos : 198, 222, 5, 102, 95, 92, 43, 210, 77, 79, 233, 118, 11, 206, 204, 64, 123, 38, 84, 209, 78, 71, 94, 41, 180,  Peso: 125    Qualidade = 15077 Numero de nos 25
+Cluster 11 Nos : 87, 225, 25, 149, 49, 73, 119, 214, 142, 185, 50, 181, 23, 207, 224, 179, 220, 200, 69, 201, 174, 20, 42, 75, 135, 184, 93,  Peso: 125    Qualidade = 18033.8 Numero de nos 27
+Qualidade do Grafo: 140267
+Solucao Viavel
+
+Numero de solucoes inviaveis: 0
+Media das Solucoes: 134829
+Melhor Solucao Final: 140267
+tempo de execucao: 590011 millisegundos
+
+
