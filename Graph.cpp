@@ -192,12 +192,15 @@ bool Graph::clustersViaveis1(){
 
 
 bool Graph::clustersViaveis2(){
-
-    for (Cluster* i = this->first_Cluster; i != nullptr; i=i->getNextCluster())
+    Cluster * i;
+    for (int k=0; k<getNumCluster();k++)
     {
+        i = getCluster(k);
         if(!(i->viavel())){//se o cluster n for viavel
+        // cout << "Cluster "<<i->getidCluster()<< "inviavel"<<endl;
             return false;
         }
+        // cout << "Cluster "<<i->getidCluster()<< "Viavel"<<endl;
     }
 
     return true;
@@ -345,22 +348,27 @@ int Graph::getNumCluster()
 
 void Graph::resetaClusters()
 {
-    for (Cluster *a = this->first_Cluster; a != nullptr; a = a->getNextCluster())
+    Cluster *a;
+    for (int i = 0; i <getNumCluster(); i++)
     {
+        a = getCluster(i);
         a->setPeso(0);
         a->setNumNodes(0);
-
+        
         Node *next_node = a->getFirstNode();
         //cout<<"entra aqui 1"<<endl;
         if (next_node != nullptr)
         {
-
+            
             delete next_node;
+             
             //cout<<"entra aqui 2"<<endl;
             a->setFirstNode(nullptr);
             a->setLastNode(nullptr);
         }
+        
     }
+    
 }
 
 Node *Graph::getNode(int id)

@@ -21,17 +21,37 @@ Matheus Cardoso Faesy 202065065A
 
 using namespace std;
 
-void Grasp::Clusterizar(Graph *grafo, Instancia *atual, Instancia *analizada, Instancia *melhorAnalizada)
+void Grasp::Clusterizar(Graph *grafo, Instancia *atual, Instancia *analizada, Instancia *melhorAnalizada, Instancia *movimentoAnterior)
 {
+    int clo = clock();
+    int nmenos4 = ((grafo->getOrder()/4) - 1)*1000;
     bool repetir = true;
     do
     {
+
         this->Centroides(grafo);
+
         this->CompletarLI1(grafo);
+        // for (int i = 0; i < grafo->getNumCluster(); i++)
+        // {
+        //     // cout << "Cluster "<<i<< " LimiteInferior e Superior: " << grafo->getCluster(i)->getLimiteInferior() << "--" << grafo->getCluster(i)->getLimiteSuperior()<<endl;
+        // }
         repetir = true;
+        //this->imprime(grafo);
         if (grafo->clustersViaveis2())
         {
+
             repetir = false;
+        }
+        else
+        {
+
+            grafo->resetaClusters();
+
+            for (int k = 0; k < grafo->getOrder(); k++)
+            {
+                grafo->listaDeNosLivres[k] = true;
+            }
         }
 
     } while (repetir);
@@ -42,17 +62,18 @@ void Grasp::Clusterizar(Graph *grafo, Instancia *atual, Instancia *analizada, In
 
     this->CompletarVerticesLivres(grafo);
 
-    this->imprime(grafo);
-
-    for (int i = 0; i < 2000; i++)
+    // this->imprime(grafo);
+    //cout<<"nmenos4 "<<nmenos4<<endl;
+    while (nmenos4>(clock() - clo))
     {
         // cout<<"Busca local: "<<i<<endl;
-        this->buscaLocal(grafo, atual, analizada, melhorAnalizada);
+        this->buscaLocal(grafo, atual, analizada, melhorAnalizada, movimentoAnterior);
         atual->setInstancia(0, 0, 0);
         analizada->setInstancia(0, 0, 0);
         melhorAnalizada->setInstancia(0, 0, 0);
     }
 
+    cout << "tempo de execucao da iteração: " << (clock() - clo) << " millisegundos" << endl;
     // this->imprime(grafo);
 }
 
@@ -71,6 +92,14 @@ void Grasp::imprime(Graph *grafo)
         cout << " Peso: " << grafo->getCluster(i)->getPeso() << "    Qualidade = " << grafo->getCluster(i)->calculaQualidade() << " Numero de nos " << grafo->getCluster(i)->getNumNodes() << endl;
     }
     cout << "Qualidade do Grafo: " << this->calculaSolucao(grafo) << endl;
+    if (grafo->clustersViaveis2())
+    {
+        cout << "Solucao Viavel" << endl;
+    }
+    else
+    {
+        cout << "Solucao Nao Viavel" << endl;
+    }
     cout << endl;
 }
 
@@ -346,7 +375,7 @@ void Grasp::CompletarLS1(Graph *grafo)
 void Grasp::CompletarVerticesLivres(Graph *grafo)
 {
 
-    cout << "entra no completar" << endl;
+    // cout << "entra no completar" << endl;
 
     bool algumVerticeLivre = false;
 
@@ -374,20 +403,23 @@ void Grasp::CompletarVerticesLivres(Graph *grafo)
             }
         }
 
-        int contador=0;
+        int contador = 0;
 
         do
         {
 
             clusterSorteado = contador;
 
-            if(contador > grafo->getNumCluster()){//adiciona o nó no cluster de menor peso
+            if (contador > grafo->getNumCluster())
+            { // adiciona o nó no cluster de menor peso
                 int menorCluster = grafo->getCluster(0)->getPeso();
                 int menorCluster2 = -1;
-                for(int i=0 ; i<grafo->getNumCluster(); i ++){
-                    if(grafo->getCluster(i)->getPeso() < menorCluster){
-                        menorCluster=grafo->getCluster(i)->getPeso();
-                        menorCluster2=i;
+                for (int i = 0; i < grafo->getNumCluster(); i++)
+                {
+                    if (grafo->getCluster(i)->getPeso() < menorCluster)
+                    {
+                        menorCluster = grafo->getCluster(i)->getPeso();
+                        menorCluster2 = i;
                     }
                 }
 
@@ -396,7 +428,6 @@ void Grasp::CompletarVerticesLivres(Graph *grafo)
                 grafo->listaDeNosLivres[verticeAnalisado] = false;
 
                 break;
-
             }
 
             contador++;
@@ -415,7 +446,7 @@ void Grasp::CompletarVerticesLivres(Graph *grafo)
             }
         }
     }
-    cout << "sai do completar" << endl;
+    // cout << "sai do completar" << endl;
 }
 
 void Grasp::Completar(Graph *grafo)
@@ -586,7 +617,7 @@ bool Grasp::desbalanceadoS(Cluster *cluster)
     return false;
 }
 
-void Grasp::buscaLocal(Graph *grafo, Instancia *atual, Instancia *analizada, Instancia *melhorAnalizada)
+void Grasp::buscaLocal(Graph *grafo, Instancia *atual, Instancia *analizada, Instancia *melhorAnalizada, Instancia *movimentoAnterior)
 {
     // declaração de variaveis
 
@@ -598,7 +629,11 @@ void Grasp::buscaLocal(Graph *grafo, Instancia *atual, Instancia *analizada, Ins
     float valorSolAutual = 0;
     float pesoClusterPosADDNode = 0;
     float valorMelhorSol;
-
+    bool movimentoAnteriorPossivel = false;
+    if (grafo->clustersViaveis2())
+    {
+        valorMelhorSol = calculaSolucao(grafo);
+    }
     for (int i = 0; i < grafo->getNumCluster(); i++)
     {
 
@@ -606,15 +641,9 @@ void Grasp::buscaLocal(Graph *grafo, Instancia *atual, Instancia *analizada, Ins
 
         while (desbalanceadoS(clusterAtual))
         {
-            if (grafo->clustersViaveis2())
-            {
-                valorMelhorSol = calculaSolucao(grafo);
-            }
-            else
-            {
-                valorMelhorSol = 0;
-            }
-            cout << "loop" << endl;
+            // verificação para caso esteja balanceado não seja
+            valorMelhorSol = 0;
+
             // cout << "Tentando Balancear Cluster " << clusterAtual->getidCluster() << endl;
             valorAleatorio = rand() % grafo->getCluster(i)->getNumNodes();
 
@@ -650,25 +679,26 @@ void Grasp::buscaLocal(Graph *grafo, Instancia *atual, Instancia *analizada, Ins
             {
                 if (i != l)
                 {
-                    // cout << "no Cluster " << l;
-                    pesoClusterPosADDNode = grafo->getCluster(l)->getPeso() + p->getWeight();
-
-                    if (pesoClusterPosADDNode < grafo->getCluster(l)->getLimiteSuperior() && pesoClusterPosADDNode >= grafo->getCluster(l)->getLimiteInferior())
+                    if (verificaTroca(grafo, i, l, p->getId()))
                     {
+                        // cout << "no Cluster " << l;
                         // cout << " tem espaco para esse no";
 
-                        if (verificaTroca(grafo, i, l, p->getId()))
+                        // cout << " e a troca e viavel";
+                        // cout<<endl<<i<<" __ "<<l<<" __ "<<p->getId()<<endl;
+                        troca(grafo, i, l, p->getId());
+                        // cout << " _1 ";
+                        valorSolAutual = calculaSolucao(grafo);
+                        // cout << " _2 ";
+                        troca(grafo, l, i, p->getId());
+                        // cout << " _3 ";
+                        analizada->setInstancia(l, p->getId(), valorSolAutual);
+                        // cout << " _4 ";
+
+                        pesoClusterPosADDNode = grafo->getCluster(l)->getPeso() + p->getWeight();
+
+                        if (pesoClusterPosADDNode < grafo->getCluster(l)->getLimiteSuperior() && pesoClusterPosADDNode >= grafo->getCluster(l)->getLimiteInferior())
                         {
-                            // cout << " e a troca e viavel";
-                            // cout<<endl<<i<<" __ "<<l<<" __ "<<p->getId()<<endl;
-                            troca(grafo, i, l, p->getId());
-                            // cout << " _1 ";
-                            valorSolAutual = calculaSolucao(grafo);
-                            // cout << " _2 ";
-                            troca(grafo, l, i, p->getId());
-                            // cout << " _3 ";
-                            analizada->setInstancia(l, p->getId(), valorSolAutual);
-                            // cout << " _4 ";
 
                             if (melhorAnalizada->getMelhorInstancia() < analizada->getMelhorInstancia())
                             {
@@ -679,12 +709,22 @@ void Grasp::buscaLocal(Graph *grafo, Instancia *atual, Instancia *analizada, Ins
                             }
                             else
                             {
-                                // cout << " mas nao e a melhor instancia" << endl;
+                                movimentoAnteriorPossivel = true;
+
+                                movimentoAnterior->idCluster = analizada->getIdCluster();
+                                movimentoAnterior->idNo = analizada->getIdNo();
+                                movimentoAnterior->melhorInstancia = analizada->getMelhorInstancia();
                             }
-                            // movimentoAnterior = analizada;
                         }
                         else
                         {
+                            if (!movimentoAnteriorPossivel)
+                            {
+                                movimentoAnterior->idCluster = analizada->getIdCluster();
+                                movimentoAnterior->idNo = analizada->getIdNo();
+                                movimentoAnterior->melhorInstancia = analizada->getMelhorInstancia();
+                            }
+
                             // cout << " mas a troca nao e viavel";
                         }
                     }
@@ -694,14 +734,22 @@ void Grasp::buscaLocal(Graph *grafo, Instancia *atual, Instancia *analizada, Ins
                     }
                 }
             }
-
-            if (verificaTroca(grafo, i, melhorAnalizada->getIdCluster(), p->getId()))
+            if (melhorAnalizada->getIdCluster() != atual->getIdCluster())
             {
-                // cout<<endl;
-                // cout << "a melhor instancia e o  cluster: "<<melhorAnalizada->getIdCluster()<<endl<<"No: "<<melhorAnalizada->getIdNo()<<endl<<"Peso: "<<melhorAnalizada->getMelhorInstancia()<< endl;
-                // cout<<endl;
-                troca(grafo, i, melhorAnalizada->getIdCluster(), p->getId());
+                if (verificaTroca(grafo, i, melhorAnalizada->getIdCluster(), p->getId()))
+                {
+                    // cout<<endl;
+                    // cout << "a melhor instancia e o  cluster: "<<melhorAnalizada->getIdCluster()<<endl<<"No: "<<melhorAnalizada->getIdNo()<<endl<<"Peso: "<<melhorAnalizada->getMelhorInstancia()<< endl;
+                    // cout<<endl;
+                    troca(grafo, i, melhorAnalizada->getIdCluster(), p->getId());
+                    pesoCluster = grafo->getCluster(i)->getPeso();
+                }
+            }
+            else
+            {
+                troca(grafo, i, movimentoAnterior->getIdCluster(), p->getId());
                 pesoCluster = grafo->getCluster(i)->getPeso();
+                break;
             }
             // cout<<"0.1"<<endl;
         }

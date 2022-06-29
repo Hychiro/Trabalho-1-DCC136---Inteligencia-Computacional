@@ -307,9 +307,6 @@ Graph *leituraInstancia2(ifstream &input_file, ofstream &output_file)
         }
     }
 
-
-
-
     int limiteInferiorSuperior[clusters][2];
 
     for (int i = 0; i < clusters; i++)
@@ -374,6 +371,7 @@ void selecionar(int selecao, Graph *graph, ofstream &output_file)
     case 1:
     {
         int clo = clock();
+        int contaSolNaoViaveis = 0;
         graph->printGraph(output_file);
 
         //     for (int i = 0; i < graph->getNumCluster(); i++)
@@ -384,20 +382,30 @@ void selecionar(int selecao, Graph *graph, ofstream &output_file)
         Instancia *atual = new Instancia();
         Instancia *analizada = new Instancia();
         Instancia *melhorAnalizada = new Instancia();
+        Instancia *movimentoAnterior = new Instancia();
 
         float melhorsolucao = 0;
         for (int i = 0; i < 10; i++)
         {
             Grasp *a;
             cout << "Cluster " << i << endl;
-            a->Clusterizar(graph, atual, analizada, melhorAnalizada);
+            a->Clusterizar(graph, atual, analizada, melhorAnalizada, movimentoAnterior);
             a->imprime(graph);
             // cout<<"Solucao: "<<a->calculaSolucao(graph)<<endl;
-            if (a->calculaSolucao(graph) > melhorsolucao)
+
+            if (graph->clustersViaveis2())
             {
-                melhorsolucao = a->calculaSolucao(graph);
-                // cout<<"Melhor Solucao: "<<melhorsolucao<<endl;
+                if (a->calculaSolucao(graph) > melhorsolucao)
+                {
+                    melhorsolucao = a->calculaSolucao(graph);
+                    // cout<<"Melhor Solucao: "<<melhorsolucao<<endl;
+                }
             }
+            else
+            {
+                contaSolNaoViaveis++;
+            }
+
             graph->resetaClusters();
             for (int k = 0; k < graph->getOrder(); k++)
             {
@@ -405,6 +413,7 @@ void selecionar(int selecao, Graph *graph, ofstream &output_file)
             }
         }
         cout << "Melhor Solucao Final: " << melhorsolucao << endl;
+        cout << "Numero de solucoes inviaveis: " << contaSolNaoViaveis << endl;
 
         output_file << "tempo de execucao: " << (clock() - clo) << " millisegundos" << endl;
 
@@ -485,12 +494,12 @@ int main(int argc, char const *argv[])
 
         if (verificaTipoLeitura(input_file_name))
         {
-           
+
             graph = leituraInstancia(input_file, output_file);
         }
         else
         {
-          
+
             graph = leituraInstancia2(input_file, output_file);
         }
 
