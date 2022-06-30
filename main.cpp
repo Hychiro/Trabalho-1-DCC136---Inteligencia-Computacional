@@ -13,6 +13,7 @@ Matheus Cardoso Faesy 202065065A
 #include <chrono>
 #include "Graph.h"
 #include "Grasp.h"
+#include "Grasp2.h"
 #include <thread>
 #include <time.h>
 #include <sstream>
