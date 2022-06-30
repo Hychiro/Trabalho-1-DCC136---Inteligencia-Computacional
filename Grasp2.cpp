@@ -27,12 +27,18 @@ void Grasp2::Clusterizar(Graph *grafo, Instancia *atual, Instancia *analizada, I
     int clo = clock();
     int nmenos4 = ((grafo->getOrder() / 4) - 1) * 1000;
     int iteracoesSemMelhorSol = 0;
-    int contadorBuscaLocal=0;
-    int contadorPertubacao=0;
-    int contadorConstrucao=0;
-    for (int d = 0; iteracoesSemMelhorSol < grafo->getOrder() / 2 && nmenos4/4 > (clock() - clo); d++)
+    int contadorConstrucao = 0;
+    for (int d = 0; iteracoesSemMelhorSol < grafo->getOrder()/2 && nmenos4 / 4 > (clock() - clo); d++)
     {
+
+        grafo->resetaClusters();
+        for (int k = 0; k < grafo->getOrder(); k++)
+        {
+            grafo->listaDeNosLivres[k] = true;
+        }
+
         contadorConstrucao++;
+
         bool repetir = true;
         do
         {
@@ -41,22 +47,15 @@ void Grasp2::Clusterizar(Graph *grafo, Instancia *atual, Instancia *analizada, I
 
             this->CompletarLI1(grafo);
 
-            // for (int i = 0; i < grafo->getNumCluster(); i++)
-            // {
-            //     // cout << "Cluster "<<i<< " LimiteInferior e Superior: " << grafo->getCluster(i)->getLimiteInferior() << "--" << grafo->getCluster(i)->getLimiteSuperior()<<endl;
-            // }
             repetir = true;
-            // this->imprime(grafo);
+
             if (grafo->clustersViaveis2())
             {
-
                 repetir = false;
             }
             else
             {
-
                 grafo->resetaClusters();
-
                 for (int k = 0; k < grafo->getOrder(); k++)
                 {
                     grafo->listaDeNosLivres[k] = true;
@@ -72,85 +71,31 @@ void Grasp2::Clusterizar(Graph *grafo, Instancia *atual, Instancia *analizada, I
         this->CompletarVerticesLivres(grafo);
 
         this->buscaLocal(grafo, atual, analizada, melhorAnalizada, movimentoAnterior);
-        contadorBuscaLocal++;
 
         if (calculaQualidadeMelhorSolucao(grafo) < calculaSolucao(grafo))
         {
             grafo->resetaClusterMelhorSol();
             grafo->atualizaMelhorSolucao();
-            int iteracoesSemMelhorSol = 0;
-
+            iteracoesSemMelhorSol = 0;
         }
         iteracoesSemMelhorSol++;
-        if(iteracoesSemMelhorSol > grafo->getOrder() / 2){
-            cout<<"Parou de Construir por Tempo"<<endl;
-        }else if(nmenos4/4 < (clock() - clo)){
-            cout<<"Parou de Construir por repeticao"<<endl;
-        }
     }
-    this->buscaLocal(grafo, atual, analizada, melhorAnalizada, movimentoAnterior);
-    // this->imprime(grafo);
-    // cout<<"nmenos4 "<<nmenos4<<endl;
-    int contador = 0;
-    int ordemX2 = grafo->getOrder() * 3;
-    int ordemSob10 = grafo->getOrder() / 40;
-    int solAnt=0;
 
-    int j = 0;
+    this->buscaLocal(grafo, atual, analizada, melhorAnalizada, movimentoAnterior);
+
     while (nmenos4 > (clock() - clo))
     {
-
-        if (contador > ordemX2)
-        {
-            if (calculaQualidadeMelhorSolucao(grafo) < calculaSolucao(grafo))
-            {
-                grafo->resetaClusterMelhorSol();
-                grafo->atualizaMelhorSolucao();
-            }
-            for (int i = 0; i < 1; i++)
-            {
-                // cout << "pertubacao: " << i << endl;
-                pertubacao(grafo);
-                contadorPertubacao++;
-            }
-            this->buscaLocal(grafo, atual, analizada, melhorAnalizada, movimentoAnterior);
-            contadorBuscaLocal++;
-            contador = 0;
-            solAnt=calculaSolucao(grafo);
-        }
-        else
-        {
-            // cout << "Busca local: " << j << endl;
-            this->buscaLocal(grafo, atual, analizada, melhorAnalizada, movimentoAnterior);
-            this->buscaLocal2(grafo);
-            contadorBuscaLocal++;
-            if (calculaSolucao(grafo) <= solAnt)
-            {
-                contador++;
-            }
-            else
-            {
-                solAnt=calculaSolucao(grafo);
-                contador = 0;
-            }
-            atual->setInstancia(0, 0, 0);
-            analizada->setInstancia(0, 0, 0);
-            melhorAnalizada->setInstancia(0, 0, 0);
-        }
-
-        j++;
+        this->buscaLocal2(grafo);
     }
+
     if (calculaQualidadeMelhorSolucao(grafo) < calculaSolucao(grafo))
     {
-
         grafo->resetaClusterMelhorSol();
-
         grafo->atualizaMelhorSolucao();
     }
+
     cout << "tempo de execucao da iteração: " << (clock() - clo) << " millisegundos" << endl;
-    cout << "Busca Local Realizada "<<contadorBuscaLocal<<" vezes"<<endl;
-    cout << "Pertubacao Realizada "<<contadorPertubacao<<" vezes"<<endl;
-    cout << "Construcao Realizada "<<contadorConstrucao<<" vezes"<<endl;
+    cout << "Construcao Realizada " << contadorConstrucao << " vezes" << endl;
     // this->imprime(grafo);
 }
 
@@ -188,7 +133,7 @@ void Grasp2::guarda(Graph *grafo, ofstream &output_file)
     // cout << "Melhor Instancia: " << grafo->melhorInstancia << endl;
     for (int i = 0; i < grafo->getNumCluster(); i++)
     {
-        output_file << "Cluster " << i << " Nos : ";
+        output_file << "{";
         for (Node *a = grafo->getClusterMelhorSol(i)->getFirstNode(); a != nullptr; a = a->getNextNode())
         {
             output_file << a->getId() << ", ";
@@ -803,8 +748,8 @@ void Grasp2::pertubacao(Graph *grafo)
         idCluster2 = rand() % grafo->getNumCluster();
     }
     // cout << "sai while" << endl;
-    //int aux1 = 0;
-    //int aux2 = 0;
+    // int aux1 = 0;
+    // int aux2 = 0;
     aux1 = rand() % grafo->getCluster(idCluster1)->getNumNodes();
 
     aux2 = rand() % grafo->getCluster(idCluster2)->getNumNodes();
@@ -843,7 +788,7 @@ void Grasp2::pertubacao(Graph *grafo)
 void Grasp2::buscaLocal2(Graph *grafo)
 {
 
-    //sortear 2 clusters diferentes
+    // sortear 2 clusters diferentes
     int idCluster1 = 0;
     int idCluster2 = 0;
 
@@ -854,7 +799,7 @@ void Grasp2::buscaLocal2(Graph *grafo)
         idCluster2 = rand() % grafo->getNumCluster();
     }
 
-    //sortear 1 nó de cada cluster
+    // sortear 1 nó de cada cluster
     Node *nodeCluster1;
     Node *nodeCluster2;
     int idNo1;
@@ -883,12 +828,13 @@ void Grasp2::buscaLocal2(Graph *grafo)
     idNo1 = nodeCluster1->getId();
     idNo2 = nodeCluster2->getId();
 
-    //fazer a troca entre nós de clusters
+    // fazer a troca entre nós de clusters
     int solAntiga = calculaSolucao(grafo);
     swap(grafo, idCluster1, idCluster2, idNo1, idNo2);
 
-    //se a qualidade piorar ou não ser viavel fazer a troca ao contrario
-    if(!grafo->clustersViaveis2() || calculaSolucao(grafo) < solAntiga){
+    // se a qualidade piorar ou não ser viavel fazer a troca ao contrario
+    if (!grafo->clustersViaveis2() || calculaSolucao(grafo) < solAntiga)
+    {
         swap(grafo, idCluster2, idCluster1, idNo1, idNo2);
     }
 }
