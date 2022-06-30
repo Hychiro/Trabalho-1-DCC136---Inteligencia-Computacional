@@ -1,23 +1,8 @@
+Numero de solucoes inviaveis: 10
+Nao houve Solucao Viavel, Logo Melhor Solucao e Media inexistentes
+tempo de execucao: 40208 millisegundos
 
-======== NOVA MELHOR SOLUÇÃO ========
-
-
-Cluster 0 Nos : 1,  Peso: 39.0518    Qualidade = 0 Numero de nos 1
-Cluster 1 Nos : 9, 11, 16,  Peso: 49.8858    Qualidade = 175 Numero de nos 3
-Cluster 2 Nos : 3,  Peso: 38.86    Qualidade = 0 Numero de nos 1
-Cluster 3 Nos : 15,  Peso: 41.5574    Qualidade = 0 Numero de nos 1
-Cluster 4 Nos : 4, 14, 18,  Peso: 49.8429    Qualidade = 451 Numero de nos 3
-Cluster 5 Nos : 2, 8,  Peso: 50.6385    Qualidade = 0 Numero de nos 2
-Cluster 6 Nos : 10, 0, 17,  Peso: 52.7514    Qualidade = 138 Numero de nos 3
-Cluster 7 Nos : 19, 6,  Peso: 52.8648    Qualidade = 0 Numero de nos 2
-Cluster 8 Nos : 5, 13,  Peso: 51.1842    Qualidade = 0 Numero de nos 2
-Cluster 9 Nos : 7, 12,  Peso: 50.8152    Qualidade = 0 Numero de nos 2
-Qualidade do Grafo: 764
-Solucao Viavel
-
-Numero de solucoes inviaveis: 9
-Media das Solucoes: 764
-Melhor Solucao Final: 764
-tempo de execucao: 40001 millisegundos
-
+Numero de solucoes inviaveis: 10
+Nao houve Solucao Viavel, Logo Melhor Solucao e Media inexistentes
+tempo de execucao: 40219 millisegundos
 

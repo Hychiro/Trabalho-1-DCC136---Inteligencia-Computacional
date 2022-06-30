@@ -28,9 +28,64 @@ void Grasp2::Clusterizar(Graph *grafo, Instancia *atual, Instancia *analizada, I
     int nmenos4 = ((grafo->getOrder() / 4) - 1) * 1000;
     int iteracoesSemMelhorSol = 0;
     int contadorConstrucao = 0;
-    for (int d = 0; iteracoesSemMelhorSol < grafo->getOrder()/2 && nmenos4 / 4 > (clock() - clo); d++)
-    {
 
+    if (grafo->getOrder() < 21)
+    {
+        for (int d = 0; iteracoesSemMelhorSol < grafo->getOrder() / 2 && nmenos4 / 4 > (clock() - clo); d++)
+        {
+
+            grafo->resetaClusters();
+            for (int k = 0; k < grafo->getOrder(); k++)
+            {
+                grafo->listaDeNosLivres[k] = true;
+            }
+
+            contadorConstrucao++;
+
+            bool repetir = true;
+            do
+            {
+
+                this->Centroides(grafo);
+
+                this->CompletarLI1(grafo);
+
+                repetir = true;
+
+                if (grafo->clustersViaveis2())
+                {
+                    repetir = false;
+                }
+                else
+                {
+                    grafo->resetaClusters();
+                    for (int k = 0; k < grafo->getOrder(); k++)
+                    {
+                        grafo->listaDeNosLivres[k] = true;
+                    }
+                }
+
+            } while (repetir);
+
+            this->CompletarLS1(grafo);
+
+            this->Completar(grafo);
+
+            this->CompletarVerticesLivres(grafo);
+
+            this->buscaLocal(grafo, atual, analizada, melhorAnalizada, movimentoAnterior);
+
+            if (calculaQualidadeMelhorSolucao(grafo) < calculaSolucao(grafo))
+            {
+                grafo->resetaClusterMelhorSol();
+                grafo->atualizaMelhorSolucao();
+                iteracoesSemMelhorSol = 0;
+            }
+            iteracoesSemMelhorSol++;
+        }
+    }
+    else
+    {
         grafo->resetaClusters();
         for (int k = 0; k < grafo->getOrder(); k++)
         {
@@ -131,6 +186,7 @@ void Grasp2::guarda(Graph *grafo, ofstream &output_file)
 
     output_file << endl;
     // cout << "Melhor Instancia: " << grafo->melhorInstancia << endl;
+    output_file << "S = {";
     for (int i = 0; i < grafo->getNumCluster(); i++)
     {
         output_file << "{";
@@ -138,8 +194,9 @@ void Grasp2::guarda(Graph *grafo, ofstream &output_file)
         {
             output_file << a->getId() << ", ";
         }
-        output_file << " Peso: " << grafo->getClusterMelhorSol(i)->getPeso() << " Numero de nos " << grafo->getClusterMelhorSol(i)->getNumNodes() << endl;
+        output_file << "},";
     }
+    output_file << "}" << endl;
     output_file << "Qualidade do Grafo: " << this->calculaSolucao(grafo) << endl;
     output_file << "Melhor Qualidade do Grafo: " << this->calculaQualidadeMelhorSolucao(grafo) << endl;
     if (grafo->clustersViaveis3())
@@ -155,28 +212,63 @@ void Grasp2::guarda(Graph *grafo, ofstream &output_file)
 
 void Grasp2::Centroides(Graph *grafo)
 {
+
     int Ncentroides = 0;
     Ncentroides = grafo->getNumCluster();
     int Nvertices = 0;
     Nvertices = grafo->getOrder();
     int centroides[Ncentroides];
-
+    Node *p;
     int i = 0, igual;
-    do
+    int centroideMaisLeve = 0;
+    if (grafo->getOrder() < 21)
     {
-        centroides[i] = rand() % Nvertices;
-        igual = 0;
-        for (int j = 0; j < i; j++)
+        do
         {
-            if (centroides[i] == centroides[j])
+            centroides[i] = rand() % Nvertices;
+            igual = 0;
+            for (int j = 0; j < i; j++)
             {
-                igual = 1;
+                if (centroides[i] == centroides[j])
+                {
+                    igual = 1;
+                }
             }
+
+            if (igual == 0)
+                i++;
+        } while (i < Ncentroides);
+    }
+    else
+    {
+
+        for (int k = 0; k < grafo->getNumCluster(); k++)
+        {
+            centroides[k] = 0;
         }
 
-        if (igual == 0)
-            i++;
-    } while (i < Ncentroides);
+        for (int k = 0; k < grafo->getOrder(); k++)
+        {
+            p = grafo->getNode(k);
+            for (int l = 0; l < grafo->getNumCluster(); l++)
+            {
+                if (grafo->listaDeNosLivres[k] == true)
+                {
+                    if (p->getWeight() > grafo->getNode(centroides[l])->getWeight())
+                    {
+                        grafo->listaDeNosLivres[k] = false;
+                        grafo->listaDeNosLivres[centroides[l]] = true;
+                        centroides[l] = k;
+                    }
+                }
+            }
+        }
+    }
+
+    for (int i = 0; i < Ncentroides; i++)
+    {
+        grafo->listaDeNosLivres[centroides[i]] = true;
+    }
 
     for (int i = 0; i < Ncentroides; i++)
     {

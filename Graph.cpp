@@ -259,7 +259,6 @@ void Graph::insertAllClusters()
         this->last_Cluster = p;
         this->last_Cluster2 = q;
     }
-
 }
 
 bool Graph::verificaAresta(int id, int target_id)

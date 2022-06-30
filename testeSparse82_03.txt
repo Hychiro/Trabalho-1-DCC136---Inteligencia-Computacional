@@ -2,65 +2,32 @@
 ======== NOVA MELHOR SOLUÇÃO ========
 
 
-Cluster 0 Nos : 43, 53, 14, 49, 67, 34, 56,  Peso: 42    Qualidade = 42.0824 Numero de nos 7
-Cluster 1 Nos : 28, 39, 74, 54, 17, 73, 31, 25, 76, 40, 26, 64,  Peso: 75    Qualidade = 153.949 Numero de nos 12
-Cluster 2 Nos : 55, 69, 9, 0, 13, 18, 11, 62, 2, 37, 44, 72, 80, 61, 6, 1, 75,  Peso: 75    Qualidade = 151.51 Numero de nos 17
-Cluster 3 Nos : 51, 66, 48, 58, 70,  Peso: 26    Qualidade = 67.3784 Numero de nos 5
-Cluster 4 Nos : 36, 21, 22, 35, 79, 30, 16, 5, 10,  Peso: 41    Qualidade = 75.6045 Numero de nos 9
-Cluster 5 Nos : 63, 7, 8, 46, 47, 45, 50, 68, 52, 60, 42, 81,  Peso: 66    Qualidade = 162.378 Numero de nos 12
-Cluster 6 Nos : 41, 57, 4, 23, 71, 3, 12, 20, 19, 78, 38, 77, 24,  Peso: 70    Qualidade = 100.197 Numero de nos 13
-Cluster 7 Nos : 29, 27, 15, 32, 33, 59, 65,  Peso: 43    Qualidade = 44.6203 Numero de nos 7
-Qualidade do Grafo: 797.72
+S = {{30, 3, 65, 32, 33, 15, 8, 41, 27, 57, 20, 62, 29, 79, 5, },{0, 1, 7, 72, 17, 6, 26, 39, 31, 11, 71, 64, 28, },{78, 35, 36, 74, 21, 43, 47, 22, 10, 73, 37, 16, },{38, 12, 54, 42, 9, },{48, 59, 68, 52, },{40, 4, 23, 44, 2, 77, 80, 76, 25, 18, 24, 19, 75, 13, 81, },{67, 56, 34, 51, 66, 14, 53, 55, },{70, 63, 69, 60, 58, 46, 50, 61, 49, 45, },}
+Qualidade do Grafo: 1120.14
+Melhor Qualidade do Grafo: 1120.14
 Solucao Viavel
 
 
 ======== NOVA MELHOR SOLUÇÃO ========
 
 
-Cluster 0 Nos : 26, 3, 77, 17, 23, 41, 33, 8, 54, 20,  Peso: 61    Qualidade = 53.2975 Numero de nos 10
-Cluster 1 Nos : 28, 27, 59, 15, 31, 32, 62, 39, 29, 35, 25,  Peso: 64    Qualidade = 144.784 Numero de nos 11
-Cluster 2 Nos : 52, 67, 49, 65, 56,  Peso: 26    Qualidade = 31.2062 Numero de nos 5
-Cluster 3 Nos : 55, 14, 34, 72, 53, 66, 51,  Peso: 38    Qualidade = 98.3038 Numero de nos 7
-Cluster 4 Nos : 11, 71, 7, 0, 6, 5,  Peso: 26    Qualidade = 28.6859 Numero de nos 6
-Cluster 5 Nos : 10, 22, 30, 43, 42, 2, 1, 64, 18, 44, 12, 80, 81, 69, 57,  Peso: 73    Qualidade = 157.253 Numero de nos 15
-Cluster 6 Nos : 63, 50, 61, 45, 79, 13, 60, 58, 70, 46, 68, 48, 47,  Peso: 75    Qualidade = 331.286 Numero de nos 13
-Cluster 7 Nos : 74, 40, 78, 37, 75, 24, 16, 36, 9, 76, 19, 21, 38, 73, 4,  Peso: 75    Qualidade = 145.352 Numero de nos 15
-Qualidade do Grafo: 990.168
+S = {{22, 74, 42, 73, 12, },{63, 48, 70, 45, 58, 34, 61, 60, 69, 46, },{16, 38, 9, 59, 54, },{37, 23, 75, 8, 18, 81, 4, 6, 27, 40, 30, 13, 19, 76, 57, 77, 80, 78, },{55, 66, 44, 14, 65, 68, 49, 43, 53, 56, 52, 50, 72, 67, 51, },{64, 7, 47, 24, 71, 2, 79, 11, 0, 1, 5, },{3, 20, 15, 41, 17, },{35, 10, 62, 26, 28, 29, 36, 21, 31, 25, 33, 32, 39, },}
+Qualidade do Grafo: 1245.07
+Melhor Qualidade do Grafo: 1245.07
 Solucao Viavel
 
 
 ======== NOVA MELHOR SOLUÇÃO ========
 
 
-Cluster 0 Nos : 38, 62, 25, 28, 26, 29, 15, 39, 40, 27, 17,  Peso: 61    Qualidade = 124.136 Numero de nos 11
-Cluster 1 Nos : 34, 67, 52, 56, 55, 72, 65, 53, 43,  Peso: 46    Qualidade = 88.2972 Numero de nos 9
-Cluster 2 Nos : 51, 50, 14, 63,  Peso: 26    Qualidade = 17.4151 Numero de nos 4
-Cluster 3 Nos : 54, 73, 41, 20, 3, 74,  Peso: 31    Qualidade = 9.75948 Numero de nos 6
-Cluster 4 Nos : 10, 21, 31, 42, 22, 9, 32, 75, 33, 30, 35,  Peso: 62    Qualidade = 73.8702 Numero de nos 11
-Cluster 5 Nos : 1, 37, 80, 0, 7, 71, 11, 24, 45, 79, 5, 2, 6,  Peso: 66    Qualidade = 174.496 Numero de nos 13
-Cluster 6 Nos : 57, 12, 78, 18, 44, 16, 19, 23, 47, 76, 8, 4, 77, 81,  Peso: 73    Qualidade = 235.969 Numero de nos 14
-Cluster 7 Nos : 13, 70, 59, 36, 49, 61, 66, 69, 68, 58, 64, 46, 48, 60,  Peso: 73    Qualidade = 279.51 Numero de nos 14
-Qualidade do Grafo: 1003.45
-Solucao Viavel
-
-
-======== NOVA MELHOR SOLUÇÃO ========
-
-
-Cluster 0 Nos : 43, 30, 38, 23, 81, 4, 19, 78, 77, 18, 64, 12, 8,  Peso: 59    Qualidade = 150.971 Numero de nos 13
-Cluster 1 Nos : 35, 29, 39, 36, 21, 26, 27, 28, 32, 15, 33, 31, 16,  Peso: 69    Qualidade = 197.243 Numero de nos 13
-Cluster 2 Nos : 10, 24, 22,  Peso: 26    Qualidade = 6.41004 Numero de nos 3
-Cluster 3 Nos : 0, 2, 1, 6, 7, 79, 57, 47, 5, 11, 71, 80,  Peso: 59    Qualidade = 136.204 Numero de nos 12
-Cluster 4 Nos : 75, 42, 9, 74,  Peso: 26    Qualidade = 17.531 Numero de nos 4
-Cluster 5 Nos : 55, 46, 72, 53, 34, 58, 63, 60, 14, 67,  Peso: 58    Qualidade = 145.561 Numero de nos 10
-Cluster 6 Nos : 40, 25, 59, 20, 73, 41, 76, 17, 62, 37, 3, 54,  Peso: 66    Qualidade = 79.1501 Numero de nos 12
-Cluster 7 Nos : 51, 13, 65, 69, 68, 70, 66, 50, 49, 44, 61, 45, 48, 56, 52,  Peso: 75    Qualidade = 282.486 Numero de nos 15
-Qualidade do Grafo: 1015.56
+S = {{21, 26, 28, 10, 35, 72, 36, 39, 31, },{33, 3, 15, 41, 32, 17, 29, 63, 20, },{48, 38, 73, 22, 12, 9, },{42, 62, 47, 16, 59, },{77, 40, 75, 76, 24, 37, 74, 54, 57, 23, 4, 78, },{70, 45, 51, 55, 50, 53, 66, 61, 49, 69, 68, 60, 34, 58, 46, },{64, 52, 67, 43, 65, 44, 14, 56, },{81, 1, 8, 5, 6, 19, 7, 0, 71, 2, 80, 11, 79, 30, 18, 27, 13, 25, },}
+Qualidade do Grafo: 1282.25
+Melhor Qualidade do Grafo: 1282.25
 Solucao Viavel
 
 Numero de solucoes inviaveis: 0
-Media das Solucoes: 909.178
-Melhor Solucao Final: 1015.56
-tempo de execucao: 190004 millisegundos
+Media das Solucoes: 1221.93
+Melhor Solucao Final: 1282.25
+tempo de execucao: 190459 millisegundos
 
 
