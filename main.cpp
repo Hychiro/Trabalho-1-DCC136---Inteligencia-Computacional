@@ -364,8 +364,6 @@ int menu()
 
 void selecionar(int selecao, Graph *graph, ofstream &output_file)
 {
-    srand((unsigned int)time(NULL));
-
     switch (selecao)
     {
     // Algoritmo Guloso;
@@ -413,6 +411,7 @@ void selecionar(int selecao, Graph *graph, ofstream &output_file)
             }
 
             graph->resetaClusters();
+            graph->resetaClusterMelhorSol();
             for (int k = 0; k < graph->getOrder(); k++)
             {
                 graph->listaDeNosLivres[k] = true;

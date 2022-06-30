@@ -23,51 +23,67 @@ using namespace std;
 
 void Grasp2::Clusterizar(Graph *grafo, Instancia *atual, Instancia *analizada, Instancia *melhorAnalizada, Instancia *movimentoAnterior)
 {
+    srand((unsigned int)time(NULL));
     int clo = clock();
     int nmenos4 = ((grafo->getOrder() / 4) - 1) * 1000;
-    bool repetir = true;
-    do
+    int iteracoesSemMelhorSol = 0;
+    for (int d = 0; iteracoesSemMelhorSol < grafo->getOrder() / 2 || nmenos4/4 > (clock() - clo); d++)
     {
-
-        this->Centroides(grafo);
-
-        this->CompletarLI1(grafo);
-
-        // for (int i = 0; i < grafo->getNumCluster(); i++)
-        // {
-        //     // cout << "Cluster "<<i<< " LimiteInferior e Superior: " << grafo->getCluster(i)->getLimiteInferior() << "--" << grafo->getCluster(i)->getLimiteSuperior()<<endl;
-        // }
-        repetir = true;
-        // this->imprime(grafo);
-        if (grafo->clustersViaveis2())
+        bool repetir = true;
+        do
         {
 
-            repetir = false;
-        }
-        else
-        {
+            this->Centroides(grafo);
 
-            grafo->resetaClusters();
+            this->CompletarLI1(grafo);
 
-            for (int k = 0; k < grafo->getOrder(); k++)
+            // for (int i = 0; i < grafo->getNumCluster(); i++)
+            // {
+            //     // cout << "Cluster "<<i<< " LimiteInferior e Superior: " << grafo->getCluster(i)->getLimiteInferior() << "--" << grafo->getCluster(i)->getLimiteSuperior()<<endl;
+            // }
+            repetir = true;
+            // this->imprime(grafo);
+            if (grafo->clustersViaveis2())
             {
-                grafo->listaDeNosLivres[k] = true;
+
+                repetir = false;
             }
+            else
+            {
+
+                grafo->resetaClusters();
+
+                for (int k = 0; k < grafo->getOrder(); k++)
+                {
+                    grafo->listaDeNosLivres[k] = true;
+                }
+            }
+
+        } while (repetir);
+
+        this->CompletarLS1(grafo);
+
+        this->Completar(grafo);
+
+        this->CompletarVerticesLivres(grafo);
+
+        this->buscaLocal(grafo, atual, analizada, melhorAnalizada, movimentoAnterior);
+
+        if (calculaQualidadeMelhorSolucao(grafo) < calculaSolucao(grafo))
+        {
+            grafo->resetaClusterMelhorSol();
+            grafo->atualizaMelhorSolucao();
+            int iteracoesSemMelhorSol = 0;
         }
+        iteracoesSemMelhorSol++;
+    }
 
-    } while (repetir);
-
-    this->CompletarLS1(grafo);
-
-    this->Completar(grafo);
-
-    this->CompletarVerticesLivres(grafo);
 
     // this->imprime(grafo);
     // cout<<"nmenos4 "<<nmenos4<<endl;
     int contador = 0;
-    int ordemX2 = grafo->getOrder() * 2;
-    int ordemSob10 = grafo->getOrder() / 10;
+    int ordemX2 = grafo->getOrder() * 3;
+    int ordemSob10 = grafo->getOrder() / 40;
 
     int j = 0;
     while (nmenos4 > (clock() - clo))
@@ -77,12 +93,10 @@ void Grasp2::Clusterizar(Graph *grafo, Instancia *atual, Instancia *analizada, I
         {
             if (calculaQualidadeMelhorSolucao(grafo) < calculaSolucao(grafo))
             {
-
                 grafo->resetaClusterMelhorSol();
-
                 grafo->atualizaMelhorSolucao();
             }
-            for (int i = 0; i < ordemSob10; i++)
+            for (int i = 0; i < 1; i++)
             {
                 // cout << "pertubacao: " << i << endl;
                 pertubacao(grafo);
