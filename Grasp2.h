@@ -6,8 +6,8 @@ Matheus Cardoso Faesy 202065065A
 
 **************************************************************************************************/
 
-#ifndef GRASP_H_INCLUDED
-#define GRASP_H_INCLUDED
+#ifndef GRASP2_H_INCLUDED
+#define GRASP2_H_INCLUDED
 #include "Graph.h"
 #include "Instancia.h"
 #include <fstream>
@@ -43,5 +43,7 @@ public:
     void pertubacao(Graph *grafo);
     void swap(Graph *grafo, int idCluster1, int idCluster2, int idNo1, int idNo2);
 
+    float calculaQualidadeMelhorSolucao(Graph *grafo);
+    
 };
-#endif // GRASP_INCLUDED
+#endif // GRASP2_INCLUDED

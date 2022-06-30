@@ -123,6 +123,8 @@ void Cluster::addNode(int id, float peso)
 
 bool Cluster::viavel()
 {
+
+    
     if (this->peso > this->limiteSuperior)
     {
         return false;

@@ -384,24 +384,26 @@ void selecionar(int selecao, Graph *graph, ofstream &output_file)
         Instancia *analizada = new Instancia();
         Instancia *melhorAnalizada = new Instancia();
         Instancia *movimentoAnterior = new Instancia();
-        Grasp *a;
+        Grasp2 *a;
+     
         float melhorsolucao = 0;
         float media=0;
         for (int i = 0; i < 10; i++)
         {
             cout << "Cluster " << i << endl;
             a->Clusterizar(graph, atual, analizada, melhorAnalizada, movimentoAnterior);
-            //a->imprime(graph);
+            a->imprime(graph);
+           
             // cout<<"Solucao: "<<a->calculaSolucao(graph)<<endl;
 
-            if (graph->clustersViaveis2())
+            if (graph->clustersViaveis3())
             {
-                media=media+a->calculaSolucao(graph);
-                if (a->calculaSolucao(graph) > melhorsolucao)
+                media=media+a->calculaQualidadeMelhorSolucao(graph);
+                if (a->calculaQualidadeMelhorSolucao(graph) > melhorsolucao)
                 {
                     output_file<<endl<<"======== NOVA MELHOR SOLUÇÃO ========"<<endl<<endl;
                     a->guarda(graph,output_file);
-                    melhorsolucao = a->calculaSolucao(graph);
+                    melhorsolucao = a->calculaQualidadeMelhorSolucao(graph);
                     // cout<<"Melhor Solucao: "<<melhorsolucao<<endl;
                 }
             }

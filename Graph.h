@@ -30,6 +30,8 @@ private:
     Node *last_node;
     Cluster *first_Cluster;
     Cluster *last_Cluster;
+    Cluster *first_Cluster2;
+    Cluster *last_Cluster2;
 public:
     bool *listaDeNosLivres;
     float melhorInstancia;
@@ -46,19 +48,26 @@ public:
     Node *getLastNode();
     bool getConexGraph();
     int getNumCluster();
+    Cluster *getCluster(int id);
+    Cluster *getClusterMelhorSol(int id);
     // Other methods
     bool clustersViaveis1();
     bool clustersViaveis2();
+    bool clustersViaveis3();
     void insertNode(int id);
     void insertEdge(int id, int target_id, float peso);
     void removeNode(int id);
     bool searchNode(int id);
     bool searchCluster(int id);
+    bool searchClusterMelhorSol(int id);
     Node *getNode(int id);
-    Cluster *getCluster(int id);
+    
     void insertAllNodes();
     void insertAllClusters();
     bool verificaAresta(int id, int target_id);
+
+    void atualizaMelhorSolucao();
+    void resetaClusterMelhorSol();
 
     // void funcAtualizaProbAlfas(float numeroDeRotulos, int numAlfa, float *alfa, float *probAlfa, float *mediaAlfa, ofstream &output_file);
 
