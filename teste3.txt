@@ -1,0 +1,22 @@
+
+======== NOVA MELHOR SOLUÇÃO ========
+
+
+Cluster 0 Nos : 34, 50, 45, 63, 60, 55, 68, 61, 53, 46, 58, 66, 69, 49, 51, 70,  Peso: 73 Numero de nos 16
+Cluster 1 Nos : 4, 28, 31, 3, 54, 39, 20, 72, 41,  Peso: 51 Numero de nos 9
+Cluster 2 Nos : 22, 40, 17, 38,  Peso: 27 Numero de nos 4
+Cluster 3 Nos : 47, 12, 16,  Peso: 26 Numero de nos 3
+Cluster 4 Nos : 27, 15, 32, 59, 36, 29, 33, 62, 35, 21,  Peso: 68 Numero de nos 10
+Cluster 5 Nos : 7, 13, 79, 11, 30, 10, 6, 2, 5, 80, 24, 81, 0, 71, 1,  Peso: 75 Numero de nos 15
+Cluster 6 Nos : 57, 44, 74, 26, 73, 18, 23, 8, 78, 77, 48, 19, 75, 25, 76,  Peso: 74 Numero de nos 15
+Cluster 7 Nos : 9, 43, 64, 14, 65, 37, 56, 42, 52, 67,  Peso: 62 Numero de nos 10
+Qualidade do Grafo: 1230.15
+Melhor Qualidade do Grafo: 1230.15
+Solucao Viavel
+
+Numero de solucoes inviaveis: 0
+Media das Solucoes: 1143.62
+Melhor Solucao Final: 1230.15
+tempo de execucao: 190277 millisegundos
+
+
