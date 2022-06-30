@@ -661,6 +661,9 @@ void Grasp2::pertubacao(Graph *grafo)
 
     idCluster1 = rand() % grafo->getNumCluster();
     idCluster2 = rand() % grafo->getNumCluster();
+    while(idCluster2 == idCluster1){
+        idCluster2 = rand() % grafo->getNumCluster();
+    }
     aux1 = rand() % grafo->getCluster(idCluster1)->getNumNodes();
     aux2 = rand() % grafo->getCluster(idCluster2)->getNumNodes();
     
