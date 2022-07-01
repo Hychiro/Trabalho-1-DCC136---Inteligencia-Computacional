@@ -371,7 +371,7 @@ void selecionar(int selecao, Graph *graph, ofstream &output_file)
     {
         int clo = clock();
         int contaSolNaoViaveis = 0;
-        //graph->printGraph(output_file);
+        // graph->printGraph(output_file);
 
         //     for (int i = 0; i < graph->getNumCluster(); i++)
         // {
@@ -383,24 +383,26 @@ void selecionar(int selecao, Graph *graph, ofstream &output_file)
         Instancia *melhorAnalizada = new Instancia();
         Instancia *movimentoAnterior = new Instancia();
         Grasp2 *a;
-     
+
         float melhorsolucao = 0;
-        float media=0;
+        float media = 0;
         for (int i = 0; i < 10; i++)
         {
             cout << "Cluster " << i << endl;
             a->Clusterizar(graph, atual, analizada, melhorAnalizada, movimentoAnterior);
             a->imprime(graph);
-           
+
             // cout<<"Solucao: "<<a->calculaSolucao(graph)<<endl;
 
             if (graph->clustersViaveis3())
             {
-                media=media+a->calculaQualidadeMelhorSolucao(graph);
+                media = media + a->calculaQualidadeMelhorSolucao(graph);
                 if (a->calculaQualidadeMelhorSolucao(graph) > melhorsolucao)
                 {
-                    output_file<<endl<<"======== NOVA MELHOR SOLUÇÃO ========"<<endl<<endl;
-                    a->guarda(graph,output_file);
+                    output_file << endl
+                                << "======== NOVA MELHOR SOLUÇÃO ========" << endl
+                                << endl;
+                    a->guarda(graph, output_file);
                     melhorsolucao = a->calculaQualidadeMelhorSolucao(graph);
                     // cout<<"Melhor Solucao: "<<melhorsolucao<<endl;
                 }
@@ -418,12 +420,15 @@ void selecionar(int selecao, Graph *graph, ofstream &output_file)
             }
         }
         output_file << "Numero de solucoes inviaveis: " << contaSolNaoViaveis << endl;
-        if(contaSolNaoViaveis<10){
-            media=media/(10-contaSolNaoViaveis);
+        if (contaSolNaoViaveis < 10)
+        {
+            media = media / (10 - contaSolNaoViaveis);
             output_file << "Media das Solucoes: " << media << endl;
             output_file << "Melhor Solucao Final: " << melhorsolucao << endl;
-        }else{
-            output_file << "Nao houve Solucao Viavel, Logo Melhor Solucao e Media inexistentes"<< endl;
+        }
+        else
+        {
+            output_file << "Nao houve Solucao Viavel, Logo Melhor Solucao e Media inexistentes" << endl;
         }
         output_file << "tempo de execucao: " << (clock() - clo) << " millisegundos" << endl;
 
@@ -432,12 +437,67 @@ void selecionar(int selecao, Graph *graph, ofstream &output_file)
     // Algoritmo Guloso Randomizado;
     case 2:
     {
-        Grasp *a;
-        graph->getCluster(0)->addNode(5, graph->getNode(5)->getWeight());
-        a->imprime(graph);
-        a->troca(graph, 0, 1, 5);
+
+        int clo = clock();
+        int contaSolNaoViaveis = 0;
+        // graph->printGraph(output_file);
+
+        //     for (int i = 0; i < graph->getNumCluster(); i++)
+        // {
+        //     cout<<"LI: "<<graph->getCluster(i).getLimiteInferior()<<endl;
+        // }
+
+        Instancia *atual = new Instancia();
+        Instancia *analizada = new Instancia();
+        Instancia *melhorAnalizada = new Instancia();
+        Instancia *movimentoAnterior = new Instancia();
+        Grasp2 *a;
+
+        float melhorsolucao = 0;
+        float media = 0;
+
+        a->Clusterizar(graph, atual, analizada, melhorAnalizada, movimentoAnterior);
         a->imprime(graph);
 
+        // cout<<"Solucao: "<<a->calculaSolucao(graph)<<endl;
+
+        if (graph->clustersViaveis3())
+        {
+            media = media + a->calculaQualidadeMelhorSolucao(graph);
+            if (a->calculaQualidadeMelhorSolucao(graph) > melhorsolucao)
+            {
+                output_file << endl
+                            << "======== NOVA MELHOR SOLUÇÃO ========" << endl
+                            << endl;
+                a->guarda(graph, output_file);
+                melhorsolucao = a->calculaQualidadeMelhorSolucao(graph);
+                // cout<<"Melhor Solucao: "<<melhorsolucao<<endl;
+            }
+        }
+        else
+        {
+            contaSolNaoViaveis++;
+        }
+
+        graph->resetaClusters();
+        graph->resetaClusterMelhorSol();
+        for (int k = 0; k < graph->getOrder(); k++)
+        {
+            graph->listaDeNosLivres[k] = true;
+        }
+
+        output_file << "Numero de solucoes inviaveis: " << contaSolNaoViaveis << endl;
+        if (contaSolNaoViaveis < 1)
+        {
+            media = media / (1 - contaSolNaoViaveis);
+            output_file << "Media das Solucoes: " << media << endl;
+            output_file << "Melhor Solucao Final: " << melhorsolucao << endl;
+        }
+        else
+        {
+            output_file << "Nao houve Solucao Viavel, Logo Melhor Solucao e Media inexistentes" << endl;
+        }
+        output_file << "tempo de execucao: " << (clock() - clo) << " millisegundos" << endl;
         break;
     }
 
