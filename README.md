@@ -1,1 +1,0 @@
-# Trabalho-1-DCC136---Inteligencia-Computacional

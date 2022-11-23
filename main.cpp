@@ -1,5 +1,4 @@
 /*
-Hiero Henrique Barcelos Costa 202065136A
 Matheus Cardoso Faesy 202065065A
 */
 #include <iostream>
@@ -12,8 +11,6 @@ Matheus Cardoso Faesy 202065065A
 #include <stdlib.h>
 #include <chrono>
 #include "Graph.h"
-#include "Grasp.h"
-#include "Grasp2.h"
 #include <thread>
 #include <time.h>
 #include <sstream>
@@ -53,6 +50,7 @@ int transformacaoS(string sAnalizada)
 
 Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
 {
+    /*
 
     // Variáveis para auxiliar na criação dos nós no Grafo
 
@@ -246,11 +244,12 @@ Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
     }
 
     return grafo;
+    */
 }
 
 Graph *leituraInstancia2(ifstream &input_file, ofstream &output_file)
 {
-
+ /*
     // Variáveis para auxiliar na criação dos nós no Grafo
 
     int ordem;
@@ -343,7 +342,7 @@ Graph *leituraInstancia2(ifstream &input_file, ofstream &output_file)
         // cout<<"Peso do No "<<i<<": "<<grafo->getNode(i)->getWeight()<<endl;
     }
 
-    return grafo;
+    return grafo; */
 }
 
 int menu()
@@ -369,135 +368,11 @@ void selecionar(int selecao, Graph *graph, ofstream &output_file)
     // Algoritmo Guloso;
     case 1:
     {
-        int clo = clock();
-        int contaSolNaoViaveis = 0;
-        // graph->printGraph(output_file);
-
-        //     for (int i = 0; i < graph->getNumCluster(); i++)
-        // {
-        //     cout<<"LI: "<<graph->getCluster(i).getLimiteInferior()<<endl;
-        // }
-
-        Instancia *atual = new Instancia();
-        Instancia *analizada = new Instancia();
-        Instancia *melhorAnalizada = new Instancia();
-        Instancia *movimentoAnterior = new Instancia();
-        Grasp2 *a;
-
-        float melhorsolucao = 0;
-        float media = 0;
-        for (int i = 0; i < 10; i++)
-        {
-            cout << "Cluster " << i << endl;
-            a->Clusterizar(graph, atual, analizada, melhorAnalizada, movimentoAnterior);
-            a->imprime(graph);
-
-            // cout<<"Solucao: "<<a->calculaSolucao(graph)<<endl;
-
-            if (graph->clustersViaveis3())
-            {
-                media = media + a->calculaQualidadeMelhorSolucao(graph);
-                if (a->calculaQualidadeMelhorSolucao(graph) > melhorsolucao)
-                {
-                    output_file << endl
-                                << "======== NOVA MELHOR SOLUÇÃO ========" << endl
-                                << endl;
-                    a->guarda(graph, output_file);
-                    melhorsolucao = a->calculaQualidadeMelhorSolucao(graph);
-                    // cout<<"Melhor Solucao: "<<melhorsolucao<<endl;
-                }
-            }
-            else
-            {
-                contaSolNaoViaveis++;
-            }
-
-            graph->resetaClusters();
-            graph->resetaClusterMelhorSol();
-            for (int k = 0; k < graph->getOrder(); k++)
-            {
-                graph->listaDeNosLivres[k] = true;
-            }
-        }
-        output_file << "Numero de solucoes inviaveis: " << contaSolNaoViaveis << endl;
-        if (contaSolNaoViaveis < 10)
-        {
-            media = media / (10 - contaSolNaoViaveis);
-            output_file << "Media das Solucoes: " << media << endl;
-            output_file << "Melhor Solucao Final: " << melhorsolucao << endl;
-        }
-        else
-        {
-            output_file << "Nao houve Solucao Viavel, Logo Melhor Solucao e Media inexistentes" << endl;
-        }
-        output_file << "tempo de execucao: " << (clock() - clo) << " millisegundos" << endl;
-
         break;
     }
     // Algoritmo Guloso Randomizado;
     case 2:
     {
-
-        int clo = clock();
-        int contaSolNaoViaveis = 0;
-        // graph->printGraph(output_file);
-
-        //     for (int i = 0; i < graph->getNumCluster(); i++)
-        // {
-        //     cout<<"LI: "<<graph->getCluster(i).getLimiteInferior()<<endl;
-        // }
-
-        Instancia *atual = new Instancia();
-        Instancia *analizada = new Instancia();
-        Instancia *melhorAnalizada = new Instancia();
-        Instancia *movimentoAnterior = new Instancia();
-        Grasp2 *a;
-
-        float melhorsolucao = 0;
-        float media = 0;
-
-        a->Clusterizar(graph, atual, analizada, melhorAnalizada, movimentoAnterior);
-        a->imprime(graph);
-
-        // cout<<"Solucao: "<<a->calculaSolucao(graph)<<endl;
-
-        if (graph->clustersViaveis3())
-        {
-            media = media + a->calculaQualidadeMelhorSolucao(graph);
-            if (a->calculaQualidadeMelhorSolucao(graph) > melhorsolucao)
-            {
-                output_file << endl
-                            << "======== NOVA MELHOR SOLUÇÃO ========" << endl
-                            << endl;
-                a->guarda(graph, output_file);
-                melhorsolucao = a->calculaQualidadeMelhorSolucao(graph);
-                // cout<<"Melhor Solucao: "<<melhorsolucao<<endl;
-            }
-        }
-        else
-        {
-            contaSolNaoViaveis++;
-        }
-
-        graph->resetaClusters();
-        graph->resetaClusterMelhorSol();
-        for (int k = 0; k < graph->getOrder(); k++)
-        {
-            graph->listaDeNosLivres[k] = true;
-        }
-
-        output_file << "Numero de solucoes inviaveis: " << contaSolNaoViaveis << endl;
-        if (contaSolNaoViaveis < 1)
-        {
-            media = media / (1 - contaSolNaoViaveis);
-            output_file << "Media das Solucoes: " << media << endl;
-            output_file << "Melhor Solucao Final: " << melhorsolucao << endl;
-        }
-        else
-        {
-            output_file << "Nao houve Solucao Viavel, Logo Melhor Solucao e Media inexistentes" << endl;
-        }
-        output_file << "tempo de execucao: " << (clock() - clo) << " millisegundos" << endl;
         break;
     }
 
@@ -534,57 +409,69 @@ int main(int argc, char const *argv[])
 {
 
     // Verificação se todos os parâmetros do programa foram entrados
-    if (argc != 3)
+    if (argc != 6)
     {
 
-        cout << "ERROR: Expecting: ./<program_name> <input_file> <output_file>" << endl;
+        cout << "ERROR: Expecting: ./<program_name> <input_file_cidades> <input_file_vias> <input_file_PN> <input_file_veiculos> <output_file>" << endl;
         return 1;
     }
 
     string program_name(argv[0]);
-    string input_file_name(argv[1]);
+    string input_file_cidades(argv[1]);
+    string input_file_vias(argv[2]);
+    string input_file_PN(argv[3]);
+    string input_file_veiculos(argv[4]);
 
     string instance;
-    if (input_file_name.find("_") <= input_file_name.size())
-    {
-        string instance = input_file_name.substr(0, input_file_name.find(""));
-        cout << "Running " << program_name << " with instance " << instance << " ... " << endl;
-    }
 
     // Abrindo arquivo de entrada
-    ifstream input_file;
+    ifstream input_file1;
+    ifstream input_file2;
+    ifstream input_file3;
+    ifstream input_file4;
     ofstream output_file;
-    input_file.open(argv[1], ios::in);
-    output_file.open(argv[2], ios::out | ios::trunc);
+    input_file1.open(argv[1], ios::in);
+    input_file2.open(argv[2], ios::in);
+    input_file3.open(argv[3], ios::in);
+    input_file4.open(argv[4], ios::in);
+    output_file.open(argv[5], ios::out | ios::trunc);
 
     Graph *graph;
 
-    if (input_file.is_open())
+    if (input_file1.is_open())
     {
-
-        if (verificaTipoLeitura(input_file_name))
-        {
-
-            graph = leituraInstancia(input_file, output_file);
-        }
-        else
-        {
-
-            graph = leituraInstancia2(input_file, output_file);
-        }
-
-        // for (int i = 0; i < graph->getOrder(); i++)
-        //{
-        // cout<<"Peso do No "<<i<<": "<<graph->getNode(i)->getWeight()<<endl;
-        //}
+            graph = leituraInstancia(input_file1, output_file);
     }
     else
         cout << "Unable to open " << argv[1];
+        input_file1.close();
+
+    if (input_file2.is_open())
+    {
+            graph = leituraInstancia2(input_file2, output_file);
+    }
+    else
+        cout << "Unable to open " << argv[2];
+
+        input_file2.close();
+
+    if (input_file3.is_open())
+    {
+            graph = leituraInstancia(input_file3, output_file);
+    }
+    else
+        cout << "Unable to open " << argv[3];
+        input_file3.close();
+
+    if (input_file4.is_open())
+    {
+            graph = leituraInstancia(input_file4, output_file);
+    }
+    else
+        cout << "Unable to open " << argv[4];
+        input_file4.close();
 
     mainMenu(output_file, graph);
-
-    // Fechando arquivo de entrada
-    input_file.close();
 
     // Fechando arquivo de saída
     output_file.close();

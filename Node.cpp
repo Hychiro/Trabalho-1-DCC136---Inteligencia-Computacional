@@ -1,5 +1,4 @@
 /*
-Hiero Henrique Barcelos Costa 202065136A
 Matheus Cardoso Faesy 202065065A
 */
 #include "Node.h"
@@ -19,7 +18,6 @@ Node::Node(int id)
     this->id = id;
     this->in_degree = 0;
     this->out_degree = 0;
-    this->weight = 0;
     this->first_edge = NULL;
     this->last_edge = NULL;
     this->next_node = NULL;
@@ -70,12 +68,6 @@ int Node::getOutDegree()
     return this->out_degree;
 }
 
-float Node::getWeight()
-{
-
-    return this->weight;
-}
-
 Node *Node::getNextNode()
 {
 
@@ -90,11 +82,6 @@ void Node::setNextNode(Node *next_node)
     this->next_node = next_node;
 }
 
-void Node::setWeight(float peso)
-{
-    this->weight = peso;
-}
-
 void Node::setFirstEdge(Edge *edge)
 {
     this->first_edge = edge;
@@ -106,22 +93,30 @@ void Node::setLastEdge(Edge *edge)
 }
 
 // Other methods
-void Node::insertEdge(int target_id, float peso)
+void Node::insertEdge(int pn_fim,int pn_inicio, float kmTotal, float duracaoInspecao, float tMaxInspecao, float tMinInspecao, float ultimainspecao)
 {
     // Verifies whether there are at least one edge in the node
     if (this->first_edge != NULL)
     {
         // Allocating the new edge and keeping the integrity of the edge list
-        Edge *edge = new Edge(target_id);
-        edge->setPeso(peso);
+        Edge *edge = new Edge(pn_fim, pn_inicio);
+        edge->setkmTotal(kmTotal);
+        edge->setduracaoInspecao(duracaoInspecao);
+        edge->settMaxInspecao(tMaxInspecao);
+        edge->settMinInspecao(tMinInspecao);
+        edge->setultimainspecao(ultimainspecao);
         this->last_edge->setNextEdge(edge);
         this->last_edge = edge;
     }
     else
     {
         // Allocating the new edge and keeping the integrity of the edge list
-        this->first_edge = new Edge(target_id);
-        this->first_edge->setPeso(peso);
+        this->first_edge = new Edge(pn_fim, pn_inicio);
+        this->first_edge->setkmTotal(kmTotal);
+        this->first_edge->setduracaoInspecao( duracaoInspecao);
+        this->first_edge->settMaxInspecao(tMaxInspecao);
+        this->first_edge->settMinInspecao(tMinInspecao);
+        this->first_edge->setultimainspecao(ultimainspecao);
         this->last_edge = this->first_edge;
     }
 }
@@ -201,20 +196,6 @@ bool Node::searchEdge(int target_id)
     }
 
     return false;
-}
-
-float Node::searchEdgeWeight(int target_id)
-{
-    // Verifies whether there are at least one edge in the node
-    if (this->first_edge != NULL)
-    {
-        // Searching for a specific edge of target id equal to target id
-        for (Edge *aux = this->first_edge; aux != NULL; aux = aux->getNextEdge())
-            if (aux->getTargetId() == target_id)
-                return aux->getPeso();
-    }
-
-    return 0;
 }
 
 void Node::incrementInDegree()

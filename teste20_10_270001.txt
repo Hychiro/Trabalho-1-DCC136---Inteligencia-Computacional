@@ -1,8 +1,0 @@
-Numero de solucoes inviaveis: 10
-Nao houve Solucao Viavel, Logo Melhor Solucao e Media inexistentes
-tempo de execucao: 40208 millisegundos
-
-Numero de solucoes inviaveis: 10
-Nao houve Solucao Viavel, Logo Melhor Solucao e Media inexistentes
-tempo de execucao: 40219 millisegundos
-

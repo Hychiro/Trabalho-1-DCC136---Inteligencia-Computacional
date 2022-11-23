@@ -28,8 +28,6 @@ Graph::Graph(int order, int numClusters, int aux[][2])
 
     this->order = order;
 
-    this->first_Cluster = nullptr;
-    this->last_Cluster = nullptr;
     this->first_node = nullptr;
     this->last_node = nullptr;
     this->number_edges = 0;
@@ -43,14 +41,6 @@ Graph::Graph(int order, int numClusters, int aux[][2])
         listaDeNosLivres[i] = true;
     }
     insertAllNodes();
-    insertAllClusters();
-    Cluster *p;
-    for (int i = 0; i < numClusters; i++)
-    {
-        p = getCluster(i);
-        p->setLimiteSuperior(aux[i][1]);
-        p->setLimiteInferior(aux[i][0]);
-    }
 }
 
 // Destructor
@@ -62,33 +52,6 @@ Graph::~Graph()
     delete next_node;
     this->first_node = nullptr;
     this->last_node = nullptr;
-}
-
-Cluster *Graph::getCluster(int id)
-{
-    Cluster *p = first_Cluster;
-    if (searchCluster(id))
-    {
-        while (p != nullptr && p->getidCluster() != id)
-        {
-            p = p->getNextCluster();
-        }
-        return p;
-    }
-    return p;
-}
-Cluster *Graph::getClusterMelhorSol(int id)
-{
-    Cluster *p = first_Cluster2;
-    if (searchClusterMelhorSol(id))
-    {
-        while (p != nullptr && p->getidCluster() != id)
-        {
-            p = p->getNextCluster();
-        }
-        return p;
-    }
-    return p;
 }
 
 void Graph::printGraph(ofstream &output_file)
@@ -104,7 +67,7 @@ void Graph::printGraph(ofstream &output_file)
         while (aux != nullptr)
         {
 
-            output_file << p->getId() << " -- " << aux->getTargetId() << "  [ label = " << aux->getPeso() << " ]" << endl;
+            output_file << p->getId() << " -- " << aux->getTargetId() << endl;
             aux = aux->getNextEdge();
         }
         p = p->getNextNode();
@@ -179,95 +142,15 @@ void Graph::insertAllNodes()
     }
 }
 
-bool Graph::clustersViaveis1()
-{
 
-    for (Cluster *i = this->first_Cluster; i != nullptr; i = i->getNextCluster())
-    {
-        if (!(i->viavel()))
-        { // se o cluster n for viavel
-            return false;
-        }
-    }
 
-    int k = 0;
-    for (int i = 0; i < this->getOrder(); i++)
-    {
-        if (this->listaDeNosLivres[i] == true)
-        {
-            k++;
-        }
-    }
-    if (k > 0)
-    {
-        return false;
-    }
-
-    return true;
-}
-
-bool Graph::clustersViaveis2()
-{
-    Cluster *i;
-    for (int k = 0; k < getNumCluster(); k++)
-    {
-        i = getCluster(k);
-        if (!(i->viavel()))
-        { // se o cluster n for viavel
-            // cout << "Cluster "<<i->getidCluster()<< "inviavel"<<endl;
-            return false;
-        }
-        // cout << "Cluster "<<i->getidCluster()<< "Viavel"<<endl;
-    }
-
-    return true;
-}
-
-bool Graph::clustersViaveis3()
-{
-    Cluster *i;
-    for (int k = 0; k < getNumCluster(); k++)
-    {
-        i = getClusterMelhorSol(k);
-        if (!(i->viavel()))
-        { // se o cluster n for viavel
-            // cout << "Cluster "<<i->getidCluster()<< "inviavel"<<endl;
-            return false;
-        }
-        // cout << "Cluster "<<i->getidCluster()<< "Viavel"<<endl;
-    }
-
-    return true;
-}
-
-void Graph::insertAllClusters()
-{
-    for (int i = 0; i < this->numClusters; i++)
-    {
-        Cluster *p = new Cluster(i);
-        Cluster *q = new Cluster(i);
-        if (this->first_Cluster == nullptr)
-        {
-            this->first_Cluster = p;
-            this->first_Cluster2 = q;
-        }
-        else
-        {
-            this->last_Cluster->setNextCluster(p);
-            this->last_Cluster2->setNextCluster(q);
-        }
-        this->last_Cluster = p;
-        this->last_Cluster2 = q;
-    }
-}
-
-bool Graph::verificaAresta(int id, int target_id)
+bool Graph::verificaAresta(int id, int pn_fim)
 {
     Node *p = getNode(id);
     for (Edge *g = p->getFirstEdge(); g != nullptr; g = g->getNextEdge())
     {
 
-        if (g->getTargetId() == target_id)
+        if (g->getTargetId() == pn_fim)
         {
             return true;
         }
@@ -275,18 +158,18 @@ bool Graph::verificaAresta(int id, int target_id)
     return false;
 }
 
-void Graph::insertEdge(int id, int target_id, float peso)
+void Graph::insertEdge(int id, int pn_fim,int pn_inicio,int kmTotal,int duracaoInspecao,int tMaxInspecao,int tMinInspecao,int ultimainspecao)
 {
     // junta os nos entre si
     if (searchNode(id)) //<-- ta sendo direcionado prestar atenção nisso.
     {
 
-        if (!verificaAresta(id, target_id))
+        if (!verificaAresta(id, pn_fim))
         {
             Node *p = getNode(id);
-            Node *sup = getNode(target_id);
-            p->insertEdge(target_id, peso);
-            sup->insertEdge(id, peso);
+            Node *sup = getNode(pn_fim);
+            p->insertEdge(pn_fim,pn_inicio, kmTotal, duracaoInspecao, tMaxInspecao, tMinInspecao, ultimainspecao);
+            sup->insertEdge(pn_fim,pn_inicio,kmTotal, duracaoInspecao, tMaxInspecao, tMinInspecao, ultimainspecao);
             this->number_edges += 1;
         }
     }
@@ -364,83 +247,6 @@ bool Graph::searchNode(int id)
     return false;
 }
 
-bool Graph::searchCluster(int id)
-{
-    // so verifica se exste o no ali ou nao
-
-    for (Cluster *p = this->first_Cluster; p != nullptr; p = p->getNextCluster())
-    {
-        if (p->getidCluster() == id)
-        {
-            return true;
-        }
-    }
-    return false;
-}
-bool Graph::searchClusterMelhorSol(int id)
-{
-    // so verifica se exste o no ali ou nao
-
-    for (Cluster *p = this->first_Cluster2; p != nullptr; p = p->getNextCluster())
-    {
-        if (p->getidCluster() == id)
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
-int Graph::getNumCluster()
-{
-    return this->numClusters;
-}
-
-void Graph::resetaClusters()
-{
-    Cluster *a;
-    for (int i = 0; i < getNumCluster(); i++)
-    {
-        a = getCluster(i);
-        a->setPeso(0);
-        a->setNumNodes(0);
-
-        Node *next_node = a->getFirstNode();
-        // cout<<"entra aqui 1"<<endl;
-        if (next_node != nullptr)
-        {
-
-            delete next_node;
-
-            // cout<<"entra aqui 2"<<endl;
-            a->setFirstNode(nullptr);
-            a->setLastNode(nullptr);
-        }
-    }
-}
-void Graph::resetaClusterMelhorSol()
-{
-    Cluster *a;
-    for (int i = 0; i < getNumCluster(); i++)
-    {
-        a = getClusterMelhorSol(i);
-        a->setPeso(0);
-        a->setNumNodes(0);
-
-        Node *next_node = a->getFirstNode();
-        // cout<<"entra aqui 1"<<endl;
-        if (next_node != nullptr)
-        {
-
-            delete next_node;
-
-            // cout<<"entra aqui 2"<<endl;
-            a->setFirstNode(nullptr);
-            a->setLastNode(nullptr);
-        }
-    }
-}
-
 Node *Graph::getNode(int id)
 {
     // pega o no na lista de nos
@@ -454,22 +260,4 @@ Node *Graph::getNode(int id)
         return p;
     }
     return p;
-}
-
-void Graph::atualizaMelhorSolucao()
-{
-    Cluster *clusterLista1;
-    Cluster *clusterLista2;
-
-    for (int i = 0; i < this->numClusters; i++)
-    {
-        clusterLista1 = getCluster(i);
-        clusterLista2 = getClusterMelhorSol(i);
-        clusterLista2->setLimiteInferior(clusterLista1->getLimiteInferior());
-        clusterLista2->setLimiteSuperior(clusterLista1->getLimiteSuperior());
-        for (Node *p = clusterLista1->getFirstNode(); p != nullptr; p = p->getNextNode())
-        {
-            clusterLista2->addNode(p->getId(), p->getWeight());
-        }
-    }
 }

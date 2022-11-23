@@ -1,5 +1,4 @@
 /*
-Hiero Henrique Barcelos Costa 202065136A
 Matheus Cardoso Faesy 202065065A
 */
 #include "Edge.h"
@@ -12,11 +11,16 @@ using namespace std;
 **************************************************************************************************/
 
 // Constructor
-Edge::Edge(int target_id){
+Edge::Edge(int pn_fim, int pn_inicio){
 
-    this->target_id = target_id;
+    this->pn_fim = pn_fim;
+    this->pn_inicio = pn_inicio;
     this->next_edge = nullptr;
-    this->peso = 0;
+    this->kmTotal=0;
+    this->duracaoInspecao=0;
+    this->tMaxInspecao=0;
+    this->tMinInspecao=0;
+    this->ultimainspecao=0;
 
 }
 
@@ -31,9 +35,15 @@ Edge::~Edge(){
 }
 
 // Getters
-int Edge::getTargetId(){
+int Edge::getpn_fim(){
 
-    return this->target_id;
+    return this->pn_fim;
+
+}
+
+int Edge::getpn_inicio(){
+
+    return this->pn_inicio;
 
 }
 
@@ -43,10 +53,20 @@ Edge* Edge::getNextEdge(){
 
 }
 
-float Edge::getPeso(){
-
-    return this->peso;
-
+float Edge::getkmTotal(){
+return this->kmTotal;
+}
+float Edge::getduracaoInspecao(){
+return this->duracaoInspecao;
+}
+float Edge::gettMaxInspecao(){
+return this->tMaxInspecao;
+}
+float Edge::gettMinInspecao(){
+return this->tMinInspecao;
+}
+float Edge::getultimainspecao(){
+return this->ultimainspecao;
 }
 
 // Setters
@@ -56,8 +76,27 @@ void Edge::setNextEdge(Edge* edge){
 
 }
 
-void Edge::setPeso(float peso){
-
-    this->peso = peso;
-
+void Edge::setpn_fim(int pn_fim){
+    this->pn_fim=pn_fim;
 }
+
+void Edge::setpn_inicio(int pn_inicio){
+this->pn_inicio=pn_inicio;
+}
+
+void Edge::setkmTotal(float kmTotal){
+this->kmTotal = kmTotal;
+}
+void Edge::setduracaoInspecao(float duracaoInspecao){
+this->duracaoInspecao = duracaoInspecao;
+}
+void Edge::settMaxInspecao(float tMaxInspecao){
+this->tMaxInspecao = tMaxInspecao;
+}
+void Edge::settMinInspecao(float tMinInspecao){
+this->tMinInspecao = tMinInspecao;
+}
+void Edge::setultimainspecao(float ultimainspecao){
+this->ultimainspecao = ultimainspecao;
+}
+

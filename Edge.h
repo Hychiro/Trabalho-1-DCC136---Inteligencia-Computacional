@@ -2,7 +2,6 @@
  * Implementation of the TAD Edge
 **************************************************************************************************/
 /*
-Hiero Henrique Barcelos Costa 202065136A
 Matheus Cardoso Faesy 202065065A
 */
 #ifndef EDGE_H_INCLUDED
@@ -15,22 +14,40 @@ class Edge{
 
     // Attributes
     private:
-        int target_id;
+        int pn_fim;
+        int pn_inicio;
         Edge* next_edge;
-        float peso;
+        float kmTotal;
+        float duracaoInspecao;
+        float tMaxInspecao;
+        float tMinInspecao;
+        int ultimainspecao;
 
     public:
         // Constructor
-        Edge(int target_id);
+        Edge(int pn_fim,int pn_inicio);
         // Destructor
         ~Edge();
         // Getters
+        int getpn_fim();
+        int getpn_inicio();
+        float getkmTotal();
+        float getduracaoInspecao();
+        float gettMaxInspecao();
+        float gettMinInspecao();
+        float getultimainspecao();
         int getTargetId();
         Edge* getNextEdge();
-        float getPeso();
         // Setters
+        void setpn_fim(int pn_fim);
+        void setpn_inicio(int pn_inicio);
+        void setkmTotal(float kmTotal);
+        void setduracaoInspecao(float duracaoInspecao);
+        void settMaxInspecao(float tMaxInspecao);
+        void settMinInspecao(float tMinInspecao);
+        void setultimainspecao(float ultimainspecao);
         void setNextEdge(Edge* edge);
-        void setPeso(float peso); 
+        ; 
 
 }; 
 

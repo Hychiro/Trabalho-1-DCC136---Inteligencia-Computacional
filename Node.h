@@ -1,10 +1,7 @@
 /*
-Hiero Henrique Barcelos Costa 202065136A
 Matheus Cardoso Faesy 202065065A
 */
-/**************************************************************************************************
- * Implementation of the TAD Node
-**************************************************************************************************/
+
 
 #ifndef NODE_H_INCLUDED
 #define NODE_H_INCLUDED
@@ -20,9 +17,12 @@ class Node{
         Edge* first_edge;
         Edge* last_edge;
         int id;
+        char nome[20];
+        int km;
+        char cidade[20];
+        int tempoHotel;
         unsigned int in_degree;
         unsigned int out_degree;
-        float weight;
         Node* next_node;
 
     public:
@@ -36,17 +36,14 @@ class Node{
         int getId();
         int getInDegree();
         int getOutDegree();
-        float getWeight();
         Node* getNextNode();
         // Setters
         void setNextNode(Node* node);
-        void setWeight(float peso);
         void setFirstEdge(Edge* edge);
         void setLastEdge(Edge* edge);
         // Other methods
         bool searchEdge(int target_id);
-        float searchEdgeWeight(int target_id);
-        void insertEdge(int target_id, float peso);
+        void insertEdge(int pn_fim,int pn_inicio, float kmTotal, float duracaoInspecao, float tMaxInspecao, float tMinInspecao, float ultimainspecao);
         void removeAllEdges();
         int removeEdge(int id, bool directed, Node* target_node);
         void incrementOutDegree();
