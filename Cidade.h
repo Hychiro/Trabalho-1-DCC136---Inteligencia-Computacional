@@ -10,10 +10,12 @@ class Cidade{
 // Attributes
     private:
     int id;
-    char nome[20];
+    char nome[30];
     int distancias[26];
     public:
     //getters
+    Cidade();
+    ~Cidade();
     int getid();
     char* getnome();
     int* getdistancias();

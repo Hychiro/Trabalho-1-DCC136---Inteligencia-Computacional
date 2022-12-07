@@ -147,7 +147,7 @@ int Node::removeEdge(int id, bool directed, Node *target_node)
         Edge *aux = this->first_edge;
         Edge *previous = NULL;
         // Searching for the edge to be removed
-        while (aux->getTargetId() != id)
+        while (aux->getpn_fim()!= id)
         {
 
             previous = aux;
@@ -190,9 +190,15 @@ bool Node::searchEdge(int target_id)
     if (this->first_edge != NULL)
     {
         // Searching for a specific edge of target id equal to target id
-        for (Edge *aux = this->first_edge; aux != NULL; aux = aux->getNextEdge())
-            if (aux->getTargetId() == target_id)
+        for (Edge *aux = this->first_edge; aux != NULL; aux = aux->getNextEdge()){
+            if (aux->getpn_fim() == target_id)
                 return true;
+            if(aux->is_bidirecional() == true){
+                if(aux->getpn_inicio() == target_id){
+                    return true;
+                }
+            }
+        }
     }
 
     return false;
@@ -225,10 +231,14 @@ void Node::decrementOutDegree()
 Edge *Node::hasEdgeBetween(int target_id)
 {
 
-    for (Edge *auxEdge = this->first_edge; auxEdge != nullptr; auxEdge = auxEdge->getNextEdge())
-    {
-        if (auxEdge->getTargetId() == target_id)
-            return auxEdge;
-    }
+    for (Edge *aux = this->first_edge; aux != NULL; aux = aux->getNextEdge()){
+            if (aux->getpn_fim() == target_id)
+                return aux;
+            if(aux->is_bidirecional() == true){
+                if(aux->getpn_inicio() == target_id){
+                    return aux;
+                }
+            }
+        }
     return nullptr;
 }

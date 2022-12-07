@@ -19,15 +19,6 @@ Matheus Cardoso Faesy 202065065A
 
 using namespace std;
 
-bool verificaTipoLeitura(string input_file_name)
-{
-    if (input_file_name[2] >= '0' && input_file_name[2] <= '9')
-    {
-        return false;
-    }
-    return true;
-}
-
 int transformacaoC(char cAnalizada)
 {
     int valor = cAnalizada - '0';
@@ -48,301 +39,390 @@ int transformacaoS(string sAnalizada)
     return valor;
 }
 
-Graph *leituraInstancia(ifstream &input_file, ofstream &output_file)
+template<typename T>
+int nthSubstrg(int n, const basic_string<T>& s,
+               const basic_string<T>& p,
+               bool repeats = false) {
+   string::size_type i = s.find(p);
+   string::size_type adv = (repeats) ? 1 : p.length();
+
+   int j;
+   for (j = 1; j < n && i != basic_string<T>::npos; ++j)
+      i = s.find(p, i+adv);
+
+   if (j == n)
+     return(i);
+   else
+     return(-1);
+}
+
+Graph *leituraInstancia(ifstream &input_file, ofstream &output_file) // Leitura dos Dados
 {
-    /*
-
-    // Variáveis para auxiliar na criação dos nós no Grafo
-
-    int ordem;
-    int clusters;
-
-    float pesoAresta;
-    int verticeA;
-    int verticeB;
-    int separator1 = 0;
-    int separator2 = 0;
-    int separator3 = 0;
-    int separator4 = 0;
-    string tipoCluster = "";
     string primeiraLinha = "";
-    string ordemS = "";
-    string clustersS = "";
-    string charAnalizado = "";
-    string limitesClusters = "";
-    string pesoNos = "";
-    // Pegando a ordem do grafo
 
-    getline(input_file, primeiraLinha, '\n');
+    string regiao;
+    string ramal;
+    string aux_km_in;
+    float km_in;
+    string aux_km_fim;
+    float km_fim;
+    string pn_in;
+    string pn_fim;
+    string aux_km_total;
+    float km_total;
+    string aux_low_ciclo;
+    float low_ciclo;
+    string aux_upper_ciclo;
+    float upper_ciclo;
+    string aux_ultimainspecao;
+    float ultimainspecao;
+    string aux_dia_ultimainspecao;
+    float dia_ultimainspecao;
+    string aux_mes_ultimainspecao;
+    float mes_ultimainspecao;
+    string aux_ano_ultimainspecao;
+    float ano_ultimainspecao;
+    string sentido;
+    string cidade_in;
+    string cidade_fim;
+    string hotel_in;
+    string hotel_fim;
 
-    separator1 = primeiraLinha.find_first_of(' ');
-    separator4 = primeiraLinha.find_first_of('W');
-    separator2 = primeiraLinha.find_first_of(' ', separator1 + 1);
-    separator3 = primeiraLinha.find_first_of(' ', separator2 + 1);
+    string aux_t_hotel_in;
+    string aux_t_min_hotel_in;
+    string aux_t_hor_hotel_in;
+    float t_min_hotel_in;
+    float t_hor_hotel_in;
 
-    for (int i = 0; i < separator1; i++)
+    string aux_t_hotel_fim;
+    string aux_t_min_hotel_fim;
+    string aux_t_hor_hotel_fim;
+    float t_min_hotel_fim;
+    float t_hor_hotel_fim;
+
+    string aux_t_inspecao;
+    string aux_t_hor_inspecao;
+    float t_hor_inspecao;
+    string aux_t_min_inspecao;
+    float t_min_inspecao;
+
+    string parametro_virgula = ",";
+    string parametro_barra = "/";
+    string parametro_doispontos = ":";
+
+    string charAnalizado;
+
+    int contador_linha = 0;
+
+    while (getline(input_file, primeiraLinha, '\n'))
     {
-        charAnalizado = (primeiraLinha[i]);
-        ordemS = ordemS.append(charAnalizado);
-    }
+        if(contador_linha==0){
+            contador_linha++;
+        }else{
 
-    for (int i = separator1 + 1; i < separator2; i++)
-    {
-        charAnalizado = (primeiraLinha[i]);
+        regiao = "";
+        ramal = "";
+        aux_km_in = "";
+        km_in = 0;
+        aux_km_fim = "";
+        km_fim = 0;
+        pn_in = "";
+        pn_fim = "";
+        aux_km_total = "";
+        km_total = 0;
+        aux_low_ciclo = "";
+        low_ciclo = 0;
+        aux_upper_ciclo = "";
+        upper_ciclo = 0;
+        aux_ultimainspecao="";
+        ultimainspecao = 0;
+        aux_dia_ultimainspecao = "";
+        dia_ultimainspecao = 0;
+        aux_mes_ultimainspecao = "";
+        mes_ultimainspecao = 0;
+        aux_ano_ultimainspecao = "";
+        ano_ultimainspecao = 0;
+        sentido = "";
+        cidade_in = "";
+        cidade_fim = "";
+        hotel_in = "";
+        hotel_fim = "";
 
-        clustersS = clustersS.append(charAnalizado);
-    }
+        aux_t_hotel_in= "";
+        aux_t_min_hotel_in= "";
+        aux_t_hor_hotel_in= "";
+        t_min_hotel_in= 0;
+        t_hor_hotel_in= 0;
 
-    for (int i = separator2; i < separator3; i++)
-    {
-        charAnalizado = (primeiraLinha[i]);
-        tipoCluster = tipoCluster.append(charAnalizado);
-    }
-    cout << "tipoCluster" << tipoCluster << endl;
-    for (int i = separator3; i < separator4; i++)
-    {
-        charAnalizado = (primeiraLinha[i]);
-        limitesClusters = limitesClusters.append(charAnalizado);
-    }
-    cout << "limitesClusters" << limitesClusters << endl;
-    for (int i = separator4 + 1; i < primeiraLinha.length(); i++)
-    {
-        charAnalizado = (primeiraLinha[i]);
-        pesoNos = pesoNos.append(charAnalizado);
-    }
-    cout << "pesoNos" << pesoNos << endl;
-    ordem = transformacaoS(ordemS);
+        aux_t_hotel_fim= "";
+        aux_t_min_hotel_fim= "";
+        aux_t_hor_hotel_fim= "";
+        t_min_hotel_fim= 0;
+        t_hor_hotel_fim= 0;
+        
+        string aux_t_inspecao = "";
+        aux_t_hor_inspecao = "";
+        t_hor_inspecao = 0;
+        aux_t_min_inspecao = "";
+        t_min_inspecao = 0;
 
-    clusters = transformacaoS(clustersS);
+        charAnalizado = "";
 
-    int limiteInferiorSuperior[clusters][2];
-
-    int alturaDoTexto = 0;
-
-    for (int i = 0; i < clusters; i++)
-    {
-        string aux = "";
-
-        while (alturaDoTexto <= limitesClusters.find_first_of(' ', alturaDoTexto) && alturaDoTexto < limitesClusters.length())
+        for (int i = 0; i < nthSubstrg(1,primeiraLinha, parametro_virgula); i++)
         {
-            charAnalizado = (limitesClusters[alturaDoTexto]);
-
-            if (charAnalizado != " ")
-            {
-                aux = aux.append(charAnalizado);
-                alturaDoTexto++;
-            }
-            else if (alturaDoTexto == 0 && charAnalizado == " ")
-            {
-                alturaDoTexto++;
-            }
-            else
-            {
-                alturaDoTexto++;
-                break;
-            }
+            charAnalizado = (primeiraLinha[i]);
+            regiao = regiao.append(charAnalizado);
         }
 
-        int valor = transformacaoS(aux);
-        limiteInferiorSuperior[i][0] = valor;
-
-        aux = "";
-        while (alturaDoTexto <= limitesClusters.find_first_of(' ', alturaDoTexto) && alturaDoTexto < limitesClusters.length())
+        for (int i = nthSubstrg(1,primeiraLinha, parametro_virgula)+1; i < nthSubstrg(2,primeiraLinha, parametro_virgula); i++)
         {
-            charAnalizado = (limitesClusters[alturaDoTexto]);
-
-            if (charAnalizado != " ")
-            {
-                aux = aux.append(charAnalizado);
-                alturaDoTexto++;
-            }
-            else
-            {
-                alturaDoTexto++;
-                break;
-            }
+            charAnalizado = (primeiraLinha[i]);
+           ramal = ramal.append(charAnalizado);
         }
 
-        valor = transformacaoS(aux);
-        limiteInferiorSuperior[i][1] = valor;
-    }
-
-    // Criando objeto grafo
-    Graph *grafo = new Graph(ordem, clusters, limiteInferiorSuperior);
-    alturaDoTexto = 0;
-    int pesoVertice[ordem];
-
-    for (int i = 0; i < ordem; i++)
-    {
-        string aux = "";
-
-        while (alturaDoTexto <= pesoNos.find_first_of(' ', alturaDoTexto) && alturaDoTexto < pesoNos.length())
+        for (int i = nthSubstrg(2,primeiraLinha, parametro_virgula)+1; i < nthSubstrg(3,primeiraLinha, parametro_virgula); i++)
         {
-            charAnalizado = (pesoNos[alturaDoTexto]);
-            if (charAnalizado != " ")
-            {
-                aux = aux.append(charAnalizado);
-                alturaDoTexto++;
-            }
-            else if (alturaDoTexto == 0 && charAnalizado == " ")
-            {
-                alturaDoTexto++;
-            }
-            else
-            {
-                alturaDoTexto++;
-                break;
-            }
+            charAnalizado = (primeiraLinha[i]);
+           aux_km_in = aux_km_in.append(charAnalizado);
         }
-        int valor = transformacaoS(aux);
+        km_in = strtof(aux_km_in.c_str(),nullptr);
 
-        pesoVertice[i] = valor;
-    }
-
-    for (int i = 0; i < ordem; i++)
-    {
-        // cout<<"pesoVertice "<<i<<": "<<pesoVertice[i]<<endl;
-        grafo->getNode(i)->setWeight(pesoVertice[i]);
-    }
-    ////
-
-    float matrixPesoArestas[ordem][ordem];
-
-    for (int k = 0; k < ordem; k++)
-    {
-        for (int j = 0; j < ordem; j++)
+        for (int i = nthSubstrg(3,primeiraLinha, parametro_virgula)+1; i < nthSubstrg(4,primeiraLinha, parametro_virgula); i++)
         {
-            matrixPesoArestas[k][j] = -1;
+            charAnalizado = (primeiraLinha[i]);
+           aux_km_fim = aux_km_fim.append(charAnalizado);
         }
-    }
+        km_fim = strtof(aux_km_fim.c_str(),nullptr);
 
-    int coluna = 1;
-    int linha = 0;
-    // Leitura de arquivo
-
-    while (input_file >> verticeA >> verticeB >> pesoAresta)
-    {
-        // cout << "verticeA " << verticeA << " verticeB " << verticeB << " pesoAresta " << pesoAresta << endl;
-        matrixPesoArestas[verticeA][verticeB] = pesoAresta;
-        matrixPesoArestas[verticeB][verticeA] = pesoAresta;
-    }
-
-    for (int o = 0; o < ordem; o++)
-    {
-        for (int p = 0; p < ordem; p++)
+        for (int i = nthSubstrg(4,primeiraLinha, parametro_virgula)+1; i < nthSubstrg(5,primeiraLinha, parametro_virgula); i++)
         {
-            if (!grafo->verificaAresta(o, p) && o != p)
-            {
-                grafo->insertEdge(o, p, matrixPesoArestas[o][p]);
-            }
+            charAnalizado = (primeiraLinha[i]);
+           pn_in = pn_in.append(charAnalizado);
+        }
+
+        for (int i = nthSubstrg(5,primeiraLinha, parametro_virgula)+1; i < nthSubstrg(6,primeiraLinha, parametro_virgula); i++)
+        {
+            charAnalizado = (primeiraLinha[i]);
+           pn_fim = pn_fim.append(charAnalizado);
+        }
+
+        for (int i = nthSubstrg(6,primeiraLinha, parametro_virgula)+1; i < nthSubstrg(7,primeiraLinha, parametro_virgula); i++)
+        {
+            charAnalizado = (primeiraLinha[i]);
+           aux_km_total = aux_km_total.append(charAnalizado);
+        }
+        km_total = strtof(aux_km_total.c_str(),nullptr);
+
+        for (int i = nthSubstrg(7,primeiraLinha, parametro_virgula)+1; i < nthSubstrg(8,primeiraLinha, parametro_virgula); i++)
+        {
+            charAnalizado = (primeiraLinha[i]);
+           aux_low_ciclo = aux_low_ciclo.append(charAnalizado);
+        }
+        low_ciclo = strtof(aux_low_ciclo.c_str(),nullptr);
+
+        for (int i = nthSubstrg(8,primeiraLinha, parametro_virgula)+1; i < nthSubstrg(9,primeiraLinha, parametro_virgula); i++)
+        {
+            charAnalizado = (primeiraLinha[i]);
+           aux_upper_ciclo = aux_upper_ciclo.append(charAnalizado);
+        }
+        upper_ciclo = strtof(aux_upper_ciclo.c_str(),nullptr);
+
+
+
+        for (int i = nthSubstrg(9,primeiraLinha, parametro_virgula)+1; i < nthSubstrg(10,primeiraLinha, parametro_virgula); i++)
+        {
+            charAnalizado = (primeiraLinha[i]);
+           aux_ultimainspecao = aux_ultimainspecao.append(charAnalizado);
+        }
+        for (int i = 0; i < nthSubstrg(1,aux_ultimainspecao, parametro_barra); i++)
+        {
+            charAnalizado = (aux_ultimainspecao[i]);
+           aux_dia_ultimainspecao = aux_dia_ultimainspecao.append(charAnalizado);
+        }
+        dia_ultimainspecao = strtof(aux_dia_ultimainspecao.c_str(),nullptr);
+        for (int i = nthSubstrg(1,aux_ultimainspecao, parametro_barra)+1; i < nthSubstrg(2,aux_ultimainspecao, parametro_barra); i++)
+        {
+            charAnalizado = (aux_ultimainspecao[i]);
+           aux_mes_ultimainspecao = aux_mes_ultimainspecao.append(charAnalizado);
+        }
+        mes_ultimainspecao = strtof(aux_mes_ultimainspecao.c_str(),nullptr);
+        for (int i = nthSubstrg(2,aux_ultimainspecao, parametro_barra)+1; i < aux_ultimainspecao.size(); i++)
+        {
+            charAnalizado = (aux_ultimainspecao[i]);
+           aux_ano_ultimainspecao = aux_ano_ultimainspecao.append(charAnalizado);
+        }
+        ano_ultimainspecao = strtof(aux_ano_ultimainspecao.c_str(),nullptr);
+
+
+
+        for (int i = nthSubstrg(10,primeiraLinha, parametro_virgula)+1; i < nthSubstrg(11,primeiraLinha, parametro_virgula); i++)
+        {
+            charAnalizado = (primeiraLinha[i]);
+          sentido = sentido.append(charAnalizado);
+        }
+
+        for (int i = nthSubstrg(11,primeiraLinha, parametro_virgula)+1; i < nthSubstrg(12,primeiraLinha, parametro_virgula); i++)
+        {
+            charAnalizado = (primeiraLinha[i]);
+          cidade_in = cidade_in.append(charAnalizado);
+        }
+
+        for (int i = nthSubstrg(12,primeiraLinha, parametro_virgula)+1; i < nthSubstrg(13,primeiraLinha, parametro_virgula); i++)
+        {
+            charAnalizado = (primeiraLinha[i]);
+          cidade_fim = cidade_fim.append(charAnalizado);
+        }
+
+        for (int i = nthSubstrg(13,primeiraLinha, parametro_virgula)+1; i < nthSubstrg(14,primeiraLinha, parametro_virgula); i++)
+        {
+            charAnalizado = (primeiraLinha[i]);
+          hotel_in = hotel_in.append(charAnalizado);
+        }
+
+        for (int i = nthSubstrg(14,primeiraLinha, parametro_virgula)+1; i < nthSubstrg(15,primeiraLinha, parametro_virgula); i++)
+        {
+            charAnalizado = (primeiraLinha[i]);
+          hotel_fim = hotel_fim.append(charAnalizado);
+        }
+
+
+        for (int i = nthSubstrg(17,primeiraLinha, parametro_virgula)+1; i < nthSubstrg(18,primeiraLinha, parametro_virgula); i++)
+        {
+            charAnalizado = (primeiraLinha[i]);
+          aux_t_hotel_in = aux_t_hotel_in.append(charAnalizado);
+        }
+        for (int i = 0; i < nthSubstrg(1,aux_t_hotel_in, parametro_doispontos); i++)
+        {
+            charAnalizado = (aux_t_hotel_in[i]);
+           aux_t_hor_hotel_in = aux_t_hor_hotel_in.append(charAnalizado);
+        }
+        t_hor_hotel_in = strtof(aux_t_hor_hotel_in.c_str(),nullptr);
+        for (int i = nthSubstrg(1,aux_t_hotel_in, parametro_doispontos)+1; i < aux_t_hotel_in.size(); i++)
+        {
+            charAnalizado = (aux_t_hotel_in[i]);
+           aux_t_min_hotel_in = aux_t_min_hotel_in.append(charAnalizado);
+        }
+        t_min_hotel_in = strtof(aux_t_min_hotel_in.c_str(),nullptr);
+
+
+
+        for (int i = nthSubstrg(18,primeiraLinha, parametro_virgula)+1; i < nthSubstrg(19,primeiraLinha, parametro_virgula); i++)
+        {
+            charAnalizado = (primeiraLinha[i]);
+          aux_t_hotel_fim = aux_t_hotel_fim.append(charAnalizado);
+        }
+        for (int i = 0; i < nthSubstrg(1,aux_t_hotel_fim, parametro_doispontos); i++)
+        {
+            charAnalizado = (aux_t_hotel_fim[i]);
+           aux_t_hor_hotel_fim = aux_t_hor_hotel_fim.append(charAnalizado);
+        }
+        t_hor_hotel_fim = strtof(aux_t_hor_hotel_fim.c_str(),nullptr);
+        for (int i = nthSubstrg(1,aux_t_hotel_fim, parametro_doispontos)+1; i < aux_t_hotel_fim.size(); i++)
+        {
+            charAnalizado = (aux_t_hotel_fim[i]);
+           aux_t_min_hotel_fim = aux_t_min_hotel_fim.append(charAnalizado);
+        }
+        t_min_hotel_fim = strtof(aux_t_min_hotel_fim.c_str(),nullptr);
+
+
+
+        for (int i = nthSubstrg(20,primeiraLinha, parametro_virgula)+1; i < nthSubstrg(21,primeiraLinha, parametro_virgula); i++)
+        {
+            charAnalizado = (primeiraLinha[i]);
+          aux_t_inspecao = aux_t_inspecao.append(charAnalizado);
+        }
+        for (int i = 0; i < nthSubstrg(1,aux_t_inspecao, parametro_doispontos); i++)
+        {
+            charAnalizado = (aux_t_inspecao[i]);
+           aux_t_hor_inspecao = aux_t_hor_inspecao.append(charAnalizado);
+        }
+        t_hor_inspecao = strtof(aux_t_hor_inspecao.c_str(),nullptr);
+        if(t_hor_inspecao==12){
+            t_hor_inspecao=0;
+        }
+        for (int i = nthSubstrg(1,aux_t_inspecao, parametro_doispontos)+1; i < aux_t_inspecao.size(); i++)
+        {
+            charAnalizado = (aux_t_inspecao[i]);
+           aux_t_min_inspecao = aux_t_min_inspecao.append(charAnalizado);
+        }
+        t_min_inspecao = strtof(aux_t_min_inspecao.c_str(),nullptr);
+
+
+
+
+
+        contador_linha++;
         }
     }
 
-    for (int i = 0; i < grafo->getOrder(); i++)
-    {
-        // cout<<"Peso do No "<<i<<": "<<grafo->getNode(i)->getWeight()<<endl;
+    return NULL;
+}
+
+void aux_leituraInstancia2(float* distancias, int coluna,string linhaAtual){
+
+    string charAnalizado="";
+    string parametro_virgula=",";
+    string aux_dist="";
+    if(coluna==25){
+        for (int i = nthSubstrg(coluna+1,linhaAtual, parametro_virgula)+1; i < linhaAtual.size(); i++)
+        {
+            charAnalizado = (linhaAtual[i]);
+            aux_dist = aux_dist.append(charAnalizado);
+        }
+        distancias[coluna] = strtof(aux_dist.c_str(),nullptr);
     }
 
-    return grafo;
-    */
+    for (int i = nthSubstrg(coluna+1,linhaAtual, parametro_virgula)+1; i < nthSubstrg(coluna+2,linhaAtual, parametro_virgula); i++)
+        {
+            charAnalizado = (linhaAtual[i]);
+            aux_dist = aux_dist.append(charAnalizado);
+        }
+        distancias[coluna] = strtof(aux_dist.c_str(),nullptr);
+
 }
 
 Graph *leituraInstancia2(ifstream &input_file, ofstream &output_file)
 {
- /*
-    // Variáveis para auxiliar na criação dos nós no Grafo
+    string primeiraLinha ="";
+    int contador_linha = 0;
+    string parametro_virgula =",";
+    string charAnalizado= "";
+    string cidade_nome ="";
 
-    int ordem;
-    int clusters;
-    float limiteSClusters;
-    int limiteIClusters = 0;
-    float pesoAresta;
+    string aux_dist;
+    float distancias[26];
 
-    // Pegando a ordem do grafo
-
-    input_file >> ordem;
-    input_file >> clusters;
-    input_file >> limiteSClusters;
-
-    cout << "Ordem: " << ordem << endl;
-    cout << "Numero de clusters: " << clusters << endl;
-    cout << "Limite Superior dos Clusters: " << limiteSClusters << endl;
-
-    float pesoNos[ordem];
-
-    for (int i = 0; i < ordem; i++)
+    while (getline(input_file, primeiraLinha, '\n'))
     {
-        input_file >> pesoNos[i];
-    }
-    cout << "Peso Nos: " << endl;
-    for (int i = 0; i < ordem; i++)
-    {
-        cout << pesoNos[i] << " ";
-    }
-    cout << endl;
+        if(contador_linha==0){
 
-    float matrixPesoArestas[ordem][ordem];
+        }else{
+        for(int i=0;i<26;i++){distancias[i]=0;}
+        aux_dist="";
+        cidade_nome ="";
 
-    for (int k = 0; k < ordem; k++)
-    {
-        for (int j = 0; j < ordem; j++)
+            for (int i = 0; i < nthSubstrg(1,primeiraLinha, parametro_virgula); i++)
         {
-            matrixPesoArestas[k][j] = -1;
+            charAnalizado = (primeiraLinha[i]);
+            cidade_nome = cidade_nome.append(charAnalizado);
         }
-    }
-
-    for (int k = 0; k < ordem; k++)
-    {
-        for (int j = 0; j < ordem; j++)
-        {
-            input_file >> matrixPesoArestas[k][j];
-        }
-    }
-
-    for (int k = 0; k < ordem; k++)
-    {
-        for (int j = 0; j < ordem; j++)
-        {
-            input_file >> matrixPesoArestas[k][j];
-        }
-    }
-
-    int limiteInferiorSuperior[clusters][2];
-
-    for (int i = 0; i < clusters; i++)
-    {
-        limiteInferiorSuperior[i][0] = 0;
-        limiteInferiorSuperior[i][1] = limiteSClusters;
-    }
-
-    // Criando objeto grafo
-    Graph *grafo = new Graph(ordem, clusters, limiteInferiorSuperior);
-
-    for (int i = 0; i < ordem; i++)
-    {
-        // cout<<"pesoVertice "<<i<<": "<<pesoVertice[i]<<endl;
-        grafo->getNode(i)->setWeight(pesoNos[i]);
-    }
-    ////
-    // Leitura de arquivo
-
-    for (int o = 0; o < ordem; o++)
-    {
-        for (int p = 0; p < ordem; p++)
-        {
-            if (!grafo->verificaAresta(o, p) && o != p)
-            {
-                grafo->insertEdge(o, p, matrixPesoArestas[o][p]);
+            for(int coluna=0;coluna<26;coluna++){
+            aux_leituraInstancia2(distancias, coluna,primeiraLinha);
             }
+
+
+            cout<<"Distancias "<<cidade_nome<<":"<<endl;
+            for(int i=0;i<26;i++){
+               cout<<distancias[i]<<" ; ";
+                }
+                cout<<endl;
+
+
         }
+        contador_linha++;
     }
-
-    for (int i = 0; i < grafo->getOrder(); i++)
-    {
-        // cout<<"Peso do No "<<i<<": "<<grafo->getNode(i)->getWeight()<<endl;
-    }
-
-    return grafo; */
+    
+    return NULL;
 }
 
 int menu()
@@ -409,69 +489,47 @@ int main(int argc, char const *argv[])
 {
 
     // Verificação se todos os parâmetros do programa foram entrados
-    if (argc != 6)
+    if (argc != 4)
     {
 
-        cout << "ERROR: Expecting: ./<program_name> <input_file_cidades> <input_file_vias> <input_file_PN> <input_file_veiculos> <output_file>" << endl;
+        cout << "ERROR: Expecting: ./<program_name> <input_file_Dados> <input_file_cidades> <output_file>" << endl;
         return 1;
     }
 
     string program_name(argv[0]);
-    string input_file_cidades(argv[1]);
-    string input_file_vias(argv[2]);
-    string input_file_PN(argv[3]);
-    string input_file_veiculos(argv[4]);
+    string input_file_Dados(argv[1]);
+    string input_file_cidades(argv[2]);
 
     string instance;
 
     // Abrindo arquivo de entrada
     ifstream input_file1;
     ifstream input_file2;
-    ifstream input_file3;
-    ifstream input_file4;
     ofstream output_file;
     input_file1.open(argv[1], ios::in);
     input_file2.open(argv[2], ios::in);
-    input_file3.open(argv[3], ios::in);
-    input_file4.open(argv[4], ios::in);
-    output_file.open(argv[5], ios::out | ios::trunc);
+    output_file.open(argv[3], ios::out | ios::trunc);
 
     Graph *graph;
 
     if (input_file1.is_open())
     {
-            graph = leituraInstancia(input_file1, output_file);
+        graph = leituraInstancia(input_file1, output_file);
     }
     else
         cout << "Unable to open " << argv[1];
-        input_file1.close();
+    input_file1.close();
 
     if (input_file2.is_open())
     {
-            graph = leituraInstancia2(input_file2, output_file);
+        graph = leituraInstancia2(input_file2, output_file);
     }
     else
         cout << "Unable to open " << argv[2];
 
-        input_file2.close();
+    input_file2.close();
 
-    if (input_file3.is_open())
-    {
-            graph = leituraInstancia(input_file3, output_file);
-    }
-    else
-        cout << "Unable to open " << argv[3];
-        input_file3.close();
-
-    if (input_file4.is_open())
-    {
-            graph = leituraInstancia(input_file4, output_file);
-    }
-    else
-        cout << "Unable to open " << argv[4];
-        input_file4.close();
-
-    mainMenu(output_file, graph);
+    // mainMenu(output_file, graph);
 
     // Fechando arquivo de saída
     output_file.close();

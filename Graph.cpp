@@ -54,7 +54,8 @@ Graph::~Graph()
     this->last_node = nullptr;
 }
 
-void Graph::printGraph(ofstream &output_file)
+//cometando pois get target id não existe
+/*void Graph::printGraph(ofstream &output_file)
 {
     Node *p = this->first_node;
     Edge *aux = p->getFirstEdge();
@@ -73,7 +74,7 @@ void Graph::printGraph(ofstream &output_file)
         p = p->getNextNode();
     }
     output_file << "}" << endl;
-}
+}*/
 
 // Getters
 
@@ -147,14 +148,11 @@ void Graph::insertAllNodes()
 bool Graph::verificaAresta(int id, int pn_fim)
 {
     Node *p = getNode(id);
-    for (Edge *g = p->getFirstEdge(); g != nullptr; g = g->getNextEdge())
-    {
 
-        if (g->getTargetId() == pn_fim)
-        {
-            return true;
+    for (Edge *aux = p->getFirstEdge(); aux != NULL; aux = aux->getNextEdge()){
+            if (aux->getpn_fim() == pn_fim)
+                return true;
         }
-    }
     return false;
 }
 
@@ -215,7 +213,7 @@ void Graph::removeNode(int id) // pfv dps me ajudem a revisar esse removeNode
                     sup = k;
                     k->getNextEdge();
 
-                    if (k->getTargetId() == p->getId())
+                    if (k->getpn_fim() == p->getId())
                     {
                         sup->setNextEdge(k->getNextEdge());
                         k = nullptr;

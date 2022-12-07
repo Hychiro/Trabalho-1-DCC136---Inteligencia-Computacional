@@ -34,6 +34,8 @@ class Veiculo{
         list<Node> proximosPn;
 
     public:
+    Veiculo();
+    ~Veiculo();
 //getters
     int getid();
     int getidNoAtual();

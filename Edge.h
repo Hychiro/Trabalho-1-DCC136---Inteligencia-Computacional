@@ -22,6 +22,7 @@ class Edge{
         float tMaxInspecao;
         float tMinInspecao;
         int ultimainspecao;
+        bool bidirecional;
 
     public:
         // Constructor
@@ -36,8 +37,8 @@ class Edge{
         float gettMaxInspecao();
         float gettMinInspecao();
         float getultimainspecao();
-        int getTargetId();
         Edge* getNextEdge();
+        bool is_bidirecional(){return this->bidirecional;}
         // Setters
         void setpn_fim(int pn_fim);
         void setpn_inicio(int pn_inicio);
@@ -47,6 +48,7 @@ class Edge{
         void settMinInspecao(float tMinInspecao);
         void setultimainspecao(float ultimainspecao);
         void setNextEdge(Edge* edge);
+        void setdirecao(bool direcao){this->bidirecional=direcao;}
         ; 
 
 }; 
