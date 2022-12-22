@@ -9,6 +9,7 @@ using namespace std;
 // Constructor
 Cidade::Cidade(){
 
+
 }
 
 // Destructor
@@ -23,7 +24,7 @@ Cidade::~Cidade(){
     char* Cidade::getnome(){
         return this->nome;
     }
-    int* Cidade::getdistancias(){
+    float* Cidade::getdistancias(){
         return this->distancias;
     }
 //setters
@@ -31,11 +32,11 @@ Cidade::~Cidade(){
         this->id=id;
     }
     void Cidade::setnome(char* nome){
-        for(int i=0;i<20;i++){
+        for(int i=0;i<30;i++){
             this->nome[i]=nome[i];
         }
     }
-    void Cidade::setdistancias(int* distancias){
+    void Cidade::setdistancias(float* distancias){
         for(int i=0;i<26;i++){
             this->distancias[i]=distancias[i];
         }

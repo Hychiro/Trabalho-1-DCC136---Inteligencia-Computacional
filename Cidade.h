@@ -11,17 +11,31 @@ class Cidade{
     private:
     int id;
     char nome[30];
-    int distancias[26];
+    float distancias[26];
+    Cidade *prox_cidade;
+    Cidade *ant_cidade;
     public:
     //getters
     Cidade();
     ~Cidade();
     int getid();
     char* getnome();
-    int* getdistancias();
+    float* getdistancias();
+    Cidade* get_prox_cidade(){
+        return this->prox_cidade;
+    };
+    Cidade* get_ant_cidade(){
+        return this->ant_cidade;
+    };
     //setters
+    void set_ant_Cidade(Cidade *a){
+        this->ant_cidade=a;
+    };
+    void set_prox_Cidade(Cidade *a){
+        this->prox_cidade=a;
+    };
     void setid(int id);
     void setnome(char* nome);
-    void setdistancias(int* distancias);
+    void setdistancias(float* distancias);
 };
 #endif // EDGE_H_INCLUDED

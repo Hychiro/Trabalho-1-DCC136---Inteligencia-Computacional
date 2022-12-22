@@ -1,5 +1,4 @@
 /*
-Hiero Henrique Barcelos Costa 202065136A
 Matheus Cardoso Faesy 202065065A
 */
 #include "Graph.h"
@@ -23,24 +22,11 @@ using namespace std;
  **************************************************************************************************/
 
 // Constructor
-Graph::Graph(int order, int numClusters, int aux[][2])
+Graph::Graph()
 {
-
-    this->order = order;
-
     this->first_node = nullptr;
     this->last_node = nullptr;
     this->number_edges = 0;
-    this->melhorInstancia = -1;
-    this->numClusters = numClusters;
-
-    this->listaDeNosLivres = new bool[order];
-
-    for (int i = 0; i < order; i++)
-    {
-        listaDeNosLivres[i] = true;
-    }
-    insertAllNodes();
 }
 
 // Destructor
@@ -54,7 +40,7 @@ Graph::~Graph()
     this->last_node = nullptr;
 }
 
-//cometando pois get target id não existe
+/// cometando pois get target id não existe
 /*void Graph::printGraph(ofstream &output_file)
 {
     Node *p = this->first_node;
@@ -68,10 +54,10 @@ Graph::~Graph()
         while (aux != nullptr)
         {
 
-            output_file << p->getId() << " -- " << aux->getTargetId() << endl;
+            output_file << p->getId() << " -- " << aux->getpn_fim() << endl;
             aux = aux->getNextEdge();
         }
-        p = p->getNextNode();
+        p = p->getProxNode();
     }
     output_file << "}" << endl;
 }*/
@@ -109,68 +95,39 @@ Node *Graph::getLastNode()
 
 // implementacao abaixo:
 
-void Graph::insertNode(int id)
+void Graph::insertNode()
 {
     // so cria o no e deixa ele no espaço
-    Node *p = new Node(id);
-    if (this->first_node == nullptr)
+    Node *p = new Node();
+    if (this->first_node == NULL)
     {
+        p->setAntNode(NULL);
+        p->setProxNode(NULL);
+        p->setid(0);
         this->first_node = p;
+        this->last_node = p;
     }
     else
     {
-        this->last_node->setNextNode(p);
-    }
-    this->last_node = p;
-    this->last_node->setNextNode(nullptr);
-    this->order++;
-    // delete p;
-}
-void Graph::insertAllNodes()
-{
-    for (int i = 0; i < this->order; i++)
-    {
-        Node *p = new Node(i);
-        if (this->first_node == nullptr)
-        {
-            this->first_node = p;
-        }
-        else
-        {
-            this->last_node->setNextNode(p);
-        }
+        p->setProxNode(NULL);
+        p->setAntNode(this->last_node);
+        this->last_node->setProxNode(p);
         this->last_node = p;
+        p->setid(p->getAntNode()->getId() + 1);
     }
+    this->order++;
 }
-
-
 
 bool Graph::verificaAresta(int id, int pn_fim)
 {
     Node *p = getNode(id);
 
-    for (Edge *aux = p->getFirstEdge(); aux != NULL; aux = aux->getNextEdge()){
-            if (aux->getpn_fim() == pn_fim)
-                return true;
-        }
-    return false;
-}
-
-void Graph::insertEdge(int id, int pn_fim,int pn_inicio,int kmTotal,int duracaoInspecao,int tMaxInspecao,int tMinInspecao,int ultimainspecao)
-{
-    // junta os nos entre si
-    if (searchNode(id)) //<-- ta sendo direcionado prestar atenção nisso.
+    for (Edge *aux = p->getFirstEdge(); aux != NULL; aux = aux->getproxEdge())
     {
-
-        if (!verificaAresta(id, pn_fim))
-        {
-            Node *p = getNode(id);
-            Node *sup = getNode(pn_fim);
-            p->insertEdge(pn_fim,pn_inicio, kmTotal, duracaoInspecao, tMaxInspecao, tMinInspecao, ultimainspecao);
-            sup->insertEdge(pn_fim,pn_inicio,kmTotal, duracaoInspecao, tMaxInspecao, tMinInspecao, ultimainspecao);
-            this->number_edges += 1;
-        }
+        if (aux->getpn_fim() == pn_fim)
+            return true;
     }
+    return false;
 }
 
 void Graph::removeNode(int id) // pfv dps me ajudem a revisar esse removeNode
@@ -193,31 +150,31 @@ void Graph::removeNode(int id) // pfv dps me ajudem a revisar esse removeNode
 
             p = getNode(id);
 
-            while (p != previousN->getNextNode())
+            while (p != previousN->getProxNode())
             {
-                previousN->getNextNode();
+                previousN->getProxNode();
             }
-            nextN = p->getNextNode();
+            nextN = p->getProxNode();
 
-            previousN->setNextNode(nextN);
-            if (previousN->getNextNode() == nullptr)
+            previousN->getProxNode();
+            if (previousN->getProxNode() == nullptr)
             {
                 last_node = previousN;
             }
 
-            for (Node *i = first_node; i != nullptr; i->getNextNode())
+            for (Node *i = first_node; i != nullptr; i->getProxNode())
             {
                 Edge *k = i->getFirstEdge();
                 while (k != nullptr)
                 {
                     sup = k;
-                    k->getNextEdge();
+                    k->getproxEdge();
 
                     if (k->getpn_fim() == p->getId())
                     {
-                        sup->setNextEdge(k->getNextEdge());
+                        sup->setproxEdge(k->getproxEdge());
                         k = nullptr;
-                        k = sup->getNextEdge();
+                        k = sup->getproxEdge();
                     }
                 }
             }
@@ -235,7 +192,7 @@ bool Graph::searchNode(int id)
 {
     // so verifica se exste o no ali ou nao
 
-    for (Node *p = this->first_node; p != nullptr; p = p->getNextNode())
+    for (Node *p = this->first_node; p != nullptr; p = p->getProxNode())
     {
         if (p->getId() == id)
         {
@@ -243,6 +200,20 @@ bool Graph::searchNode(int id)
         }
     }
     return false;
+}
+
+Node* Graph::searchNode_ByID(int id)
+{
+    // so verifica se exste o no ali ou nao
+
+    for (Node *p = this->first_node; p != nullptr; p = p->getProxNode())
+    {
+        if (p->getId() == id)
+        {
+            return p;
+        }
+    }
+    return NULL;
 }
 
 Node *Graph::getNode(int id)
@@ -253,9 +224,33 @@ Node *Graph::getNode(int id)
     {
         while (p != nullptr && p->getId() != id)
         {
-            p = p->getNextNode();
+            p = p->getProxNode();
         }
         return p;
     }
     return p;
+}
+
+Node *Graph::searchNode_ByNome(string nome)
+{
+
+    for (Node *a = this->first_node; a != NULL; a = a->getProxNode())
+    {
+        for (int i = 0; i < nome.size(); i++)
+        {
+            if (a->getNome()[i] == nome[i])
+            {
+            }
+            else
+            {
+                break;
+            }
+
+            if (i == nome.size()-1)
+            {
+                return a;
+            }
+        }
+    }
+    return NULL;
 }

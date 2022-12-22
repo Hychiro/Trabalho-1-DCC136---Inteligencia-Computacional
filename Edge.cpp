@@ -11,11 +11,13 @@ using namespace std;
 **************************************************************************************************/
 
 // Constructor
-Edge::Edge(int pn_fim, int pn_inicio){
+Edge::Edge(int pn_inicio, int pn_fim,int id){
 
+    this->id=id;
     this->pn_fim = pn_fim;
     this->pn_inicio = pn_inicio;
-    this->next_edge = nullptr;
+    this->prox_edge = NULL;
+    this->ant_edge = NULL;
     this->kmTotal=0;
     this->duracaoInspecao=0;
     this->tMaxInspecao=0;
@@ -27,9 +29,9 @@ Edge::Edge(int pn_fim, int pn_inicio){
 // Destructor
 Edge::~Edge(){
 
-    if (this->next_edge != nullptr){
-        delete this->next_edge;
-        this->next_edge = nullptr;
+    if (this->prox_edge != nullptr){
+        delete this->prox_edge;
+        this->prox_edge = nullptr;
     }
 
 }
@@ -47,9 +49,15 @@ int Edge::getpn_inicio(){
 
 }
 
-Edge* Edge::getNextEdge(){
+Edge* Edge::getproxEdge(){
 
-    return this->next_edge;
+    return this->prox_edge;
+
+}
+
+Edge* Edge::getantEdge(){
+
+    return this->ant_edge;
 
 }
 
@@ -70,9 +78,15 @@ return this->ultimainspecao;
 }
 
 // Setters
-void Edge::setNextEdge(Edge* edge){
+void Edge::setproxEdge(Edge* edge){
 
-    this->next_edge = edge;
+    this->prox_edge = edge;
+
+}
+
+void Edge::setantEdge(Edge* edge){
+
+    this->ant_edge = edge;
 
 }
 

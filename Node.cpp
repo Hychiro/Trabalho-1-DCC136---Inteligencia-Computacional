@@ -12,28 +12,27 @@ using namespace std;
  **************************************************************************************************/
 
 // Constructor
-Node::Node(int id)
+Node::Node()
 {
-
-    this->id = id;
     this->in_degree = 0;
     this->out_degree = 0;
     this->first_edge = NULL;
     this->last_edge = NULL;
-    this->next_node = NULL;
+    this->prox_node = NULL;
+    this->ant_node = NULL;
 };
 
 // Destructor
 Node::~Node()
 {
-    if (this->next_node != nullptr)
+    if (this->prox_node != nullptr)
     {
         // cout<<"entra aqui 1.1"<<endl;
-        delete this->next_node;
+        delete this->prox_node;
         // cout<<"entra aqui 1.2"<<endl;
-        next_node->removeAllEdges();
+        prox_node->removeAllEdges();
         // cout<<"entra aqui 1.3"<<endl;
-        this->next_node = nullptr;
+        this->prox_node = nullptr;
     }
 };
 
@@ -68,18 +67,30 @@ int Node::getOutDegree()
     return this->out_degree;
 }
 
-Node *Node::getNextNode()
+Node *Node::getProxNode()
 {
 
-    return this->next_node;
+    return this->prox_node;
+}
+
+Node *Node::getAntNode()
+{
+
+    return this->ant_node;
 }
 
 // Setters
 
-void Node::setNextNode(Node *next_node)
+void Node::setProxNode(Node *next_node)
 {
 
-    this->next_node = next_node;
+    this->prox_node = next_node;
+}
+
+void Node::setAntNode(Node *next_node)
+{
+
+    this->ant_node = next_node;
 }
 
 void Node::setFirstEdge(Edge *edge)
@@ -93,31 +104,44 @@ void Node::setLastEdge(Edge *edge)
 }
 
 // Other methods
-void Node::insertEdge(int pn_fim,int pn_inicio, float kmTotal, float duracaoInspecao, float tMaxInspecao, float tMinInspecao, float ultimainspecao)
+
+
+void Node::insertEdge(int pn_inicio,int pn_fim, float kmTotal, float duracaoInspecao, float tMaxInspecao, float tMinInspecao, float ultimainspecao,int id,string ramal,string regiao)
 {
     // Verifies whether there are at least one edge in the node
     if (this->first_edge != NULL)
     {
         // Allocating the new edge and keeping the integrity of the edge list
-        Edge *edge = new Edge(pn_fim, pn_inicio);
+        Edge *edge = new Edge(pn_inicio, pn_fim,id);
         edge->setkmTotal(kmTotal);
         edge->setduracaoInspecao(duracaoInspecao);
         edge->settMaxInspecao(tMaxInspecao);
         edge->settMinInspecao(tMinInspecao);
         edge->setultimainspecao(ultimainspecao);
-        this->last_edge->setNextEdge(edge);
+        edge->setRamal(ramal);
+        edge->setRegiao(regiao);
+
+        this->last_edge->setproxEdge(edge); 
+
+        edge->setantEdge(this->last_edge);
+        edge->setproxEdge(NULL);
         this->last_edge = edge;
     }
     else
     {
         // Allocating the new edge and keeping the integrity of the edge list
-        this->first_edge = new Edge(pn_fim, pn_inicio);
+        this->first_edge = new Edge(pn_inicio, pn_fim,id);
         this->first_edge->setkmTotal(kmTotal);
         this->first_edge->setduracaoInspecao( duracaoInspecao);
         this->first_edge->settMaxInspecao(tMaxInspecao);
         this->first_edge->settMinInspecao(tMinInspecao);
         this->first_edge->setultimainspecao(ultimainspecao);
+        this->first_edge->setRamal(ramal);
+        this->first_edge->setRegiao(regiao);
         this->last_edge = this->first_edge;
+
+        this->last_edge->setproxEdge(NULL);
+        this->last_edge->setantEdge(NULL);
     }
 }
 
@@ -151,20 +175,20 @@ int Node::removeEdge(int id, bool directed, Node *target_node)
         {
 
             previous = aux;
-            aux = aux->getNextEdge();
+            aux = aux->getproxEdge();
         }
         // Keeping the integrity of the edge list
         if (previous != NULL)
-            previous->setNextEdge(aux->getNextEdge());
+            previous->setproxEdge(aux->getproxEdge());
 
         else
-            this->first_edge = aux->getNextEdge();
+            this->first_edge = aux->getproxEdge();
 
         if (aux == this->last_edge)
             this->last_edge = previous;
 
-        if (aux->getNextEdge() == this->last_edge)
-            this->last_edge = aux->getNextEdge();
+        if (aux->getproxEdge() == this->last_edge)
+            this->last_edge = aux->getproxEdge();
 
         delete aux;
         // Verifies whether the graph is directed
@@ -190,7 +214,7 @@ bool Node::searchEdge(int target_id)
     if (this->first_edge != NULL)
     {
         // Searching for a specific edge of target id equal to target id
-        for (Edge *aux = this->first_edge; aux != NULL; aux = aux->getNextEdge()){
+        for (Edge *aux = this->first_edge; aux != NULL; aux = aux->getproxEdge()){
             if (aux->getpn_fim() == target_id)
                 return true;
             if(aux->is_bidirecional() == true){
@@ -231,7 +255,7 @@ void Node::decrementOutDegree()
 Edge *Node::hasEdgeBetween(int target_id)
 {
 
-    for (Edge *aux = this->first_edge; aux != NULL; aux = aux->getNextEdge()){
+    for (Edge *aux = this->first_edge; aux != NULL; aux = aux->getproxEdge()){
             if (aux->getpn_fim() == target_id)
                 return aux;
             if(aux->is_bidirecional() == true){
